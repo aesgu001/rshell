@@ -18,6 +18,10 @@ class cmd {
     }
     ~cmd() { delete[] argumentList; }
 
+    const std::string get_exec() { return executable; }
+    char **get_arList() { return argumentList; }
+    const std::string get_conn() { return connector; }
+
     private:
     std::string executable;
     char **argumentList;
