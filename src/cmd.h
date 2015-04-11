@@ -17,20 +17,13 @@ class cmd {
         const std::string conn) : executable(exec), argumentList(argList),
         connector(conn) {}
 
-    const std::string get_exec() {
-        return executable;
-    }
+    const std::string get_exec() { return executable; }
 
-    const std::string get_conn() {
-        return connector;
-    }
+    void set_exec(const std::string str) { executable=str; }
 
-    bool match(const std::string str) {
-        for (int i=0;i<argumentList.size();i++)
-            if (argumentList.at(i)==str)
-                return true;
-        return false;
-    }
+    const std::string get_conn() { return connector; }
+
+    void set_conn(const std::string str) { connector=str; }
 
     private:
     std::string executable;
