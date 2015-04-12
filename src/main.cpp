@@ -1,6 +1,5 @@
 #include <iostream>
 #include <unistd.h>
-#include <string.h>
 #include <queue>
 #include "cmd.h"
 using namespace std;
@@ -19,15 +18,25 @@ string get_nearest_connector(const string &s) {
     return ";";
 }
 
-void parse_help(const string &line, const string &conn, queue<cmd> commands,
-    char *s) {
-    char *c_line=new char[line.length()+1];
-    strcpy(c_line,line.c_str());
-    string exec=strtok(c_line," ");
-    char *p=strtok(NULL," ");
-    while (p!=0) { p=strtok(NULL," "); }
-    //commands.push(cmd(exec,arlist,conn));
-    delete[] c_line;
+void parse_help(const string &line, const string &conn,
+    queue<cmd> &commands, char *s) {
+    string exec=line.substr(0,line.find(" "));
+    string l,p;
+    cmd command;
+    command.set_exec(exec);
+    command.set_conn(conn);
+    command.push(s);
+    if (exec.length()!=line.length()) {
+        l=line.substr(exec.length()+1,string::npos);
+        p=l.substr(0,l.find(" "));
+        while (p.length()!=l.length()) {
+            command.push(p);
+            l=l.substr(p.length()+1,string::npos);
+            p=l.substr(0,l.find(" "));
+        }
+        command.push(p);
+    }
+    commands.push(command);
 }
 
 void parse(const string &line, queue<cmd> &commands, char *s) {
@@ -42,13 +51,10 @@ void parse(const string &line, queue<cmd> &commands, char *s) {
 int main(int argc, char **argv) {
     queue<cmd> commands;
     string line;
-    while (true) {
+    while (commands.empty()||commands.front().get_exec()!="exit") {
+        cout << "$ ";
         getline(cin,line);
         parse(line,commands,argv[0]);
-        //while (!commands.empty()) {
-        //    commands.front().print();
-        //    commands.pop();
-        //}
     }
     return 0;
 }
