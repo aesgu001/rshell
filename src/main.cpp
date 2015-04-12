@@ -24,16 +24,15 @@ void parse_help(const string &line, const string &conn, queue<cmd> commands,
     char *c_line=new char[line.length()+1];
     strcpy(c_line,line.c_str());
     string exec=strtok(c_line," ");
-    char **c_arg,**curr;
-    c_arg[0]=s;
-    curr=c_arg;
-    while (curr!=0) { curr++; curr[0]=strtok(NULL," "); }
-    commands.push(cmd(exec,c_arg,conn));
+    char *p=strtok(NULL," ");
+    while (p!=0) { p=strtok(NULL," "); }
+    //commands.push(cmd(exec,arlist,conn));
     delete[] c_line;
 }
 
 void parse(const string &line, queue<cmd> &commands, char *s) {
     string conn=get_nearest_connector(line);
+    if (line=="") return;
     if (conn=="") { parse_help(line,conn,commands,s); return; }
     string l=line.substr(0,line.find(conn));
     parse_help(l,conn,commands,s);
@@ -46,6 +45,10 @@ int main(int argc, char **argv) {
     while (true) {
         getline(cin,line);
         parse(line,commands,argv[0]);
+        //while (!commands.empty()) {
+        //    commands.front().print();
+        //    commands.pop();
+        //}
     }
     return 0;
 }
