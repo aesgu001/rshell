@@ -11,17 +11,17 @@ class cmd {
 
     public:
     cmd() : executable(""), argument_list(nullptr), connector("") {}
-    cmd(const std::string exec) : executable(exec) {}
-    cmd(const std::string exec, char **arlist) : executable(exec) {
-        char **temp=argument_list;
+    cmd(const std::string &exec) : executable(exec) {}
+    cmd(const std::string &exec, char **arlist) : executable(exec) {
+        if (argument_list!=nullptr) delete[] argument_list;
         argument_list=arlist;
-        delete[] temp;
     }
-    cmd(const std::string exec, char **arlist, const std::string conn) :
-    executable(exec), connector(conn) {
-        char **temp=argument_list;
+    cmd(const std::string &exec, const std::string &conn) :
+        executable(exec), argument_list(nullptr), connector(conn) {}
+    cmd(const std::string &exec, char **arlist, const std::string &conn) :
+        executable(exec), connector(conn) {
+        if (argument_list!=nullptr) delete[] argument_list;
         argument_list=arlist;
-        delete[] temp;
     }
     ~cmd() { delete[] argument_list; }
 
@@ -29,9 +29,12 @@ class cmd {
     char **get_arlist() const { return argument_list; }
     const std::string get_conn() const { return connector; }
 
+    void set_exec(const std::string exec) { executable=exec; }
+    void set_conn(const std::string conn) { connector=conn; }
+
     void print() const {
         std::cout << "executable: " << executable << std::endl;
-        std::cout << "argument list: ";
+        std::cout << "arguments: ";
         for (char **curr=argument_list;curr!=0;curr++)
             std::cout << curr[0] << " ";
         std::cout << std::endl;
