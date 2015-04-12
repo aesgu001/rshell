@@ -23,13 +23,12 @@ void parse_help(const string &line, const string &conn, queue<cmd> commands,
     char *s) {
     char *c_line=new char[line.length()+1];
     strcpy(c_line,line.c_str());
-    //cout << "command line: " << c_line << endl;
-    char *c_arg=strtok(c_line," ");
-    //cout << "executable: " << c_arg << endl;
-    c_arg=strtok(NULL," ");
-    //cout << "argument list: ";
-    while (c_arg!=0) { cout << c_arg << " "; c_arg=strtok(NULL," "); }
-    cout << endl << endl;
+    string exec=strtok(c_line," ");
+    char **c_arg,**curr;
+    c_arg[0]=s;
+    curr=c_arg;
+    while (curr!=0) { curr++; curr[0]=strtok(NULL," "); }
+    commands.push(cmd(exec,c_arg,conn));
     delete[] c_line;
 }
 
