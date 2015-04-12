@@ -19,17 +19,34 @@ string get_nearest_connector(const string &s) {
     return ";";
 }
 
-void parse(const string &line, queue<cmd> &commands) {
+void parse_help(const string &line, const string &conn, queue<cmd> commands,
+    char *s) {
+    char *c_line=new char[line.length()+1];
+    strcpy(c_line,line.c_str());
+    //cout << "command line: " << c_line << endl;
+    char *c_arg=strtok(c_line," ");
+    //cout << "executable: " << c_arg << endl;
+    c_arg=strtok(NULL," ");
+    //cout << "argument list: ";
+    while (c_arg!=0) { cout << c_arg << " "; c_arg=strtok(NULL," "); }
+    cout << endl << endl;
+    delete[] c_line;
+}
+
+void parse(const string &line, queue<cmd> &commands, char *s) {
     string conn=get_nearest_connector(line);
-    if (conn=="") { return; }
+    if (conn=="") { parse_help(line,conn,commands,s); return; }
     string l=line.substr(0,line.find(conn));
-    parse(line.substr(line.find(conn)+conn.size(),string::npos),commands);
+    parse_help(l,conn,commands,s);
+    parse(line.substr(line.find(conn)+conn.size(),string::npos),commands,s);
 }
 
 int main(int argc, char **argv) {
     queue<cmd> commands;
     string line;
-    getline(cin,line);
-    parse(line,commands);
+    while (true) {
+        getline(cin,line);
+        parse(line,commands,argv[0]);
+    }
     return 0;
 }
