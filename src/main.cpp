@@ -48,13 +48,26 @@ void parse(const string &line, queue<cmd> &commands, char *s) {
     parse(line.substr(line.find(conn)+conn.size(),string::npos),commands,s);
 }
 
-void execute(queue<cmd> &commands, bool &exit_called) {
+bool has_executed(const cmd &command) {
+    return true;
+}
 
+void execute(queue<cmd> &commands, bool &exit_called) {
+    cmd command;
+    bool exec_flag;
+    while (!commands.empty()) {
+        command=commands.front();
+        commands.pop();
+        if (command.get_exec()=="exit") { exit_called=true; return; }
+        exec_flag=has_executed(command);
+        if (((exec_flag&&command.get_conn()=="||")||(!exec_flag&&
+            command.get_conn()=="&&"))&&
+            !commands.empty()) commands.pop();
+    }
 }
 
 int main(int argc, char **argv) {
     queue<cmd> commands;
-    cmd command;
     string line;
     bool exit_called=false;
     while (!exit_called) {
