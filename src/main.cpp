@@ -23,21 +23,17 @@ string get_nearest_connector(const string &s) {
 
 void parse_help(const string &line, const string &conn,
     queue<cmd> &commands, char *s) {
-    string exec=line.substr(0,line.find(" "));
-    string l,p;
+    char *c_line=new char[line.length()+1];
+    strcpy(c_line,line.c_str());
+    string exec=strtok(c_line," ");
     cmd command;
     command.set_exec(exec);
     command.set_conn(conn);
     command.push(s);
-    if (exec.length()!=line.length()) {
-        l=line.substr(exec.length()+1,string::npos);
-        p=l.substr(0,l.find(" "));
-        while (p.length()!=l.length()) {
-            command.push(p);
-            l=l.substr(p.length()+1,string::npos);
-            p=l.substr(0,l.find(" "));
-        }
+    char *p=strtok(NULL," ");
+    while (p!=0) {
         command.push(p);
+        p=strtok(NULL," ");
     }
     commands.push(command);
 }
@@ -51,20 +47,9 @@ void parse(const string &line, queue<cmd> &commands, char *s) {
     parse(line.substr(line.find(conn)+conn.size(),string::npos),commands,s);
 }
 
-void fill_list(char **arlist, const vector<string> v) {
-    char *p;
-    for (size_t i=0;i<v.size();i++) {
-        p=new char[v.at(i).length()+1];
-        strcpy(p,v.at(i).c_str());
-        *(arlist+i)=p;
-    }
-}
-
 bool has_executed(const cmd &command) {
     int flag=0;
-    vector<string> v=command.get_arlist();
-    char **arlist=new char*[v.size()];
-    fill_list(arlist,v);
+    char **arlist=command.get_arlist();
     int pid=fork();
     if (pid<0) {
         perror("There was an error with fork().");
@@ -78,9 +63,6 @@ bool has_executed(const cmd &command) {
         if (-1==wait(0))
             perror("There was an error with wait().");
     }
-    for (size_t i=0;i<v.size();i++)
-        delete[] *(arlist+i);
-    delete[] arlist;
     return (flag==-1)? false : true;
 }
 
@@ -90,7 +72,7 @@ void execute(queue<cmd> &commands, bool &exit_called) {
     while (!commands.empty()) {
         command=commands.front();
         commands.pop();
-        if (command.get_exec()=="exit") { exit_called=true; return; }
+        if (command.get_exec()=="exit") exit_called=true;
         exec_flag=has_executed(command);
         if (((exec_flag&&command.get_conn()=="||")||(!exec_flag&&
             command.get_conn()=="&&"))&&
