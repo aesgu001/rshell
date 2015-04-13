@@ -1,5 +1,7 @@
 #include <iostream>
 #include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 #include <queue>
 #include "cmd.h"
 using namespace std;
@@ -48,8 +50,33 @@ void parse(const string &line, queue<cmd> &commands, char *s) {
     parse(line.substr(line.find(conn)+conn.size(),string::npos),commands,s);
 }
 
+void fill_list(char **arlist, const vector<string> v) {
+
+}
+
 bool has_executed(const cmd &command) {
-    return true;
+    bool ret=false;
+    vector<string> v=command.get_arlist();
+    char **arlist=new char*[v.size()+1];
+    fill_list(arlist,v);
+    int pid=fork();
+    if (pid<0) {
+        perror("There was an error with fork().");
+        exit(1);
+    }
+    else if (pid==0) {
+        if(execvp(command.get_exec().c_str(),arlist)!=-1)
+            ret=true;
+        exit(1);
+    }
+    else { // (pid>0)
+        if (-1==wait(0))
+            perror("There was an error with wait().");
+    }
+    for (size_t i=0;i<v.size();i++)
+        delete[] *(arlist+i);
+    delete[] arlist;
+    return ret;
 }
 
 void execute(queue<cmd> &commands, bool &exit_called) {
