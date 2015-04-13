@@ -21,8 +21,16 @@ string get_nearest_connector(const string &s) {
     return ";";
 }
 
+bool is_blank(const string &s) {
+    for (size_t i=0;i<s.length();i++)
+        if (s.at(i)!=' ')
+            return false;
+    return true;
+}
+
 void parse_help(const string &line, const string &conn,
     queue<cmd> &commands, char *s) {
+    if (line==""||is_blank(line)) return;
     char *c_line=new char[line.length()+1];
     strcpy(c_line,line.c_str());
     string exec=strtok(c_line," ");
@@ -39,8 +47,11 @@ void parse_help(const string &line, const string &conn,
 }
 
 void parse(const string &line, queue<cmd> &commands, char *s) {
+    if (line.find("#")!=string::npos) {
+        parse(line.substr(0,line.find("#")),commands,s);
+        return;
+    }
     string conn=get_nearest_connector(line);
-    if (line=="") return;
     if (conn=="") { parse_help(line,conn,commands,s); return; }
     string l=line.substr(0,line.find(conn));
     parse_help(l,conn,commands,s);
@@ -49,20 +60,18 @@ void parse(const string &line, queue<cmd> &commands, char *s) {
 
 bool has_executed(const cmd &command) {
     int flag=0;
-    char **arlist=command.get_arlist();
     int pid=fork();
     if (pid<0) {
         perror("There was an error with fork().");
         exit(1);
     }
     else if (pid==0) {
-        flag=execvp(command.get_exec().c_str(),arlist);
+        flag=execvp(command.get_exec().c_str(),command.get_arlist());
         exit(1);
     }
-    else { // (pid>0)
+    else // (pid>0)
         if (-1==wait(0))
             perror("There was an error with wait().");
-    }
     return (flag==-1)? false : true;
 }
 

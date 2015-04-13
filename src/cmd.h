@@ -39,17 +39,6 @@ class cmd {
         if (arlist_sz>arlist_cap) expand();
         *(argument_list+arlist_sz-1)=s;
     }
-
-    void print() const {
-        std::cout << "executable: " << executable << std::endl;
-        std::cout << "arguments: ";
-        for (std::size_t i=0;i<arlist_sz;i++)
-            std::cout << *(argument_list+arlist_sz) << " ";
-        std::cout << std::endl;
-        std::cout << "connector: ";
-        if (connector=="") std::cout << "none" << std::endl;
-        else std::cout << connector << std::endl;
-    }
 };
 
 #endif
