@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string.h>
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -51,13 +52,18 @@ void parse(const string &line, queue<cmd> &commands, char *s) {
 }
 
 void fill_list(char **arlist, const vector<string> v) {
-
+    char *p;
+    for (size_t i=0;i<v.size();i++) {
+        p=new char[v.at(i).length()+1];
+        strcpy(p,v.at(i).c_str());
+        *(arlist+i)=p;
+    }
 }
 
 bool has_executed(const cmd &command) {
-    bool ret=false;
+    int flag=0;
     vector<string> v=command.get_arlist();
-    char **arlist=new char*[v.size()+1];
+    char **arlist=new char*[v.size()];
     fill_list(arlist,v);
     int pid=fork();
     if (pid<0) {
@@ -65,8 +71,7 @@ bool has_executed(const cmd &command) {
         exit(1);
     }
     else if (pid==0) {
-        if(execvp(command.get_exec().c_str(),arlist)!=-1)
-            ret=true;
+        flag=execvp(command.get_exec().c_str(),arlist);
         exit(1);
     }
     else { // (pid>0)
@@ -76,7 +81,7 @@ bool has_executed(const cmd &command) {
     for (size_t i=0;i<v.size();i++)
         delete[] *(arlist+i);
     delete[] arlist;
-    return ret;
+    return (flag==-1)? false : true;
 }
 
 void execute(queue<cmd> &commands, bool &exit_called) {
