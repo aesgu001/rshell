@@ -46,7 +46,6 @@ void parse_help(const string &line, const string &conn,
         p=strtok(NULL," ");
     }
     command.push(NULL);
-    //command.print();
     commands.push(command);
 }
 
