@@ -62,20 +62,22 @@ void parse(const string &line, queue<cmd> &commands, char *s) {
 }
 
 bool has_executed(const cmd &command) {
-    bool ret=true;
-    int pid=fork();
+    pid_t pid=fork();
     if (pid<0) {
         perror("fork");
         exit(1);
     }
     else if (pid==0) {
-        if (-1==execvp(command.get_exec().c_str(),command.get_arlist()))
+        if (-1==execvp(command.get_exec().c_str(),command.get_arlist())) {
             perror("execvp");
-        exit(0);
+            exit(1);
+        }
+        else exit(0);
     }
-    else // (pid>0)
-        if (-1==wait(0)) { perror("wait"); exit(1); }
-    return ret;
+    int status=0;
+    if (-1==wait(&status)) { perror("wait"); exit(1); }
+    int c_ret=WEXITSTATUS(status);
+    return c_ret==0? true : false;
 }
 
 void execute(queue<cmd> &commands, bool &exit_called) {
