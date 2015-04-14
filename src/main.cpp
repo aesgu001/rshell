@@ -45,6 +45,8 @@ void parse_help(const string &line, const string &conn,
         command.push(p);
         p=strtok(NULL," ");
     }
+    command.push(NULL);
+    //command.print();
     commands.push(command);
 }
 
@@ -61,20 +63,20 @@ void parse(const string &line, queue<cmd> &commands, char *s) {
 }
 
 bool has_executed(const cmd &command) {
-    int flag=0;
+    bool ret=true;
     int pid=fork();
     if (pid<0) {
         perror("fork");
         exit(1);
     }
     else if (pid==0) {
-        flag=execvp(command.get_exec().c_str(),command.get_arlist());
-        if (flag==-1) perror("execvp");
-        exit(1);
+        if (-1==execvp(command.get_exec().c_str(),command.get_arlist()))
+            perror("execvp");
+        exit(0);
     }
     else // (pid>0)
         if (-1==wait(0)) { perror("wait"); exit(1); }
-    return (flag==0)? true : false;
+    return ret;
 }
 
 void execute(queue<cmd> &commands, bool &exit_called) {
