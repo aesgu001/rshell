@@ -61,20 +61,22 @@ void parse(const string &line, queue<cmd> &commands, char *s) {
 }
 
 bool has_executed(const cmd &command) {
-    int flag=0;
+    bool ret=true;
     int pid=fork();
     if (pid<0) {
-        perror("There was an error with fork().");
+        perror("fork");
         exit(1);
     }
     else if (pid==0) {
-        flag=execvp(command.get_exec().c_str(),command.get_arlist());
+        if (-1==execvp(command.get_exec().c_str(),command.get_arlist())) {
+            perror("execvp");
+            ret=false;
+        }
         exit(1);
     }
     else // (pid>0)
-        if (-1==wait(0))
-            perror("There was an error with wait().");
-    return (flag==-1)? false : true;
+        if (-1==wait(0)) { perror("wait"); exit(1); }
+    return ret;
 }
 
 void execute(queue<cmd> &commands, bool &exit_called) {
@@ -83,7 +85,7 @@ void execute(queue<cmd> &commands, bool &exit_called) {
     while (!commands.empty()) {
         command=commands.front();
         commands.pop();
-        if (command.get_exec()=="exit") exit_called=true;
+        if (command.get_exec()=="exit") { exit_called=true; return; }
         exec_flag=has_executed(command);
         if (((exec_flag&&command.get_conn()=="||")||(!exec_flag&&
             command.get_conn()=="&&"))&&
