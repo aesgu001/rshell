@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -35,7 +34,7 @@ void parse_help(const string &line, const string &conn,
     if (line==""||is_blank(line)) return;
     char *c_line=new char[line.length()+1];
     strcpy(c_line,line.c_str());
-    string exec=strtok(c_line," ");
+    char *exec=strtok(c_line," ");
     cmd command;
     command.set_exec(exec);
     command.set_conn(conn);
@@ -64,17 +63,33 @@ bool has_executed(const cmd &command) {
     int flag=0;
     int pid=fork();
     if (pid<0) {
-        perror("There was an error with fork().");
-        exit(1);
+        perror("fork");
     }
     else if (pid==0) {
-        flag=execvp(command.get_exec().c_str(),command.get_arlist());
-        exit(1);
+        if (-1==execvp(command.get_exec(),command.get_arlist())) {
+            perror("execvp");
+            flag=-1;
+        }
     }
     else // (pid>0)
         if (-1==wait(0))
-            perror("There was an error with wait().");
+            perror("wait");
     return (flag==-1)? false : true;
+}
+
+bool exit_command(char *c, const string &s) {
+    char *c_s=new char[s.length()+1];
+    strcpy(c_s,s.c_str());
+    size_t i=0,j=0;
+    for (char *p=c;*p!='\0';p++)
+        i++;
+    for (char *p=c_s;*p!='\0';p++)
+        j++;
+    if (i!=j) return false;
+    for (size_t k=0;k<s.length();k++)
+        if (*(c+k)!=*(c_s+k))
+            return false;
+    return true;
 }
 
 void execute(queue<cmd> &commands, bool &exit_called) {
@@ -83,7 +98,10 @@ void execute(queue<cmd> &commands, bool &exit_called) {
     while (!commands.empty()) {
         command=commands.front();
         commands.pop();
-        if (command.get_exec()=="exit") exit_called=true;
+        if (exit_command(command.get_exec(),"exit")) {
+            exit_called=true;
+            return;
+        }
         exec_flag=has_executed(command);
         if (((exec_flag&&command.get_conn()=="||")||(!exec_flag&&
             command.get_conn()=="&&"))&&

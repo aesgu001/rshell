@@ -3,7 +3,7 @@
 
 class cmd {
     private:
-    std::string executable;
+    char *executable;
     char **argument_list;
     std::size_t arlist_sz;
     std::size_t arlist_cap;
@@ -20,19 +20,19 @@ class cmd {
     }
 
     public:
-    cmd() : executable(""), argument_list(NULL), arlist_sz(0),
+    cmd() : executable(NULL), argument_list(NULL), arlist_sz(0),
         arlist_cap(0), connector("") {}
-    cmd(const std::string &exec) : executable(exec), argument_list(NULL),
+    cmd(char *exec) : executable(exec), argument_list(NULL),
         arlist_sz(0), arlist_cap(0), connector("") {}
-    cmd(const std::string &exec, const std::string &conn) :
+    cmd(char *exec, const std::string &conn) :
         executable(exec), argument_list(NULL), arlist_sz(0), arlist_cap(0),
         connector(conn) {}
 
-    const std::string get_exec() const { return executable; }
+    char *get_exec() const { return executable; }
     char **get_arlist() const { return argument_list; }
     const std::string get_conn() const { return connector; }
 
-    void set_exec(const std::string &exec) { executable=exec; }
+    void set_exec(char *exec) { executable=exec; }
     void set_conn(const std::string &conn) { connector=conn; }
     void push(char *s) {
         arlist_sz++;
