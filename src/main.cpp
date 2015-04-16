@@ -16,9 +16,37 @@ int nearest_connector(const string &s) {
     return min(min(s.find("&&"),s.find(";")),min(s.find(";"),s.find("||")));
 }
 
+bool conn_quoted(const string &s, const int &n) {
+    size_t pos_front=0,pos_back=0;
+    size_t pos_n=static_cast<size_t>(n);
+    bool found_front=false;
+    for (size_t i=0;i<s.length();i++) {
+        if (s.at(i)=='"'&&!found_front) {
+            pos_front=i;
+            found_front=true;
+        }
+        else if (s.at(i)=='"'&&found_front) {
+            pos_back=i;
+            break;
+        }
+    }
+    return pos_front<pos_n&&pos_back>pos_n;
+}
+
+string skip_quote(const string &s) {
+    for (size_t i=0;i<s.length();i++)
+        if (s.at(i)=='"') {
+            string ret=s.substr(i+1,string::npos);
+            return ret.substr(ret.find('"')+1,string::npos);
+        }
+    return "";
+}
+
 string get_nearest_connector(const string &s) {
     int pos=nearest_connector(s);
     if (pos==-1) return "";
+    if (conn_quoted(s,pos))
+        return get_nearest_connector(skip_quote(s));
     if (s.at(pos)=='|') return "||";
     else if (s.at(pos)=='&') return "&&";
     return ";";
@@ -104,7 +132,9 @@ int main(int argc, char **argv) {
         user_host=getlogin();
         if (user_host==NULL) { perror("getlogin"); exit(1); }
         cout << user_host << "@";
-        if (-1==gethostname(user_host,HOST_NAME_MAX)) { perror("hostname"); exit(1); }
+        if (-1==gethostname(user_host,HOST_NAME_MAX)) {
+            perror("hostname"); exit(1);
+        }
         cout << user_host << "$ ";
         getline(cin,line);
         parse(line,commands,argv[0]);
