@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <limits.h>
 #include <queue>
 #include "cmd.h"
 using namespace std;
@@ -97,9 +98,14 @@ void execute(queue<cmd> &commands, bool &exit_called) {
 int main(int argc, char **argv) {
     queue<cmd> commands;
     string line;
+    char *user_host;
     bool exit_called=false;
     while (!exit_called) {
-        cout << "$ ";
+        user_host=getlogin();
+        if (user_host==NULL) { perror("getlogin"); exit(1); }
+        cout << user_host << "@";
+        if (-1==gethostname(user_host,HOST_NAME_MAX)) { perror("hostname"); exit(1); }
+        cout << user_host << "$ ";
         getline(cin,line);
         parse(line,commands,argv[0]);
         execute(commands,exit_called);
