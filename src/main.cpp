@@ -101,11 +101,12 @@ bool has_executed(const cmd &command) {
             perror("execvp");
             exit(1);
         }
-        else exit(0);
+        else exit(3);
     }
     int status=0;
-    if (-1==wait(&status)) { perror("wait"); exit(1); }
-    int c_ret=WEXITSTATUS(status);
+    if (-1==waitpid(-1,&status,0)) { perror("wait"); exit(1); }
+    int c_ret=1;
+    if (WIFEXITED(status)) c_ret=WEXITSTATUS(status);
     return c_ret==0? true : false;
 }
 
