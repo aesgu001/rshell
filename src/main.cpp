@@ -10,46 +10,42 @@
 #include "cmd.h"
 using namespace std;
 
-int nearest_connector(const string &s) {
-    if (s.find(";")==string::npos && s.find("&&")==string::npos &&
-        s.find("||")==string::npos) return -1;
-    return min(min(s.find("&&"),s.find(";")),min(s.find(";"),s.find("||")));
+void skip_quote(const string &s, size_t &pos) {
+
+    for (size_t i=pos+1;i<s.length();i++)
+        if (s.at(i)=='"') {
+            pos=i;
+            return;
+        }
 }
 
-bool conn_quoted(const string &s, const int &n) {
-    size_t pos_front=0,pos_back=0;
-    size_t pos_n=static_cast<size_t>(n);
-    bool found_front=false;
+size_t nearest_connector(const string &s) {
     for (size_t i=0;i<s.length();i++) {
-        if (s.at(i)=='"'&&!found_front) {
-            pos_front=i;
-            found_front=true;
+        if (s.at(i)=='"') {
+            skip_quote(s,i);
+            continue;
         }
-        else if (s.at(i)=='"'&&found_front) {
-            pos_back=i;
-            break;
+        else if (s.at(i)==';') {
+            return i;
+        }
+        else if (s.at(i)=='&') {
+            if (i+1<s.length()&&s.at(i+1)=='&')
+                return i;
+        }
+        else if (s.at(i)=='|') {
+            if (i+1<s.length()&&s.at(i+1)=='|')
+                return i;
         }
     }
-    return pos_front<pos_n&&pos_back>pos_n;
-}
-
-string skip_quote(const string &s) {
-    for (size_t i=0;i<s.length();i++)
-        if (s.at(i)=='"') {
-            string ret=s.substr(i+1,string::npos);
-            return ret.substr(ret.find('"')+1,string::npos);
-        }
-    return "";
+    return string::npos;
 }
 
 string get_nearest_connector(const string &s) {
-    int pos=nearest_connector(s);
-    if (pos==-1) return "";
-    if (conn_quoted(s,pos))
-        return get_nearest_connector(skip_quote(s));
-    if (s.at(pos)=='|') return "||";
+    size_t pos=nearest_connector(s);
+    if (pos==string::npos) return "";
+    else if (s.at(pos)=='|') return "||";
     else if (s.at(pos)=='&') return "&&";
-    return ";";
+    else return ";";
 }
 
 bool is_blank(const string &s) {
@@ -61,7 +57,7 @@ bool is_blank(const string &s) {
 
 void parse_help(const string &line, const string &conn,
     queue<cmd> &commands, char *s) {
-    if (line==""||is_blank(line)) return;
+    if (is_blank(line)) return;
     char *c_line=new char[line.length()+1];
     strcpy(c_line,line.c_str());
     string exec=strtok(c_line," ");
@@ -83,11 +79,12 @@ void parse(const string &line, queue<cmd> &commands, char *s) {
         parse(line.substr(0,line.find("#")),commands,s);
         return;
     }
+    size_t pos=nearest_connector(line);
+    if (pos==string::npos) { parse_help(line,"",commands,s); return; }
     string conn=get_nearest_connector(line);
-    if (conn=="") { parse_help(line,conn,commands,s); return; }
-    string l=line.substr(0,line.find(conn));
+    string l=line.substr(0,pos);
     parse_help(l,conn,commands,s);
-    parse(line.substr(line.find(conn)+conn.size(),string::npos),commands,s);
+    parse(line.substr(pos+conn.size(),string::npos),commands,s);
 }
 
 bool has_executed(const cmd &command) {
@@ -101,13 +98,11 @@ bool has_executed(const cmd &command) {
             perror("execvp");
             exit(1);
         }
-        else exit(3);
+        else exit(0);
     }
     int status=0;
     if (-1==waitpid(-1,&status,0)) { perror("wait"); exit(1); }
-    int c_ret=1;
-    if (WIFEXITED(status)) c_ret=WEXITSTATUS(status);
-    return c_ret==0? true : false;
+    return status==0? true : false;
 }
 
 void execute(queue<cmd> &commands, bool &exit_called) {
