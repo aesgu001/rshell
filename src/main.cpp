@@ -19,6 +19,19 @@ void skip_quote(const string &s, size_t &pos) {
         }
 }
 
+size_t nearest_hashtag(const string &s) {
+    for (size_t i=0;i<s.length();i++) {
+        if (s.at(i)=='"') {
+            skip_quote(s,i);
+            continue;
+        }
+        else if (s.at(i)=='#') {
+            return i;
+        }
+    }
+    return string::npos;
+}
+
 size_t nearest_connector(const string &s) {
     for (size_t i=0;i<s.length();i++) {
         if (s.at(i)=='"') {
@@ -40,8 +53,7 @@ size_t nearest_connector(const string &s) {
     return string::npos;
 }
 
-string get_nearest_connector(const string &s) {
-    size_t pos=nearest_connector(s);
+string get_nearest_connector(const string &s, const size_t &pos) {
     if (pos==string::npos) return "";
     else if (s.at(pos)=='|') return "||";
     else if (s.at(pos)=='&') return "&&";
@@ -75,13 +87,17 @@ void parse_help(const string &line, const string &conn,
 }
 
 void parse(const string &line, queue<cmd> &commands, char *s) {
-    if (line.find("#")!=string::npos) {
-        parse(line.substr(0,line.find("#")),commands,s);
+    size_t pos_ht=nearest_hashtag(line);
+    if (pos_ht!=string::npos) {
+        parse(line.substr(0,pos_ht),commands,s);
         return;
     }
     size_t pos=nearest_connector(line);
-    if (pos==string::npos) { parse_help(line,"",commands,s); return; }
-    string conn=get_nearest_connector(line);
+    if (pos==string::npos) {
+        parse_help(line,"",commands,s);
+        return;
+    }
+    string conn=get_nearest_connector(line,pos);
     string l=line.substr(0,pos);
     parse_help(l,conn,commands,s);
     parse(line.substr(pos+conn.size(),string::npos),commands,s);
@@ -113,9 +129,12 @@ void execute(queue<cmd> &commands, bool &exit_called) {
         commands.pop();
         if (command.get_exec()=="exit") { exit_called=true; return; }
         exec_flag=has_executed(command);
-        if (((exec_flag&&command.get_conn()=="||")||(!exec_flag&&
+        while (((exec_flag&&command.get_conn()=="||")||(!exec_flag&&
             command.get_conn()=="&&"))&&
-            !commands.empty()) commands.pop();
+            !commands.empty()) {
+            command.set_conn(commands.front().get_conn());
+            commands.pop();
+        }
     }
 }
 
@@ -129,7 +148,7 @@ int main(int argc, char **argv) {
         if (user_host==NULL) { perror("getlogin"); exit(1); }
         cout << user_host << "@";
         if (-1==gethostname(user_host,HOST_NAME_MAX)) {
-            perror("hostname"); exit(1);
+            perror("gethostname"); exit(1);
         }
         cout << user_host << "$ ";
         getline(cin,line);
