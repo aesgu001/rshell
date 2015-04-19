@@ -27,6 +27,9 @@ bin/rshell
 
 1. Entering `bin/rshell` in the shell simulator runs a duplication of the application.
 Returning to the bash shell would require you to enter `exit` exactly the number of times you enter the previous command.
-2. The `echo` command does not have the ability to store text into a new or existing file.
-3. The `cd` command cannot be executed.
-4. The `git commit -m <message>` cannot be executed.
+
+2. The `cd` command cannot be executed.
+
+3. The `git commit -m <message>` command cannot be executed.
+
+4. The `echo` command does not have the ability to store text into a new or existing file.
