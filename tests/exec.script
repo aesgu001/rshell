@@ -1,0 +1,358 @@
+Script started on Sun 19 Apr 2015 12:54:04 PM PDT
+~
+aesgu001@hammer $ cs100
+[0;91m
+===============================================================================
+|                                                                             |
+| You have enabled settings specific for cs100.  Everything you do is being   |
+| recorded to measure your progress in the class.                             |
+|                                                                             |
+| Important commands for the class:                                           |
+|   * calcgrade.sh          displays a detailed breakdown of your grade       |
+|   * typespeed             practice typing unix commands                     |
+|                                                                             |
+| Important commands for general C++ programming:                             |
+|   * make                  don't call g++ manually; let make do the work!    |
+|   * gdb                   the GNU debugger                                  |
+|   * valgrind              get rid of your memory leaks                      |
+|   * cppcheck              static analysis tool                              |
+|   * man                   find help about any syscall / terminal command    |
+|                                                                             |
+===============================================================================
+[0m
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~[0;95m [0;36m$[0m cd Documents/rshell
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (exec_rough) [0;36m$[0m bin/rshell
+aesgu001@hammer.cs.ucr.edu$ #	 #--------------------
+aesgu001@hammer.cs.ucr.edu$ #	TESTING RSHELL
+aesgu001@hammer.cs.ucr.edu$ #--------------------
+aesgu001@hammer.cs.ucr.edu$ #
+aesgu001@hammer.cs.ucr.edu$ #
+aesgu001@hammer.cs.ucr.edu$ # 1. single commands
+aesgu001@hammer.cs.ucr.edu$ #
+aesgu001@hammer.cs.ucr.edu$ # a/ . without arguments
+aesgu001@hammer.cs.ucr.edu$ ls
+bin  LICENSE  Makefile	README.md  src	tests
+aesgu001@hammer.cs.ucr.edu$ pwd
+/home/csmajs/aesgu001/Documents/rshell
+aesgu001@hammer.cs.ucr.edu$ ps
+  PID TTY          TIME CMD
+33628 pts/55   00:00:00 bash
+33667 pts/55   00:00:00 rshell
+34320 pts/55   00:00:00 ps
+aesgu001@hammer.cs.ucr.edu$ #
+aesgu001@hammer.cs.ucr.edu$ # b. with one or more aru guments
+aesgu001@hammer.cs.ucr.edu$ ls -a src         mk  touch test_file
+aesgu001@hammer.cs.ucr.edu$ ls -a
+.  ..  bin  .git  LICENSE  Makefile  README.md	src  test_file	tests
+aesgu001@hammer.cs.ucr.edu$ echo hello world!
+hello world!
+aesgu001@hammer.cs.ucr.edu$ rm test_file
+aesgu001@hammer.cs.ucr.edu$ ls -a
+.  ..  bin  .git  LICENSE  Makefile  README.md	src  tests
+aesgu001@hammer.cs.ucr.edu$ ls -a abc abdc acbd acdb
+bin/rshell: cannot access abc: No such file or directory
+bin/rshell: cannot access abdc: No such file or directory
+bin/rshell: cannot access acbd: No such file or directory
+bin/rshell: cannot access acdb: No such file or directory
+aesgu001@hammer.cs.ucr.edu$ #
+aesgu001@hammer.cs.ucr.edu$ #
+aesgu001@hammer.cs.ucr.edu$ # 2. multi-line commands
+aesgu001@hammer.cs.ucr.edu$ #
+aesgu001@hammer.cs.ucr.edu$ # a. without arguments
+aesgu001@hammer.cs.ucr.edu$ ls && pwd
+bin  LICENSE  Makefile	README.md  src	tests
+/home/csmajs/aesgu001/Documents/rshell
+aesgu001@hammer.cs.ucr.edu$ pwd && ps     ;p  ps
+/home/csmajs/aesgu001/Documents/rshell
+  PID TTY          TIME CMD
+33628 pts/55   00:00:00 bash
+33667 pts/55   00:00:00 rshell
+35237 pts/55   00:00:00 ps
+aesgu001@hammer.cs.ucr.edu$ ls || ps
+bin  LICENSE  Makefile	README.md  src	tests
+aesgu001@hammer.cs.ucr.edu$ pwd &&  || ls || ps || ls && pwd
+/home/csmajs/aesgu001/Documents/rshell
+/home/csmajs/aesgu001/Documents/rshell
+aesgu001@hammer.cs.ucr.edu$ pwd || ls ; ps || ls ; pwd
+/home/csmajs/aesgu001/Documents/rshell
+  PID TTY          TIME CMD
+33628 pts/55   00:00:00 bash
+33667 pts/55   00:00:00 rshell
+35376 pts/55   00:00:00 ps
+/home/csmajs/aesgu001/Documents/rshell
+aesgu001@hammer.cs.ucr.edu$ #
+aesgu001@hammer.cs.ucr.edu$ # b. with one or more arguments
+aesgu001@hammer.cs.ucr.edu$ ls -a ; echo hello && touch test_file || echo world ; git status
+.  ..  bin  .git  LICENSE  Makefile  README.md	src  tests
+hello
+# On branch exec_rough
+# Changes not staged for commit:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#	[31mmodified:   README.md[m
+#
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#	[31mbin/[m
+#	[31mtest_file[m
+#	[31mtests/[m
+no changes added to commit (use "git add" and/or "git commit -a")
+aesgu001@hammer.cs.ucr.edu$ echo bingo bingo bingo!!! || ps -ef ; echo bino go || ps -aux ; echo 4 bingos &&&  ls -a -r
+bingo bingo bingo!!!
+bingo
+4 bingos
+tests  test_file  src  README.md  Makefile  LICENSE  .git  bin	..  .
+aesgu001@hammer.cs.ucr.edu$ mkdir test_dir || touch test_dir/test_file || touch                                    &&  ; touch test_t_file && touch touch     test_t1_file ; touch test_g t2                                                 test_t_file && touch test_t1_file ; touch test_t2_file || ps -ef ;
+aesgu001@hammer.cs.ucr.edu$ ls -a ; mv    rm -rf test_dir && test       && rm test_t_file test_t1_file test_t2_file ; pwd       || pwd && ls -a   r -a
+.  ..  bin  .git  LICENSE  Makefile  README.md	src  test_dir  test_file  tests  test_t1_file  test_t2_file  test_t_file
+tests  test_file  src  README.md  Makefile  LICENSE  .git  bin	..  .
+aesgu001@hammer.cs.ucr.edu$ ls abc && pwd && pwd && pwd ; ls abc
+bin/rshell: cannot access abc: No such file or directory
+bin/rshell: cannot access abc: No such file or directory
+aesgu001@hammer.cs.ucr.edu$ #   rm test_file && ls -r
+tests  src  README.md  Makefile  LICENSE  bin
+aesgu001@hammer.cs.ucr.edu$ #
+aesgu001@hammer.cs.ucr.edu$ # 3. comments
+aesgu001@hammer.cs.ucr.edu$ #
+aesgu001@hammer.cs.ucr.edu$ # a. random text
+aesgu001@hammer.cs.ucr.edu$ # df  I can anything after thi   my rshell                        type anything in this           after this      the hashtag       '#' character, and Iw i    I will not get a                the shell will not return an error!
+aesgu001@hammer.cs.ucr.edu$ # Sur   I like tacos! :))))
+aesgu001@hammer.cs.ucr.edu$ #
+aesgu001@hammer.cs.ucr.edu$ # b. commands, with or without rgument       arguments
+aesgu001@hammer.cs.ucr.edu$ # ls
+aesgu001@hammer.cs.ucr.edu$ # pwd && ls  ps -aux
+aesgu001@hammer.cs.ucr.edu$ # echo do not put this          print this prompt again!
+aesgu001@hammer.cs.ucr.edu$ # echo good! don't print this either! || pwd || pwd && saadsafasdfsd && adsfsdf ; ;; ;    ps ; ps
+aesgu001@hammer.cs.ucr.edu$ #
+aesgu001@hammer.cs.ucr.edu$ #
+aesgu001@hammer.cs.ucr.edu$ # 4. exit        the exit command
+aesgu001@hammer.cs.ucr.edu$ 
+aesgu001@hammer.cs.ucr.edu$ # a. ex  u testing exit
+aesgu001@hammer.cs.ucr.edu$ ps
+  PID TTY          TIME CMD
+33628 pts/55   00:00:00 bash
+33667 pts/55   00:00:00 rshell
+37814 pts/55   00:00:00 ps
+aesgu001@hammer.cs.ucr.edu$ exit
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (exec_rough) [0;36m$[0m ps
+  PID TTY          TIME CMD
+33628 pts/55   00:00:00 bash
+37822 pts/55   00:00:00 ps
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (exec_rough) [0;36m$[0m bin/rshell
+aesgu001@hammer.cs.ucr.edu$ ps
+  PID TTY          TIME CMD
+33628 pts/55   00:00:00 bash
+37847 pts/55   00:00:00 rshell
+37855 pts/55   00:00:00 ps
+aesgu001@hammer.cs.ucr.edu$ #
+aesgu001@hammer.cs.ucr.edu$ # b. exit    exit in muli ti-line commands
+aesgu001@hammer.cs.ucr.edu$ exit && ps && ls && ps && echo do not print this ; exit
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (exec_rough) [0;36m$[0m bin/rshell
+aesgu001@hammer.cs.ucr.edu$ ps &&  && ls       wd && ls &&  ; pwd && ls || exit || ps -ed f || exit ||  ; pwd   ls -r && exit       abc && exit
+/home/csmajs/aesgu001/Documents/rshell
+bin  LICENSE  Makefile	README.md  src	tests
+/home/csmajs/aesgu001/Documents/rshell
+bin  LICENSE  Makefile	README.md  src	tests
+bin/rshell: cannot access abc: No such file or directory
+aesgu001@hammer.cs.ucr.edu$ echo print exit          do exit!   ... after ls ;   || pwd && ls ; afsdf && pwd  s && pwd && ps -ef ; exit
+do exit... after ls
+bin  LICENSE  Makefile	README.md  src	tests
+execvp: No such file or directory
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (exec_rough) [0;36m$[0m bin/rshell
+aesgu001@hammer.cs.ucr.edu$ #
+aesgu001@hammer.cs.ucr.edu$ #
+aesgu001@hammer.cs.ucr.edu$ # 5. special         special cases
+aesgu001@hammer.cs.ucr.edu$ #
+aesgu001@hammer.cs.ucr.edu$ # a. enquoted characters and                commands and unique      special characters (such ad s '#' are te reated            ) are treated fi  differently
+aesgu001@hammer.cs.ucr.edu$ ls -a
+.  ..  bin  .git  LICENSE  Makefile  README.md	src  tests
+aesgu001@hammer.cs.ucr.edu$ "ls -a"
+execvp: No such file or directory
+aesgu001@hammer.cs.ucr.edu$ # does not print and error
+aesgu001@hammer.cs.ucr.edu$ "# prints an error"
+execvp: No such file or directory
+aesgu001@hammer.cs.ucr.edu$ ls ; pwd
+bin  LICENSE  Makefile	README.md  src	tests
+/home/csmajs/aesgu001/Documents/rshell
+aesgu001@hammer.cs.ucr.edu$ ls ";" pwd
+bin/rshell: cannot access ";": No such file or directory
+bin/rshell: cannot access pwd: No such file or directory
+aesgu001@hammer.cs.ucr.edu$ ehco   cho # hi
+
+aesgu001@hammer.cs.ucr.edu$ echo "# hi!"
+"# hi!"
+aesgu001@hammer.cs.ucr.edu$ echo bingo ; ls -r
+bingo
+tests  src  README.md  Makefile  LICENSE  bin
+aesgu001@hammer.cs.ucr.edu$ echo "bingo ; ls -r "    " && echo " pwd   pwd || "        pe wd ;   ";" pwd
+"bingo ; ls -r"
+pwd ";" pwd
+aesgu001@hammer.cs.ucr.edu$ echo pwd ; pwd
+pwd
+/home/csmajs/aesgu001/Documents/rshell
+aesgu001@hammer.cs.ucr.edu$ #
+aesgu001@hammer.cs.ucr.edu$ # b. calling         enter ing    ing 'ls  bin/rshell' will duplica       run nested        a nested process of the same type                        appli              the     a nested similar          , but the same application.
+aesgu001@hammer.cs.ucr.edu$ # exiting will      will require two calls of 'exit'.
+aesgu001@hammer.cs.ucr.edu$ # bi  ps
+  PID TTY          TIME CMD
+33628 pts/55   00:00:00 bash
+38605 pts/55   00:00:00 rshell
+40982 pts/55   00:00:00 ps
+aesgu001@hammer.cs.ucr.edu$ bin/rshell
+aesgu001@hammer.cs.ucr.edu$ ps
+  PID TTY          TIME CMD
+33628 pts/55   00:00:00 bash
+38605 pts/55   00:00:00 rshell
+40987 pts/55   00:00:00 rshell
+40988 pts/55   00:00:00 ps
+aesgu001@hammer.cs.ucr.edu$ pwd ||ls || ls         ls || ls || ls && pwd
+/home/csmajs/aesgu001/Documents/rshell
+/home/csmajs/aesgu001/Documents/rshell
+aesgu001@hammer.cs.ucr.edu$ exit
+aesgu001@hammer.cs.ucr.edu$ ps
+  PID TTY          TIME CMD
+33628 pts/55   00:00:00 bash
+38605 pts/55   00:00:00 rshell
+41047 pts/55   00:00:00 ps
+aesgu001@hammer.cs.ucr.edu$ exit
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (exec_rough) [0;36m$[0m bin/rshell
+aesgu001@hammer.cs.ucr.edu$ #
+aesgu001@hammer.cs.ucr.edu$ # 3.    c. 'cd'
+aesgu001@hammer.cs.ucr.edu$ # cd  'cd wi   ' will not run; I will          ; I          be executed.
+aesgu001@hammer.cs.ucr.edu$ cd src
+execvp: No such file or directory
+aesgu001@hammer.cs.ucr.edu$ cd tests
+execvp: No such file or directory
+aesgu001@hammer.cs.ucr.edu$ cd bin
+execvp: No such file or directory
+aesgu001@hammer.cs.ucr.edu$ #
+aesgu001@hammer.cs.ucr.edu$ # but will not succeed, ; it has to be                                t it will not su      not return succ    a        succeed; it has yet to be implemented
+aesgu001@hammer.cs.ucr.edu$ #
+aesgu001@hammer.cs.ucr.edu$ # d. distanced   command promt pts                         comm pressed prompts
+aesgu001@hammer.cs.ucr.edu$ ls;pwd||exit||ps -ef    -ef;ls
+bin  LICENSE  Makefile	README.md  src	tests
+/home/csmajs/aesgu001/Documents/rshell
+bin  LICENSE  Makefile	README.md  src	tests
+aesgu001@hammer.cs.ucr.edu$ echo    ls-a&&echohello&&echohi||ps
+execvp: No such file or directory
+  PID TTY          TIME CMD
+33628 pts/55   00:00:00 bash
+41077 pts/55   00:00:00 rshell
+43632 pts/55   00:00:00 ps
+aesgu001@hammer.cs.ucr.edu$ # #
+aesgu001@hammer.cs.ucr.edu$ # e. expanded prompts
+aesgu001@hammer.cs.ucr.edu$ ls          -r     ;  echo this will          truncate by           by sssspacces      !!!     ||       p w d ; &&   pwd
+tests  src  README.md  Makefile  LICENSE  bin
+this will truncate by sssspacces !!!
+/home/csmajs/aesgu001/Documents/rshell
+aesgu001@hammer.cs.ucr.edu$ echo "            this    no exceptions  !!!       " ; echo " no exe ceptions!!! "
+" no exceptions!!! "
+" no exceptions!!! "
+aesgu001@hammer.cs.ucr.edu$ #
+aesgu001@hammer.cs.ucr.edu$ # f. git commands
+aesgu001@hammer.cs.ucr.edu$ git stat    status
+# On branch exec_rough
+# Changes not staged for commit:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#	[31mmodified:   README.md[m
+#
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#	[31mbin/[m
+#	[31mtests/[m
+no changes added to commit (use "git add" and/or "git commit -a")
+aesgu001@hammer.cs.ucr.edu$ git add README.md
+aesgu001@hammer.cs.ucr.edu$ git commit -m "TEST: updated README                               status
+# On branch exec_rough
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#	[32mmodified:   README.md[m
+#
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#	[31mbin/[m
+#	[31mtests/[m
+aesgu001@hammer.cs.ucr.edu$ git commit -m " TEST: updeated     ated README"                      TEST: updated READ    h the README"
+error: pathspec 'updated' did not match any file(s) known to git.
+error: pathspec 'the' did not match any file(s) known to git.
+error: pathspec '"README\""' did not match any file(s) known to git.
+aesgu001@hammer.cs.ucr.edu$ git branch
+  exec[m
+* [32mexec_rough[m
+  master[m
+aesgu001@hammer.cs.ucr.edu$ git branch testbranch!
+aesgu001@hammer.cs.ucr.edu$ git branch
+  exec[m
+* [32mexec_rough[m
+  master[m
+  testbranch![m
+aesgu001@hammer.cs.ucr.edu$ git branch -d testbranch!
+Deleted branch testbranch! (was ad30474).
+aesgu001@hammer.cs.ucr.edu$ git branch! 
+  exec[m
+* [32mexec_rough[m
+  master[m
+aesgu001@hammer.cs.ucr.edu$ git status
+# On branch exec_rough
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#	[32mmodified:   README.md[m
+#
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#	[31mbin/[m
+#	[31mtests/[m
+aesgu001@hammer.cs.ucr.edu$ #
+aesgu001@hammer.cs.ucr.edu$ # 6.    g. 'echo'
+aesgu001@hammer.cs.ucr.edu$ # enquoted          quotes      quotes will be          , if you noticed will be included when printing.
+aesgu001@hammer.cs.ucr.edu$ # also, it cannot send text to a new or existing file with the '>' character
+aesgu001@hammer.cs.ucr.edu$ eho :    cho "hello world"
+"hello world"
+aesgu001@hammer.cs.ucr.edu$ echo hello world
+hello world
+aesgu001@hammer.cs.ucr.edu$ echo h ech   "int main() { return 0; } "  " > test.cpp
+"int main() { return 0; }" > test.cpp
+aesgu001@hammer.cs.ucr.edu$ #
+aesgu001@hammer.cs.ucr.edu$ # c h. connectors ad s commands
+aesgu001@hammer.cs.ucr.edu$ ; ls
+bin  LICENSE  Makefile	README.md  src	tests
+aesgu001@hammer.cs.ucr.edu$  ; && ; && ; || ls
+bin  LICENSE  Makefile	README.md  src	tests
+aesgu001@hammer.cs.ucr.edu$ l ls &&  || && && ; ls
+bin  LICENSE  Makefile	README.md  src	tests
+aesgu001@hammer.cs.ucr.edu$ # this shell       prompt is translated to: 'ls || ls'
+aesgu001@hammer.cs.ucr.edu$ #
+aesgu001@hammer.cs.ucr.edu$ # i. cone secuive   tive connectors                           # i. compressed consecutive connectors
+aesgu001@hammer.cs.ucr.edu$ ;&&;&&||ls
+bin  LICENSE  Makefile	README.md  src	tests
+aesgu001@hammer.cs.ucr.edu$ ls;;;;;;;;;;;;;;pwd    ;||pwd;;;;;ls
+bin  LICENSE  Makefile	README.md  src	tests
+/home/csmajs/aesgu001/Documents/rshell
+bin  LICENSE  Makefile	README.md  src	tests
+aesgu001@hammer.cs.ucr.edu$ echo helo lo||||||echo holla
+hello
+aesgu001@hammer.cs.ucr.edu$ echo hello;||||||        echo this will also print     be printed!
+hello
+this will also be printed!
+aesgu001@hammer.cs.ucr.edu$ #
+aesgu001@hammer.cs.ucr.edu$ #
+aesgu001@hammer.cs.ucr.edu$ #---- EXITING        NDING TEST	           --  --------------
+aesgu001@hammer.cs.ucr.edu$ #  	ENDING TEST
+aesgu001@hammer.cs.ucr.edu$ #-----------------
+aesgu001@hammer.cs.ucr.edu$ exit
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (exec_rough) [0;36m$[0m exit
+exit
+~
+aesgu001@hammer $ exit
+exit
+
+Script done on Sun 19 Apr 2015 02:42:21 PM PDT
