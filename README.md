@@ -28,8 +28,8 @@ bin/rshell
 1. Entering `bin/rshell` in the shell simulator runs a duplication of the application.
 Returning to the bash shell would require you to enter `exit` exactly the number of times you enter the previous command.
 
-2. The `echo` command will include quotation marks when printing enquoted arguments.
-It cannot send text to a new or existing file either using the `>` character.
+2. The `echo` command will include quotation marks when printing quoted arguments.
+It cannot send text to a new or existing file using the `>` character, either.
 
 3. The `cd` command will not be executed successfully.
 
