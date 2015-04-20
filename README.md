@@ -1,11 +1,11 @@
 ## rshell
 
 *rshell* is a C++ application that simulates a terminal's shell.
-It executes commands, creates, overrides, and deletes files, and even run programs, as if you are still using your own terminal!
+It executes commands, creates, overrides, and deletes files, and even runs programs, as if you are still using your terminal!
 
 ### Building and Running
 
-*Note:* If you are using Ubuntu, you may need to install the GNU C++ compiler package in order to generate the executable.
+**Note:** If you are using Ubuntu, you may need to install the GNU C++ compiler package in order to generate the executable.
 There are two known ways to do this:
 
 - Type in your terminal: `sudo get-apt install g++`
@@ -31,6 +31,8 @@ Returning to the bash shell would require you to enter `exit` exactly the number
 2. The `echo` command will include quotation marks when printing quoted arguments.
 It cannot send text to a new or existing file using the `>` character, either.
 
-3. The `cd` command will not be executed successfully.
+3. Connectors entered first will not return a syntax error.
 
-4. Some git commands, such as `git commit -m <message>` will not be executed successfully.
+4. The `cd` command will not be executed successfully.
+
+5. The `git commit -m <message>` command will not be executed successfully.
