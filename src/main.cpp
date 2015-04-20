@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <errno.h>
 #include <limits.h>
 #include <queue>
 #include "cmd.h"
