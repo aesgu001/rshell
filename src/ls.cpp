@@ -57,19 +57,23 @@ priority_queue<file> get_dirs(const priority_queue<file> &list) {
     return ret;
 }
 
+void print_l_pms(const file &f) {
+    f.buf.st_mode&S_IFDIR? cout<<"d":cout<<"-";
+    f.buf.st_mode&S_IRUSR? cout<<"r":cout<<"-";
+    f.buf.st_mode&S_IWUSR? cout<<"w":cout<<"-";
+    f.buf.st_mode&S_IXUSR? cout<<"x":cout<<"-";
+    f.buf.st_mode&S_IRGRP? cout<<"r":cout<<"-";
+    f.buf.st_mode&S_IWGRP? cout<<"w":cout<<"-";
+    f.buf.st_mode&S_IXGRP? cout<<"x":cout<<"-";
+    f.buf.st_mode&S_IROTH? cout<<"r":cout<<"-";
+    f.buf.st_mode&S_IWOTH? cout<<"w":cout<<"-";
+    f.buf.st_mode&S_IXOTH? cout<<"x":cout<<"-";
+}
+
 void execute_print_l(const priority_queue<file> &list) {
     priority_queue<file> temp=list;
     while (!temp.empty()) {
-        temp.top().buf.st_mode&S_IFDIR? cout<<"d":cout<<"-";
-        temp.top().buf.st_mode&S_IRUSR? cout<<"r":cout<<"-";
-        temp.top().buf.st_mode&S_IWUSR? cout<<"w":cout<<"-";
-        temp.top().buf.st_mode&S_IXUSR? cout<<"x":cout<<"-";
-        temp.top().buf.st_mode&S_IRGRP? cout<<"r":cout<<"-";
-        temp.top().buf.st_mode&S_IWGRP? cout<<"w":cout<<"-";
-        temp.top().buf.st_mode&S_IXGRP? cout<<"x":cout<<"-";
-        temp.top().buf.st_mode&S_IROTH? cout<<"r":cout<<"-";
-        temp.top().buf.st_mode&S_IWOTH? cout<<"w":cout<<"-";
-        temp.top().buf.st_mode&S_IXOTH? cout<<"x":cout<<"-";
+        print_l_pms(temp.top());
         cout<<" ";
         cout<<temp.top().name<<endl;
         temp.pop();
