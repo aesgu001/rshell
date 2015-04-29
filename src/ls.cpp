@@ -12,7 +12,7 @@ using namespace std;
 
 struct file {
     file(const char *n): name(n) {
-        if (-1==stat(name.c_str(),&bf)) {
+        if (-1==stat(name.c_str(),&buf)) {
             perror("stat");
             exit(1);
         }
@@ -20,29 +20,26 @@ struct file {
     const bool operator<(const file &rhs) const {
         return name>rhs.name;
     }
-    struct stat bf;
+    struct stat buf;
     string name;
 };
 
-void handle_flags(char **argv, bool &flag_a, bool &flag_l, bool &flag_R) {
+void handle_files_flags(char **argv, bool &flag_a, bool &flag_l, bool &flag_R,
+    priority_queue<file> &flist) {
     string s;
-    for(size_t i=0;argv[i]!=NULL&&(!flag_a||!flag_l||!flag_R);i++) {
+    for(size_t i=1;argv[i]!=NULL;i++) {
         s=argv[i];
         if (s.at(0)=='-') {
             if (s.find('a')!=string::npos&&!flag_a) flag_a=true;
             if (s.find('l')!=string::npos&&!flag_l) flag_l=true;
             if (s.find('R')!=string::npos&&!flag_R) flag_R=true;
         }
+        else
+            flist.push(file(argv[i]));
     }
 }
 
-/*void handle_files_dirs(char **argv, priority_queue<dirlist> &dlists) {
-    for(size_t i=1;argv[i]!=NULL;i++)
-        if (*argv[i]!='-')
-            dlists.push(dirlist(argv[i]));
-}
-
-void execute_help(priority_queue<dirlist> &dlists, const bool &flag_l) {
+/*void execute_help(priority_queue<dirlist> &dlists, const bool &flag_l) {
     if (flag_l) {} // FIXME
     else {
         while (!dlists.empty()) {
@@ -73,10 +70,10 @@ void execute(const char *s, const bool &flag_a, const bool &flag_l,
 }*/
 
 int main(int argc, char **argv) {
-    /*priority_queue<dirlist> dlists;
+    priority_queue<file> flist;
     bool flag_a=false,flag_l=false,flag_R=false;
-    handle_flags(argv,flag_a,flag_l,flag_R);
-    handle_files_dirs(argv,dlists);
-    if (dlists.empty()) execute(".",flag_a,flag_l,flag_R);*/
+    handle_files_flags(argv,flag_a,flag_l,flag_R,flist);
+    //handle_files_dirs(argv,dlists);
+    //if (dlists.empty()) execute(".",flag_a,flag_l,flag_R);
     return 0;
 }
