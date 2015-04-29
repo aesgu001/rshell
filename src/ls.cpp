@@ -10,11 +10,17 @@
 #include <queue>
 using namespace std;
 
-struct dirlist {
-    dirlist(const char *n): name(n) {}
-    const bool operator<(const dirlist &rhs) const {
+struct file {
+    file(const char *n): name(n) {
+        if (-1==stat(name.c_str(),&bf)) {
+            perror("stat");
+            exit(1);
+        }
+    }
+    const bool operator<(const file &rhs) const {
         return name>rhs.name;
     }
+    struct stat bf;
     string name;
 };
 
@@ -30,7 +36,7 @@ void handle_flags(char **argv, bool &flag_a, bool &flag_l, bool &flag_R) {
     }
 }
 
-void handle_files_dirs(char **argv, priority_queue<dirlist> &dlists) {
+/*void handle_files_dirs(char **argv, priority_queue<dirlist> &dlists) {
     for(size_t i=1;argv[i]!=NULL;i++)
         if (*argv[i]!='-')
             dlists.push(dirlist(argv[i]));
@@ -64,17 +70,13 @@ void execute(const char *s, const bool &flag_a, const bool &flag_l,
     if (errno!=0) { perror("readdir"); exit(1); }
     if (-1==closedir(dirp)) { perror("closedir"); exit(1); }
     execute_help(dlists,flag_l);
-}
+}*/
 
 int main(int argc, char **argv) {
-    if (argc<=1)
-        execute(".",false,false,false);
-    else {
-        priority_queue<dirlist> dlists;
-        bool flag_a=false,flag_l=false,flag_R=false;
-        handle_flags(argv,flag_a,flag_l,flag_R);
-        handle_files_dirs(argv,dlists);
-        if (dlists.empty()) execute(".",flag_a,flag_l,flag_R);
-    }
+    /*priority_queue<dirlist> dlists;
+    bool flag_a=false,flag_l=false,flag_R=false;
+    handle_flags(argv,flag_a,flag_l,flag_R);
+    handle_files_dirs(argv,dlists);
+    if (dlists.empty()) execute(".",flag_a,flag_l,flag_R);*/
     return 0;
 }
