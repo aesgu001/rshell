@@ -23,7 +23,7 @@ struct file {
     string name;
 };
 
-void handle_files_flags(char **argv, priority_queue<file> &flist,
+void handle_files_flags(char **argv, priority_queue<file> &list,
     bool &flag_a, bool &flag_l, bool &flag_R) {
     string s;
     for(size_t i=1;argv[i]!=NULL;i++) {
@@ -34,83 +34,99 @@ void handle_files_flags(char **argv, priority_queue<file> &flist,
             if (s.find('R')!=string::npos&&!flag_R) flag_R=true;
         }
         else
-            flist.push(file(argv[i]));
+            list.push(file(argv[i]));
     }
+}
+
+bool is_dir(const file &f) {
+    return f.buf.st_mode&S_IFDIR;
 }
 
 bool is_current_dir(const file &f) {
     return f.name=="."||f.name=="..";
 }
 
-priority_queue<file> get_dirs(priority_queue<file> &flist) {
-    priority_queue<file> ret;
-    while (!flist.empty()) {
-        if (flist.top().buf.st_mode & S_IFDIR&&!is_current_dir(flist.top()))
-            ret.push(flist.top());
-        flist.pop();
+priority_queue<file> get_dirs(const priority_queue<file> &list) {
+    priority_queue<file> ret,temp=list;
+    while (!temp.empty()) {
+        if (is_dir(temp.top())&&!is_current_dir(temp.top())) {
+            ret.push(temp.top());
+        }
+        temp.pop();
     }
     return ret;
 }
 
-void execute_print_l(priority_queue<file> &list) {
-    while (!list.empty()) {
-        cout<<list.top().name<<endl;
-        list.pop();
+void execute_print_l(const priority_queue<file> &list) {
+    priority_queue<file> temp=list;
+    while (!temp.empty()) {
+        temp.top().buf.st_mode&S_IFDIR? cout<<"d":cout<<"-";
+        temp.top().buf.st_mode&S_IRUSR? cout<<"r":cout<<"-";
+        temp.top().buf.st_mode&S_IWUSR? cout<<"w":cout<<"-";
+        temp.top().buf.st_mode&S_IXUSR? cout<<"x":cout<<"-";
+        temp.top().buf.st_mode&S_IRGRP? cout<<"r":cout<<"-";
+        temp.top().buf.st_mode&S_IWGRP? cout<<"w":cout<<"-";
+        temp.top().buf.st_mode&S_IXGRP? cout<<"x":cout<<"-";
+        temp.top().buf.st_mode&S_IROTH? cout<<"r":cout<<"-";
+        temp.top().buf.st_mode&S_IWOTH? cout<<"w":cout<<"-";
+        temp.top().buf.st_mode&S_IXOTH? cout<<"x":cout<<"-";
+        cout<<" ";
+        cout<<temp.top().name<<endl;
+        temp.pop();
     }
 }
 
-void execute_print(const priority_queue<file> &flist, const bool &flag_l) {
-    priority_queue<file> list=flist;
-    if (flag_l) { execute_print_l(list); return; }
-    while (!list.empty()) {
-        cout<<list.top().name<<"  ";
-        list.pop();
+void execute_print(const priority_queue<file> &list) {
+    priority_queue<file> temp=list;
+    while (!temp.empty()) {
+        cout<<temp.top().name<<"  ";
+        temp.pop();
     }
     cout<<endl;
 }
 
-void execute_help(const char *s, const bool &flag_a, const bool &flag_l,
+void execute_help(const file &f, const bool &flag_a, const bool &flag_l,
     const bool &flag_R) {
-    priority_queue<file> fsublist;
+    priority_queue<file> sublist;
     DIR *dirp;
-    if (NULL==(dirp=opendir(s))) { perror("opendir"); exit(1); }
+    if (NULL==(dirp=opendir(f.name.c_str()))) { perror("opendir"); exit(1); }
     struct dirent *filespecs;
     errno=0;
     while (NULL!=(filespecs=readdir(dirp))) {
         if (!flag_a) {
             if (*filespecs->d_name!='.')
-                fsublist.push(file(filespecs->d_name));
+                sublist.push(file(filespecs->d_name));
         }
-        else fsublist.push(file(filespecs->d_name));
+        else sublist.push(file(filespecs->d_name));
     }
     if (errno!=0) { perror("readdir"); exit(1); }
     if (-1==closedir(dirp)) { perror("closedir"); exit(1); }
     if (flag_R) {
-        cout<<s<<":"<<endl;
-        execute_print(fsublist,flag_l);
-        fsublist=get_dirs(fsublist);
-        while (!fsublist.empty()) {
-             execute_help(fsublist.top().name.c_str(),flag_a,flag_l,flag_R);
-             fsublist.pop();
+        cout<<f.name<<":"<<endl;
+        flag_l? execute_print_l(sublist):execute_print(sublist);
+        sublist=get_dirs(sublist);
+        while (!sublist.empty()) {
+             execute_help(sublist.top(),flag_a,flag_l,flag_R);
+             sublist.pop();
         }
     }
-    else execute_print(fsublist,flag_l);
+    else flag_l? execute_print_l(sublist):execute_print(sublist);
 }
 
-void execute(priority_queue<file> &flist, const bool &flag_a, const bool &flag_l,
+void execute(priority_queue<file> &list, const bool &flag_a, const bool &flag_l,
     const bool &flag_R) {
-    if (flist.empty()) { execute_help(".",flag_a,flag_l,flag_R); return; }
-    while (!flist.empty()) {
-        if (flist.top().buf.st_mode & S_IFDIR)
-            execute_help(flist.top().name.c_str(),flag_a,flag_l,flag_R);
-        flist.pop();
+    if (list.empty()) { execute_help(file("."),flag_a,flag_l,flag_R); return; }
+    while (!list.empty()) {
+        if (is_dir(list.top()))
+            execute_help(list.top().name.c_str(),flag_a,flag_l,flag_R);
+        list.pop();
     }
 }
 
 int main(int argc, char **argv) {
-    priority_queue<file> flist;
+    priority_queue<file> list;
     bool flag_a=false,flag_l=false,flag_R=false;
-    handle_files_flags(argv,flist,flag_a,flag_l,flag_R);
-    execute(flist,flag_a,flag_l,flag_R);
+    handle_files_flags(argv,list,flag_a,flag_l,flag_R);
+    execute(list,flag_a,flag_l,flag_R);
     return 0;
 }
