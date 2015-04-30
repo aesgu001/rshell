@@ -121,8 +121,7 @@ void execute(priority_queue<file> &list, const bool &flag_a, const bool &flag_l,
     const bool &flag_R) {
     if (list.empty()) { execute_help(file("."),flag_a,flag_l,flag_R); return; }
     while (!list.empty()) {
-        if (is_dir(list.top()))
-            execute_help(list.top().name.c_str(),flag_a,flag_l,flag_R);
+        execute_help(list.top(),flag_a,flag_l,flag_R);
         list.pop();
     }
 }
