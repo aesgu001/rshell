@@ -11,9 +11,10 @@
 using namespace std;
 
 struct file {
-    file(const char *n): name(n) {
+    file(const string &n): name(n) {
         if (-1==stat(name.c_str(),&buf)) {
-            perror("stat");
+            string s_err="ls: cannot access "+name;
+            perror(s_err.c_str());
         }
     }
     const bool operator<(const file &rhs) const {
@@ -23,7 +24,7 @@ struct file {
     string name;
 };
 
-void handle_files_flags(char **argv, priority_queue<file> &list,
+/*void handle_files_flags(char **argv, priority_queue<file> &list,
     bool &flag_a, bool &flag_l, bool &flag_R) {
     string s;
     for(size_t i=1;argv[i]!=NULL;i++) {
@@ -36,17 +37,17 @@ void handle_files_flags(char **argv, priority_queue<file> &list,
         else
             list.push(file(argv[i]));
     }
-}
+}*/
 
-bool is_dir(const file &f) {
+/*bool is_dir(const file &f) {
     return f.buf.st_mode&S_IFDIR;
-}
+}*/
 
-bool is_current_dir(const file &f) {
+/*bool is_current_dir(const file &f) {
     return f.name=="."||f.name=="..";
-}
+}*/
 
-priority_queue<file> get_dirs(const priority_queue<file> &list) {
+/*priority_queue<file> get_dirs(const priority_queue<file> &list) {
     priority_queue<file> ret,temp=list;
     while (!temp.empty()) {
         if (is_dir(temp.top())&&!is_current_dir(temp.top())) {
@@ -55,9 +56,9 @@ priority_queue<file> get_dirs(const priority_queue<file> &list) {
         temp.pop();
     }
     return ret;
-}
+}*/
 
-void print_l_pms(const file &f) {
+/*void print_l_pms(const file &f) {
     f.buf.st_mode&S_IFDIR? cout<<"d":cout<<"-";
     f.buf.st_mode&S_IRUSR? cout<<"r":cout<<"-";
     f.buf.st_mode&S_IWUSR? cout<<"w":cout<<"-";
@@ -68,9 +69,9 @@ void print_l_pms(const file &f) {
     f.buf.st_mode&S_IROTH? cout<<"r":cout<<"-";
     f.buf.st_mode&S_IWOTH? cout<<"w":cout<<"-";
     f.buf.st_mode&S_IXOTH? cout<<"x":cout<<"-";
-}
+}*/
 
-void execute_print_l(const priority_queue<file> &list) {
+/*void execute_print_l(const priority_queue<file> &list) {
     priority_queue<file> temp=list;
     while (!temp.empty()) {
         print_l_pms(temp.top());
@@ -78,18 +79,18 @@ void execute_print_l(const priority_queue<file> &list) {
         cout<<temp.top().name<<endl;
         temp.pop();
     }
-}
+}*/
 
-void execute_print(const priority_queue<file> &list) {
+/*void execute_print(const priority_queue<file> &list) {
     priority_queue<file> temp=list;
     while (!temp.empty()) {
         cout<<temp.top().name<<"  ";
         temp.pop();
     }
     cout<<endl;
-}
+}*/
 
-void execute_help(const file &f, const bool &flag_a, const bool &flag_l,
+/*void execute_help(const file &f, const bool &flag_a, const bool &flag_l,
     const bool &flag_R) {
     priority_queue<file> sublist;
     DIR *dirp;
@@ -115,21 +116,22 @@ void execute_help(const file &f, const bool &flag_a, const bool &flag_l,
         }
     }
     else flag_l? execute_print_l(sublist):execute_print(sublist);
-}
+}*/
 
-void execute(priority_queue<file> &list, const bool &flag_a, const bool &flag_l,
+/*void execute(priority_queue<file> &list, const bool &flag_a, const bool &flag_l,
     const bool &flag_R) {
     if (list.empty()) { execute_help(file("."),flag_a,flag_l,flag_R); return; }
     while (!list.empty()) {
         execute_help(list.top(),flag_a,flag_l,flag_R);
         list.pop();
     }
-}
+}*/
 
 int main(int argc, char **argv) {
-    priority_queue<file> list;
+    /*priority_queue<file> list;
     bool flag_a=false,flag_l=false,flag_R=false;
     handle_files_flags(argv,list,flag_a,flag_l,flag_R);
-    execute(list,flag_a,flag_l,flag_R);
+    execute(list,flag_a,flag_l,flag_R);*/
+    file f=file("src/ls.cpp");
     return 0;
 }
