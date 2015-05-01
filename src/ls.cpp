@@ -82,7 +82,7 @@ void print_l_count(const priority_queue<file> &list) {
         blkctsz+=temp.top().buf.st_blocks;
         temp.pop();
     }
-    cout<<"total "<<blkctsz/2<<endl;
+    cout<<"total "<<static_cast<size_t>(blkctsz/2)<<endl;
 }
 
 void execute_print_l(const priority_queue<file> &list, const bool &count) {
