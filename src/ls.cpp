@@ -95,7 +95,7 @@ void execute_print(const priority_queue<file> &list) {
 }
 
 void execute_help(const file &f, const bool &flag_a, const bool &flag_l,
-    const bool &flag_R) {
+    const bool &flag_R, const bool &flag_RR) {
     priority_queue<file> sublist;
     DIR *dirp;
     struct dirent *filespecs;
@@ -112,12 +112,12 @@ void execute_help(const file &f, const bool &flag_a, const bool &flag_l,
     if (errno!=0) { perror("readdir"); exit(1); }
     if (-1==closedir(dirp)) { perror("closedir"); exit(1); }
     if (flag_R) {
-        cout<<f.name<<":"<<endl;
+        if (!flag_RR) cout<<f.name<<":"<<endl;
         flag_l? execute_print_l(sublist):execute_print(sublist);
         sublist=get_dirs(sublist);
         if (!sublist.empty()) cout<<endl;
         while (!sublist.empty()) {
-            execute_help(sublist.top(),flag_a,flag_l,flag_R);
+            execute_help(sublist.top(),flag_a,flag_l,flag_R,false);
             sublist.pop();
             if (!sublist.empty()) cout<<endl;
         }
@@ -127,10 +127,25 @@ void execute_help(const file &f, const bool &flag_a, const bool &flag_l,
 
 void execute(priority_queue<file> &list, const bool &flag_a, const bool &flag_l,
     const bool &flag_R) {
-    if (list.empty()) { execute_help(file(".","."),flag_a,flag_l,flag_R); return; }
+    if (list.empty()) { execute_help(file(".","."),flag_a,flag_l,flag_R,false); return; }
+    priority_queue<file> ndirs,dirs;
     while (!list.empty()) {
-        execute_help(list.top(),flag_a,flag_l,flag_R);
+        if (is_dir(list.top()))
+            dirs.push(list.top());
+        else
+            ndirs.push(list.top());
         list.pop();
+    }
+    if (!ndirs.empty())
+        flag_l? execute_print_l(ndirs):execute_print(ndirs);
+    if (!dirs.empty()) {
+        if (!ndirs.empty()) cout<<endl;
+        while (!dirs.empty()) {
+            cout<<dirs.top().name<<":"<<endl;
+            execute_help(dirs.top(),flag_a,flag_l,flag_R,true);
+            dirs.pop();
+            if (!dirs.empty()) cout<<endl;
+        }
     }
 }
 
