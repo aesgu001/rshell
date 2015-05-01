@@ -8,6 +8,8 @@
 #include <dirent.h>
 #include <errno.h>
 #include <time.h>
+#include <pwd.h>
+#include <grp.h>
 #include <queue>
 using namespace std;
 
@@ -73,12 +75,30 @@ void print_l_pms(const file &f) {
     f.buf.st_mode&S_IXOTH? cout<<"x":cout<<"-";
 }
 
-void execute_print_l(const priority_queue<file> &list) {
+void print_l_count(const priority_queue<file> &list) {
     priority_queue<file> temp=list;
+    blkcnt_t blkctsz=0;
+    while (!temp.empty()) {
+        blkctsz+=temp.top().buf.st_blocks;
+        temp.pop();
+    }
+    cout<<"total "<<blkctsz/2<<endl;
+}
+
+void execute_print_l(const priority_queue<file> &list, const bool &count) {
+    priority_queue<file> temp=list;
+    struct passwd *usr;
+    struct group *grp;
+    if (count) print_l_count(list);
     while (!temp.empty()) {
         print_l_pms(temp.top());
         cout<<" ";
         cout<<temp.top().buf.st_nlink<<" ";
+        usr=getpwuid(temp.top().buf.st_uid);
+        cout<<usr->pw_name<<" ";
+        grp=getgrgid(temp.top().buf.st_gid);
+        cout<<grp->gr_name<<" ";
+        cout<<temp.top().buf.st_size<<" ";
         cout<<ctime(&temp.top().buf.st_mtime)<<" ";
         cout<<temp.top().nname<<endl;
         temp.pop();
@@ -113,7 +133,7 @@ void execute_help(const file &f, const bool &flag_a, const bool &flag_l,
     if (-1==closedir(dirp)) { perror("closedir"); exit(1); }
     if (flag_R) {
         if (!flag_RR) cout<<f.name<<":"<<endl;
-        flag_l? execute_print_l(sublist):execute_print(sublist);
+        flag_l? execute_print_l(sublist,true):execute_print(sublist);
         sublist=get_dirs(sublist);
         if (!sublist.empty()) cout<<endl;
         while (!sublist.empty()) {
@@ -122,7 +142,7 @@ void execute_help(const file &f, const bool &flag_a, const bool &flag_l,
             if (!sublist.empty()) cout<<endl;
         }
     }
-    else flag_l? execute_print_l(sublist):execute_print(sublist);
+    else flag_l? execute_print_l(sublist,true):execute_print(sublist);
 }
 
 void execute(priority_queue<file> &list, const bool &flag_a, const bool &flag_l,
@@ -137,7 +157,7 @@ void execute(priority_queue<file> &list, const bool &flag_a, const bool &flag_l,
         list.pop();
     }
     if (!ndirs.empty())
-        flag_l? execute_print_l(ndirs):execute_print(ndirs);
+        flag_l? execute_print_l(ndirs,false):execute_print(ndirs);
     if (!dirs.empty()) {
         if (!ndirs.empty()) cout<<endl;
         while (!dirs.empty()) {
