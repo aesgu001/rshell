@@ -12,7 +12,7 @@
 using namespace std;
 
 struct file {
-    file(const string &n): name(n) {
+    file(const string &n, const string &nn): name(n), nname(nn) {
         if (-1==stat(name.c_str(),&buf)) {
             string s_err="ls: cannot access "+name;
             perror(s_err.c_str());
@@ -20,10 +20,10 @@ struct file {
         }
     }
     const bool operator<(const file &rhs) const {
-        return name>rhs.name;
+        return nname>rhs.nname;
     }
     struct stat buf;
-    string name;
+    string name,nname;
 };
 
 void handle_files_flags(char **argv, priority_queue<file> &list,
@@ -37,7 +37,7 @@ void handle_files_flags(char **argv, priority_queue<file> &list,
             if (s.find('R')!=string::npos&&!flag_R) flag_R=true;
         }
         else
-            list.push(file(s));
+            list.push(file(s,s));
     }
 }
 
@@ -46,7 +46,7 @@ bool is_dir(const file &f) {
 }
 
 bool is_current_dir(const file &f) {
-    return f.name.at(f.name.length()-1)=='.';
+    return f.nname.at(f.nname.length()-1)=='.';
 }
 
 priority_queue<file> get_dirs(const priority_queue<file> &list) {
@@ -80,7 +80,7 @@ void execute_print_l(const priority_queue<file> &list) {
         cout<<" ";
         cout<<temp.top().buf.st_nlink<<" ";
         cout<<ctime(&temp.top().buf.st_mtime)<<" ";
-        cout<<temp.top().name<<endl;
+        cout<<temp.top().nname<<endl;
         temp.pop();
     }
 }
@@ -88,7 +88,7 @@ void execute_print_l(const priority_queue<file> &list) {
 void execute_print(const priority_queue<file> &list) {
     priority_queue<file> temp=list;
     while (!temp.empty()) {
-        cout<<temp.top().name<<"  ";
+        cout<<temp.top().nname<<"  ";
         temp.pop();
     }
     cout<<endl;
@@ -105,9 +105,9 @@ void execute_help(const file &f, const bool &flag_a, const bool &flag_l,
     while (NULL!=(filespecs=readdir(dirp))) {
         if (!flag_a) {
             if (*filespecs->d_name!='.')
-                sublist.push(file(pdir+filespecs->d_name));
+                sublist.push(file(pdir+filespecs->d_name,filespecs->d_name));
         }
-        else sublist.push(file(pdir+filespecs->d_name));
+        else sublist.push(file(pdir+filespecs->d_name,filespecs->d_name));
     }
     if (errno!=0) { perror("readdir"); exit(1); }
     if (-1==closedir(dirp)) { perror("closedir"); exit(1); }
@@ -127,7 +127,7 @@ void execute_help(const file &f, const bool &flag_a, const bool &flag_l,
 
 void execute(priority_queue<file> &list, const bool &flag_a, const bool &flag_l,
     const bool &flag_R) {
-    if (list.empty()) { execute_help(file("."),flag_a,flag_l,flag_R); return; }
+    if (list.empty()) { execute_help(file(".","."),flag_a,flag_l,flag_R); return; }
     while (!list.empty()) {
         execute_help(list.top(),flag_a,flag_l,flag_R);
         list.pop();
