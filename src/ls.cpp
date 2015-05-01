@@ -7,6 +7,7 @@
 #include <sys/stat.h>
 #include <dirent.h>
 #include <errno.h>
+#include <time.h>
 #include <queue>
 using namespace std;
 
@@ -77,6 +78,8 @@ void execute_print_l(const priority_queue<file> &list) {
     while (!temp.empty()) {
         print_l_pms(temp.top());
         cout<<" ";
+        cout<<temp.top().buf.st_nlink<<" ";
+        cout<<ctime(&temp.top().buf.st_mtime)<<" ";
         cout<<temp.top().name<<endl;
         temp.pop();
     }
