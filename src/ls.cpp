@@ -14,6 +14,10 @@
 #include <queue>
 using namespace std;
 
+const char *col_def="\x1b[39;49m";
+const char *col_blue="\033[0;34m";
+const char *col_green="\033[0;32m";
+
 struct file {
     file(const string &n, const string &nn): name(n), nname(nn) {
         if (-1==stat(name.c_str(),&buf)) {
