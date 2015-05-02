@@ -10,6 +10,7 @@
 #include <time.h>
 #include <pwd.h>
 #include <grp.h>
+#include <iomanip>
 #include <queue>
 using namespace std;
 
@@ -89,6 +90,7 @@ void execute_print_l(const priority_queue<file> &list, const bool &count) {
     priority_queue<file> temp=list;
     struct passwd *usr;
     struct group *grp;
+    string stime;
     if (count) print_l_count(list);
     while (!temp.empty()) {
         print_l_pms(temp.top());
@@ -98,8 +100,10 @@ void execute_print_l(const priority_queue<file> &list, const bool &count) {
         cout<<usr->pw_name<<" ";
         grp=getgrgid(temp.top().buf.st_gid);
         cout<<grp->gr_name<<" ";
-        cout<<temp.top().buf.st_size<<" ";
-        cout<<ctime(&temp.top().buf.st_mtime)<<" ";
+        cout<<setw(5)<<temp.top().buf.st_size<<" ";
+        stime=ctime(&temp.top().buf.st_mtime);
+        stime=stime.substr(4,12);
+        cout<<stime<<" ";
         cout<<temp.top().nname<<endl;
         temp.pop();
     }
