@@ -59,6 +59,10 @@ bool is_dir(const file &f) {
     return f.buf.st_mode&S_IFDIR;
 }
 
+bool is_exec(const file &f) {
+    return f.buf.st_mode&S_IXUSR;
+}
+
 bool is_current_dir(const file &f) {
     return f.nname.at(f.nname.length()-1)=='.';
 }
@@ -111,7 +115,11 @@ void execute_print_l(const priority_queue<file> &list, const bool &count) {
         stime=ctime(&temp.top().buf.st_mtime);
         stime=stime.substr(4,12);
         cout<<stime<<" ";
-        cout<<temp.top().nname<<endl;
+        if (is_dir(temp.top()))
+            cout<<col_blue<<temp.top().nname<<col_def<<endl;
+        else if (is_exec(temp.top()))
+            cout<<col_green<<temp.top().nname<<col_def<<endl;
+        else cout<<temp.top().nname<<endl;
         temp.pop();
     }
 }
@@ -119,7 +127,11 @@ void execute_print_l(const priority_queue<file> &list, const bool &count) {
 void execute_print(const priority_queue<file> &list) {
     priority_queue<file> temp=list;
     while (!temp.empty()) {
-        cout<<temp.top().nname<<"  ";
+        if (is_dir(temp.top()))
+            cout<<col_blue<<temp.top().nname<<col_def<<"  ";
+        else if (is_exec(temp.top()))
+            cout<<col_green<<temp.top().nname<<col_def<<"  ";
+        else cout<<temp.top().nname<<"  ";
         temp.pop();
     }
     cout<<endl;
@@ -134,11 +146,13 @@ void execute_help(const file &f, const bool &flag_a, const bool &flag_l,
     string pdir=f.name+"/";
     if (NULL==(dirp=opendir(f.name.c_str()))) { perror("opendir"); exit(1); }
     while (NULL!=(filespecs=readdir(dirp))) {
-        if (!flag_a) {
-            if (*filespecs->d_name!='.')
-                sublist.push(file(pdir+filespecs->d_name,filespecs->d_name));
+        file ff=file(pdir+filespecs->d_name,filespecs->d_name);
+        if (ff.nil) continue;
+        else if (!flag_a) {
+            if (ff.nname.at(0)!='.')
+                sublist.push(ff);
         }
-        else sublist.push(file(pdir+filespecs->d_name,filespecs->d_name));
+        else sublist.push(ff);
     }
     if (errno!=0) { perror("readdir"); exit(1); }
     if (-1==closedir(dirp)) { perror("closedir"); exit(1); }
