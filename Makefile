@@ -9,7 +9,4 @@ rshell: src/main.cpp src/cmd.h
 	$(CXX) $(CPPFLAGS) $(DFLAGS) -o bin/rshell src/main.cpp
 
 cp: src/cp.cpp src/Timer.h
-	mkdir -p bin
 	$(CXX) $(CPPFLAGS) $(DFLAGS) -o bin/cp src/cp.cpp
-
-
