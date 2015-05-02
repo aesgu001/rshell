@@ -19,11 +19,11 @@ const char *col_blue="\033[0;34m";
 const char *col_green="\033[0;32m";
 
 struct file {
-    file(const string &n, const string &nn): name(n), nname(nn) {
+    file(const string &n, const string &nn): name(n), nname(nn), nil(false) {
         if (-1==stat(name.c_str(),&buf)) {
-            string s_err="ls: cannot access "+name;
+            string s_err="ls: cannot access "+nname;
             perror(s_err.c_str());
-            exit(1);
+            nil=true;
         }
     }
     const bool operator<(const file &rhs) const {
@@ -31,6 +31,7 @@ struct file {
     }
     struct stat buf;
     string name,nname;
+    bool nil;
 };
 
 void handle_files_flags(char **argv, priority_queue<file> &list,
@@ -158,7 +159,8 @@ void execute(priority_queue<file> &list, const bool &flag_a, const bool &flag_l,
     if (list.empty()) { execute_help(file(".","."),flag_a,flag_l,flag_R,false); return; }
     priority_queue<file> ndirs,dirs;
     while (!list.empty()) {
-        if (is_dir(list.top()))
+        if (list.top().nil) { list.pop(); continue; }
+        else if (is_dir(list.top()))
             dirs.push(list.top());
         else
             ndirs.push(list.top());
