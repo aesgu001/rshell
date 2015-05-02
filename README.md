@@ -36,3 +36,15 @@ It cannot send text to a new or existing file using the `>` character, either.
 4. The `cd` command will not be executed successfully.
 
 5. The `git commit -m <message>` command will not be executed successfully.
+
+### ls Bugs/Issues/Limitations
+
+1. Without the `-l` flag, `ls` only separates the files by spaces.
+
+2. Texts of hidden files do not have a grey background.
+
+3. Running `bin/ls -R -a` on heavy directories, like `.git`, will most likely fail due to a syscall error.
+
+4. Number flags do not return an error.
+
+5. `-l` flag may format unequal spacing due to the number of hard links for each file.

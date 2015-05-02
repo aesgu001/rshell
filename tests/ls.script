@@ -1,0 +1,2863 @@
+Script started on Sat 02 May 2015 12:09:12 AM PDT
+~
+aesgu001@hammer $ cs100
+[0;91m
+===============================================================================
+|                                                                             |
+| You have enabled settings specific for cs100.  Everything you do is being   |
+| recorded to measure your progress in the class.                             |
+|                                                                             |
+| Important commands for the class:                                           |
+|   * calcgrade.sh          displays a detailed breakdown of your grade       |
+|   * checksyscalls.sh      is your cpp file doing proper error checking?     |
+|   * typespeed             practice typing unix commands                     |
+|                                                                             |
+| Important commands for general C++ programming:                             |
+|   * make                  don't call g++ manually; let make do the work!    |
+|   * gdb                   the GNU debugger                                  |
+|   * valgrind              get rid of your memory leaks                      |
+|   * cppcheck              static analysis tool                              |
+|   * man                   find help about any syscall / terminal command    |
+|                                                                             |
+===============================================================================
+[0m
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~[0;95m [0;36m$[0m cd Documents/s[Krshell
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m make
+mkdir -p bin
+g++ -std=c++11 -Wall -Werror -ansi -pedantic -o bin/rshell src/main.cpp
+g++ -std=c++11 -Wall -Werror -ansi -pedantic -o bin/ls src/ls.cpp
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m #----------------------
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m # testing bin/ls
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m #----------------------
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m 
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m 1[K# 1. no flags
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m bin/ls
+LICENSE  Makefile  README.md  [0;34mbin[39;49m  [0;34msrc[39;49m  [0;34mtests[39;49m  
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m ls
+bin  LICENSE  Makefile	README.md  src	tests
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m 
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m bin/ls src tests
+src:
+cmd.h  ls.cpp  main.cpp  
+
+tests:
+exec.script  ls.script  
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m ls src tests
+src:
+cmd.h  ls.cpp  main.cpp
+
+tests:
+exec.script  ls.script
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m bin README.md[4h/[4l[4hs[4l[1P[1P[1P[C[4hi[4l[C/ README.mdl README.mds README.md[C[C[C[C[C[C[C[C[C[C . LICENSE
+LICENSE  README.md  
+
+.:
+LICENSE  Makefile  README.md  [0;34mbin[39;49m  [0;34msrc[39;49m  [0;34mtests[39;49m  
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m ls MEADE[K[K[K[K[KREADME.md , [K[K. LICENSE
+LICENSE  README.md
+
+.:
+bin  LICENSE  Makefile	README.md  src	tests
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m 
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m # 2. one flag
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m bin/ls -a
+[0;34m.[39;49m  [0;34m..[39;49m  [0;34m.git[39;49m  LICENSE  Makefile  README.md  [0;34mbin[39;49m  [0;34msrc[39;49m  [0;34mtests[39;49m  
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m ls -a
+.  ..  bin  .git  LICENSE  Makefile  README.md	src  tests
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m ls -l
+total 40
+drwx------ 2 aesgu001 csmajs  4096 May  2 00:03 bin
+-rw------- 1 aesgu001 csmajs 18047 Apr 10 13:23 LICENSE
+-rw------- 1 aesgu001 csmajs   264 May  1 20:23 Makefile
+-rw------- 1 aesgu001 csmajs  1385 Apr 19 22:10 README.md
+drwx------ 2 aesgu001 csmajs  4096 May  1 22:22 src
+drwx------ 2 aesgu001 csmajs  4096 May  2 00:01 tests
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m bin/ls -l
+total 40
+-rw------- 1 aesgu001 csmajs 18047 Apr 10 13:23 LICENSE
+-rw------- 1 aesgu001 csmajs   264 May  1 20:23 Makefile
+-rw------- 1 aesgu001 csmajs  1385 Apr 19 22:10 README.md
+drwx------ 2 aesgu001 csmajs  4096 May  2 00:03 [0;34mbin[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 22:22 [0;34msrc[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  2 00:01 [0;34mtests[39;49m
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m bin/ls -R
+.:
+LICENSE  Makefile  README.md  [0;34mbin[39;49m  [0;34msrc[39;49m  [0;34mtests[39;49m  
+
+./bin:
+[0;32mls[39;49m  [0;32mrshell[39;49m  
+
+./src:
+cmd.h  ls.cpp  main.cpp  
+
+./tests:
+exec.script  ls.script  
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m ls -R
+.:
+bin  LICENSE  Makefile	README.md  src	tests
+
+./bin:
+ls  rshell
+
+./src:
+cmd.h  ls.cpp  main.cpp
+
+./tests:
+exec.script  ls.script
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m bin/ls tests -a
+tests:
+[0;34m.[39;49m  [0;34m..[39;49m  exec.script  ls.script  
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m binn [K[K/ls -a tests
+tests:
+[0;34m.[39;49m  [0;34m..[39;49m  exec.script  ls.script  
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m bin/ls tests      -a
+tests:
+[0;34m.[39;49m  [0;34m..[39;49m  exec.script  ls.script  
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m 
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m # 3. two flags
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m mkdir test_dir && mkdir test_dir/test_dir1
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m bin/ls -a -l test_dir
+test_dir:
+total 12
+drwx------ 3 aesgu001 csmajs  4096 May  2 00:11 [0;34m.[39;49m
+drwx------ 7 aesgu001 csmajs  4096 May  2 00:11 [0;34m..[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  2 00:11 [0;34mtest_dir1[39;49m
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m ls -a -l [K[K[K[K[K[K[K[K[Kbin/ls -al test_dir
+test_dir:
+total 12
+drwx------ 3 aesgu001 csmajs  4096 May  2 00:11 [0;34m.[39;49m
+drwx------ 7 aesgu001 csmajs  4096 May  2 00:11 [0;34m..[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  2 00:11 [0;34mtest_dir1[39;49m
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m bin/ls test_dir -a[Kl -a
+test_dir:
+total 12
+drwx------ 3 aesgu001 csmajs  4096 May  2 00:11 [0;34m.[39;49m
+drwx------ 7 aesgu001 csmajs  4096 May  2 00:11 [0;34m..[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  2 00:11 [0;34mtest_dir1[39;49m
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m 
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m bin/ls -R     -l sr[K[Ktest_dir
+test_dir:
+total 4
+drwx------ 2 aesgu001 csmajs  4096 May  2 00:11 [0;34mtest_dir1[39;49m
+
+test_dir/test_dir1:
+total 0
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m bin/ls test_dir -R[KlR
+test_dir:
+total 4
+drwx------ 2 aesgu001 csmajs  4096 May  2 00:11 [0;34mtest_dir1[39;49m
+
+test_dir/test_dir1:
+total 0
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m bin/ls -l tests      -R
+tests:
+total 36
+-rw------- 1 aesgu001 csmajs 35497 May  1 23:59 exec.script
+-rw------- 1 aesgu001 csmajs     0 May  2 00:03 ls.script
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m bin/ls -Rl tests
+tests:
+total 36
+-rw------- 1 aesgu001 csmajs 35497 May  1 23:59 exec.script
+-rw------- 1 aesgu001 csmajs     0 May  2 00:03 ls.script
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m bin/ls tests -l    -R
+tests:
+total 36
+-rw------- 1 aesgu001 csmajs 35497 May  1 23:59 exec.script
+-rw------- 1 aesgu001 csmajs     0 May  2 00:03 ls.script
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m 
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m # 4. three flags
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m bin/ls -a[KRal test_dir
+test_dir:
+total 12
+drwx------ 3 aesgu001 csmajs  4096 May  2 00:11 [0;34m.[39;49m
+drwx------ 7 aesgu001 csmajs  4096 May  2 00:11 [0;34m..[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  2 00:11 [0;34mtest_dir1[39;49m
+
+test_dir/test_dir1:
+total 8
+drwx------ 2 aesgu001 csmajs  4096 May  2 00:11 [0;34m.[39;49m
+drwx------ 3 aesgu001 csmajs  4096 May  2 00:11 [0;34m..[39;49m
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m bin/ls test_dir -R -a -l
+test_dir:
+total 12
+drwx------ 3 aesgu001 csmajs  4096 May  2 00:11 [0;34m.[39;49m
+drwx------ 7 aesgu001 csmajs  4096 May  2 00:11 [0;34m..[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  2 00:11 [0;34mtest_dir1[39;49m
+
+test_dir/test_dir1:
+total 8
+drwx------ 2 aesgu001 csmajs  4096 May  2 00:11 [0;34m.[39;49m
+drwx------ 3 aesgu001 csmajs  4096 May  2 00:11 [0;34m..[39;49m
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m bin/ls -la test_dir -R
+test_dir:
+total 12
+drwx------ 3 aesgu001 csmajs  4096 May  2 00:11 [0;34m.[39;49m
+drwx------ 7 aesgu001 csmajs  4096 May  2 00:11 [0;34m..[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  2 00:11 [0;34mtest_dir1[39;49m
+
+test_dir/test_dir1:
+total 8
+drwx------ 2 aesgu001 csmajs  4096 May  2 00:11 [0;34m.[39;49m
+drwx------ 3 aesgu001 csmajs  4096 May  2 00:11 [0;34m..[39;49m
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m bin/[K[K[K[Kls -Ral test_dir
+test_dir:
+total 12
+drwx------ 3 aesgu001 csmajs 4096 May  2 00:11 .
+drwx------ 7 aesgu001 csmajs 4096 May  2 00:11 ..
+drwx------ 2 aesgu001 csmajs 4096 May  2 00:11 test_dir1
+
+test_dir/test_dir1:
+total 8
+drwx------ 2 aesgu001 csmajs 4096 May  2 00:11 .
+drwx------ 3 aesgu001 csmajs 4096 May  2 00:11 ..
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m ls [K[K[Kbin/ls src -aRl
+src:
+total 24
+drwx------ 2 aesgu001 csmajs  4096 May  1 22:22 [0;34m.[39;49m
+drwx------ 7 aesgu001 csmajs  4096 May  2 00:11 [0;34m..[39;49m
+-rw------- 1 aesgu001 csmajs  1353 Apr 19 15:01 cmd.h
+-rw------- 1 aesgu001 csmajs  6300 May  1 22:10 ls.cpp
+-rw------- 1 aesgu001 csmajs  4087 Apr 19 22:10 main.cpp
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m bin/ls -R -a src -l
+src:
+total 24
+drwx------ 2 aesgu001 csmajs  4096 May  1 22:22 [0;34m.[39;49m
+drwx------ 7 aesgu001 csmajs  4096 May  2 00:11 [0;34m..[39;49m
+-rw------- 1 aesgu001 csmajs  1353 Apr 19 15:01 cmd.h
+-rw------- 1 aesgu001 csmajs  6300 May  1 22:10 ls.cpp
+-rw------- 1 aesgu001 csmajs  4087 Apr 19 22:10 main.cpp
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m ls -[Ksrc -Arl[K[K[KaRl
+src:
+total 24
+drwx------ 2 aesgu001 csmajs 4096 May  1 22:22 .
+drwx------ 7 aesgu001 csmajs 4096 May  2 00:11 ..
+-rw------- 1 aesgu001 csmajs 1353 Apr 19 15:01 cmd.h
+-rw------- 1 aesgu001 csmajs 6300 May  1 22:10 ls.cpp
+-rw------- 1 aesgu001 csmajs 4087 Apr 19 22:10 main.cpp
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m 
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m # 5. special cases
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m # .[Ka. N[Knon-existent files
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m bin/ls -l abc -R test_dir
+ls: cannot access abc: No such file or directory
+test_dir:
+total 4
+drwx------ 2 aesgu001 csmajs  4096 May  2 00:11 [0;34mtest_dir1[39;49m
+
+test_dir/test_dir1:
+total 0
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m bin/ls [K -R [Kl test_dir abc[K[K[K   abc
+ls: cannot access abc: No such file or directory
+test_dir:
+total 4
+drwx------ 2 aesgu001 csmajs  4096 May  2 00:11 [0;34mtest_dir1[39;49m
+
+test_dir/test_dir1:
+total 0
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m # b. parent directories
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m bin/ls .. -al
+..:
+total 24
+drwx------ 5 aesgu001 csmajs  4096 Apr 29 16:01 [0;34m.[39;49m
+drwx------ 44 aesgu001 csmajs  8192 May  2 00:00 [0;34m..[39;49m
+drwx------ 7 aesgu001 csmajs  4096 May  2 00:11 [0;34mrshell[39;49m
+drwx------ 5 aesgu001 csmajs  4096 Apr 29 16:56 [0;34mrshell-1[39;49m
+drwx------ 9 aesgu001 csmajs  4096 Apr 25 18:16 [0;34mucr-cs100[39;49m
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m bin/ls -a .. -l[K[K[K[K[K[K[K;[Kl .. -a
+..:
+total 24
+drwx------ 5 aesgu001 csmajs  4096 Apr 29 16:01 [0;34m.[39;49m
+drwx------ 44 aesgu001 csmajs  8192 May  2 00:00 [0;34m..[39;49m
+drwx------ 7 aesgu001 csmajs  4096 May  2 00:11 [0;34mrshell[39;49m
+drwx------ 5 aesgu001 csmajs  4096 Apr 29 16:56 [0;34mrshell-1[39;49m
+drwx------ 9 aesgu001 csmajs  4096 Apr 25 18:16 [0;34mucr-cs100[39;49m
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m # c. [K[K[K[K[Kbin/ls -a -l .. LICENSE
+-rw------- 1 aesgu001 csmajs 18047 Apr 10 13:23 LICENSE
+
+..:
+total 24
+drwx------ 5 aesgu001 csmajs  4096 Apr 29 16:01 [0;34m.[39;49m
+drwx------ 44 aesgu001 csmajs  8192 May  2 00:00 [0;34m..[39;49m
+drwx------ 7 aesgu001 csmajs  4096 May  2 00:11 [0;34mrshell[39;49m
+drwx------ 5 aesgu001 csmajs  4096 Apr 29 16:56 [0;34mrshell-1[39;49m
+drwx------ 9 aesgu001 csmajs  4096 Apr 25 18:16 [0;34mucr-cs100[39;49m
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m bin/ls -l LICENSE -a /[K..
+-rw------- 1 aesgu001 csmajs 18047 Apr 10 13:23 LICENSE
+
+..:
+total 24
+drwx------ 5 aesgu001 csmajs  4096 Apr 29 16:01 [0;34m.[39;49m
+drwx------ 44 aesgu001 csmajs  8192 May  2 00:00 [0;34m..[39;49m
+drwx------ 7 aesgu001 csmajs  4096 May  2 00:11 [0;34mrshell[39;49m
+drwx------ 5 aesgu001 csmajs  4096 Apr 29 16:56 [0;34mrshell-1[39;49m
+drwx------ 9 aesgu001 csmajs  4096 Apr 25 18:16 [0;34mucr-cs100[39;49m
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m ls -l LICENSE -a ..
+-rw------- 1 aesgu001 csmajs 18047 Apr 10 13:23 LICENSE
+
+..:
+total 24
+drwx------  5 aesgu001 csmajs 4096 Apr 29 16:01 .
+drwx------ 44 aesgu001 csmajs 8192 May  2 00:00 ..
+drwx------  7 aesgu001 csmajs 4096 May  2 00:11 rshell
+drwx------  5 aesgu001 csmajs 4096 Apr 29 16:56 rshell-1
+drwx------  9 aesgu001 csmajs 4096 Apr 25 18:16 ucr-cs100
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m # c. repeated flags
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m bin/ls -aa -ll test_dir
+test_dir:
+total 12
+drwx------ 3 aesgu001 csmajs  4096 May  2 00:11 [0;34m.[39;49m
+drwx------ 7 aesgu001 csmajs  4096 May  2 00:11 [0;34m..[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  2 00:11 [0;34mtest_dir1[39;49m
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m ls -aa -ll test_dir
+total 12
+drwx------ 3 aesgu001 csmajs 4096 May  2 00:11 .
+drwx------ 7 aesgu001 csmajs 4096 May  2 00:11 ..
+drwx------ 2 aesgu001 csmajs 4096 May  2 00:11 test_dir1
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m ls -R -lR [K[K[K[Ktest_dir -ll -lR
+test_dir:
+total 4
+drwx------ 2 aesgu001 csmajs 4096 May  2 00:11 test_dir1
+
+test_dir/test_dir1:
+total 0
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m bin/ls -R test_dir -ll -lR
+test_dir:
+total 4
+drwx------ 2 aesgu001 csmajs  4096 May  2 00:11 [0;34mtest_dir1[39;49m
+
+test_dir/test_dir1:
+total 0
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m # d. number flags
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m bin/ls -8 -a
+[0;34m.[39;49m  [0;34m..[39;49m  [0;34m.git[39;49m  LICENSE  Makefile  README.md  [0;34mbin[39;49m  [0;34msrc[39;49m  [0;34mtest_dir[39;49m  [0;34mtests[39;49m  
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m ls -8 -a
+ls: invalid option -- '8'
+Try `ls --help' for more information.
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m bin/ls test_dir -R6
+test_dir:
+[0;34mtest_dir1[39;49m  
+
+test_dir/test_dir1:
+
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m ls test_dir -R6
+ls: invalid option -- '6'
+Try `ls --help' for more information.
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m # e. same directories
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m bin/ls . . -a
+.:
+[0;34m.[39;49m  [0;34m..[39;49m  [0;34m.git[39;49m  LICENSE  Makefile  README.md  [0;34mbin[39;49m  [0;34msrc[39;49m  [0;34mtest_dir[39;49m  [0;34mtests[39;49m  
+
+.:
+[0;34m.[39;49m  [0;34m..[39;49m  [0;34m.git[39;49m  LICENSE  Makefile  README.md  [0;34mbin[39;49m  [0;34msrc[39;49m  [0;34mtest_dir[39;49m  [0;34mtests[39;49m  
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m ls -a . .
+.:
+.  ..  bin  .git  LICENSE  Makefile  README.md	src  test_dir  tests
+
+.:
+.  ..  bin  .git  LICENSE  Makefile  README.md	src  test_dir  tests
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m ls -R . . -l[4hb[4l[4hi[4l[4hn[4l[4h/[4l
+.:
+total 44
+-rw------- 1 aesgu001 csmajs 18047 Apr 10 13:23 LICENSE
+-rw------- 1 aesgu001 csmajs   264 May  1 20:23 Makefile
+-rw------- 1 aesgu001 csmajs  1385 Apr 19 22:10 README.md
+drwx------ 2 aesgu001 csmajs  4096 May  2 00:03 [0;34mbin[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 22:22 [0;34msrc[39;49m
+drwx------ 3 aesgu001 csmajs  4096 May  2 00:11 [0;34mtest_dir[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  2 00:01 [0;34mtests[39;49m
+
+./bin:
+total 92
+-rwx------ 1 aesgu001 csmajs 51420 May  2 00:03 [0;32mls[39;49m
+-rwx------ 1 aesgu001 csmajs 40715 May  2 00:03 [0;32mrshell[39;49m
+
+./src:
+total 16
+-rw------- 1 aesgu001 csmajs  1353 Apr 19 15:01 cmd.h
+-rw------- 1 aesgu001 csmajs  6300 May  1 22:10 ls.cpp
+-rw------- 1 aesgu001 csmajs  4087 Apr 19 22:10 main.cpp
+
+./test_dir:
+total 4
+drwx------ 2 aesgu001 csmajs  4096 May  2 00:11 [0;34mtest_dir1[39;49m
+
+./test_dir/test_dir1:
+total 0
+
+./tests:
+total 36
+-rw------- 1 aesgu001 csmajs 35497 May  1 23:59 exec.script
+-rw------- 1 aesgu001 csmajs     0 May  2 00:03 ls.script
+
+.:
+total 44
+-rw------- 1 aesgu001 csmajs 18047 Apr 10 13:23 LICENSE
+-rw------- 1 aesgu001 csmajs   264 May  1 20:23 Makefile
+-rw------- 1 aesgu001 csmajs  1385 Apr 19 22:10 README.md
+drwx------ 2 aesgu001 csmajs  4096 May  2 00:03 [0;34mbin[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 22:22 [0;34msrc[39;49m
+drwx------ 3 aesgu001 csmajs  4096 May  2 00:11 [0;34mtest_dir[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  2 00:01 [0;34mtests[39;49m
+
+./bin:
+total 92
+-rwx------ 1 aesgu001 csmajs 51420 May  2 00:03 [0;32mls[39;49m
+-rwx------ 1 aesgu001 csmajs 40715 May  2 00:03 [0;32mrshell[39;49m
+
+./src:
+total 16
+-rw------- 1 aesgu001 csmajs  1353 Apr 19 15:01 cmd.h
+-rw------- 1 aesgu001 csmajs  6300 May  1 22:10 ls.cpp
+-rw------- 1 aesgu001 csmajs  4087 Apr 19 22:10 main.cpp
+
+./test_dir:
+total 4
+drwx------ 2 aesgu001 csmajs  4096 May  2 00:11 [0;34mtest_dir1[39;49m
+
+./test_dir/test_dir1:
+total 0
+
+./tests:
+total 36
+-rw------- 1 aesgu001 csmajs 35497 May  1 23:59 exec.script
+-rw------- 1 aesgu001 csmajs     0 May  2 00:03 ls.script
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m bin [K/ls . . -Rl
+.:
+total 44
+do_ypcall: clnt_call: RPC: Unable to send; errno = Operation not permitted
+-rw------- 1 aesgu001 csmajs 18047 Apr 10 13:23 LICENSE
+-rw------- 1 aesgu001 csmajs   264 May  1 20:23 Makefile
+-rw------- 1 aesgu001 csmajs  1385 Apr 19 22:10 README.md
+drwx------ 2 aesgu001 csmajs  4096 May  2 00:03 [0;34mbin[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 22:22 [0;34msrc[39;49m
+drwx------ 3 aesgu001 csmajs  4096 May  2 00:11 [0;34mtest_dir[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  2 00:01 [0;34mtests[39;49m
+
+./bin:
+total 92
+-rwx------ 1 aesgu001 csmajs 51420 May  2 00:03 [0;32mls[39;49m
+-rwx------ 1 aesgu001 csmajs 40715 May  2 00:03 [0;32mrshell[39;49m
+
+./src:
+total 16
+-rw------- 1 aesgu001 csmajs  1353 Apr 19 15:01 cmd.h
+-rw------- 1 aesgu001 csmajs  6300 May  1 22:10 ls.cpp
+-rw------- 1 aesgu001 csmajs  4087 Apr 19 22:10 main.cpp
+
+./test_dir:
+total 4
+drwx------ 2 aesgu001 csmajs  4096 May  2 00:11 [0;34mtest_dir1[39;49m
+
+./test_dir/test_dir1:
+total 0
+
+./tests:
+total 36
+-rw------- 1 aesgu001 csmajs 35497 May  1 23:59 exec.script
+-rw------- 1 aesgu001 csmajs     0 May  2 00:03 ls.script
+
+.:
+total 44
+-rw------- 1 aesgu001 csmajs 18047 Apr 10 13:23 LICENSE
+-rw------- 1 aesgu001 csmajs   264 May  1 20:23 Makefile
+-rw------- 1 aesgu001 csmajs  1385 Apr 19 22:10 README.md
+drwx------ 2 aesgu001 csmajs  4096 May  2 00:03 [0;34mbin[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 22:22 [0;34msrc[39;49m
+drwx------ 3 aesgu001 csmajs  4096 May  2 00:11 [0;34mtest_dir[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  2 00:01 [0;34mtests[39;49m
+
+./bin:
+total 92
+-rwx------ 1 aesgu001 csmajs 51420 May  2 00:03 [0;32mls[39;49m
+-rwx------ 1 aesgu001 csmajs 40715 May  2 00:03 [0;32mrshell[39;49m
+
+./src:
+total 16
+-rw------- 1 aesgu001 csmajs  1353 Apr 19 15:01 cmd.h
+-rw------- 1 aesgu001 csmajs  6300 May  1 22:10 ls.cpp
+-rw------- 1 aesgu001 csmajs  4087 Apr 19 22:10 main.cpp
+
+./test_dir:
+total 4
+drwx------ 2 aesgu001 csmajs  4096 May  2 00:11 [0;34mtest_dir1[39;49m
+
+./test_dir/test_dir1:
+total 0
+
+./tests:
+total 36
+-rw------- 1 aesgu001 csmajs 35497 May  1 23:59 exec.script
+-rw------- 1 aesgu001 csmajs     0 May  2 00:03 ls.script
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m # f. 'ls -A[Ka -R -l[K[K[K[Kl -[K[K[KR -l [K'
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m ls -a -R -l
+.:
+total 56
+drwx------ 7 aesgu001 csmajs  4096 May  2 00:11 .
+drwx------ 5 aesgu001 csmajs  4096 Apr 29 16:01 ..
+drwx------ 2 aesgu001 csmajs  4096 May  2 00:03 bin
+drwx------ 8 aesgu001 csmajs  4096 May  2 00:00 .git
+-rw------- 1 aesgu001 csmajs 18047 Apr 10 13:23 LICENSE
+-rw------- 1 aesgu001 csmajs   264 May  1 20:23 Makefile
+-rw------- 1 aesgu001 csmajs  1385 Apr 19 22:10 README.md
+drwx------ 2 aesgu001 csmajs  4096 May  1 22:22 src
+drwx------ 3 aesgu001 csmajs  4096 May  2 00:11 test_dir
+drwx------ 2 aesgu001 csmajs  4096 May  2 00:01 tests
+
+./bin:
+total 100
+drwx------ 2 aesgu001 csmajs  4096 May  2 00:03 .
+drwx------ 7 aesgu001 csmajs  4096 May  2 00:11 ..
+-rwx------ 1 aesgu001 csmajs 51420 May  2 00:03 ls
+-rwx------ 1 aesgu001 csmajs 40715 May  2 00:03 rshell
+
+./.git:
+total 64
+drwx------   8 aesgu001 csmajs 4096 May  2 00:00 .
+drwx------   7 aesgu001 csmajs 4096 May  2 00:11 ..
+drwx------   2 aesgu001 csmajs 4096 Apr 10 13:23 branches
+-rw-------   1 aesgu001 csmajs  540 Apr 13 02:28 #COMMIT_EDITMSG#
+-rw-------   1 aesgu001 csmajs   49 May  1 22:20 COMMIT_EDITMSG
+-rw-------   1 aesgu001 csmajs  321 Apr 19 21:52 config
+-rw-------   1 aesgu001 csmajs   73 Apr 10 13:23 description
+-rw-------   1 aesgu001 csmajs  308 May  1 20:20 FETCH_HEAD
+-rw-------   1 aesgu001 csmajs   19 May  1 20:23 HEAD
+drwx------   2 aesgu001 csmajs 4096 Apr 10 13:23 hooks
+-rw-------   1 aesgu001 csmajs  560 May  2 00:00 index
+drwx------   2 aesgu001 csmajs 4096 Apr 10 13:23 info
+drwx------   3 aesgu001 csmajs 4096 Apr 10 13:23 logs
+-rw-------   1 aesgu001 csmajs  287 Apr 19 17:03 #MERGE_MSG#
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 objects
+-rw-------   1 aesgu001 csmajs   41 Apr 25 14:34 ORIG_HEAD
+-rw-------   1 aesgu001 csmajs  173 Apr 10 13:23 packed-refs
+drwx------   5 aesgu001 csmajs 4096 Apr 10 13:23 refs
+
+./.git/branches:
+total 8
+drwx------ 2 aesgu001 csmajs 4096 Apr 10 13:23 .
+drwx------ 8 aesgu001 csmajs 4096 May  2 00:00 ..
+
+./.git/hooks:
+total 48
+drwx------ 2 aesgu001 csmajs 4096 Apr 10 13:23 .
+drwx------ 8 aesgu001 csmajs 4096 May  2 00:00 ..
+-rwx------ 1 aesgu001 csmajs  452 Apr 10 13:23 applypatch-msg.sample
+-rwx------ 1 aesgu001 csmajs  896 Apr 10 13:23 commit-msg.sample
+-rwx------ 1 aesgu001 csmajs  189 Apr 10 13:23 post-update.sample
+-rwx------ 1 aesgu001 csmajs  398 Apr 10 13:23 pre-applypatch.sample
+-rwx------ 1 aesgu001 csmajs 1635 Apr 10 13:23 pre-commit.sample
+-rwx------ 1 aesgu001 csmajs 1239 Apr 10 13:23 prepare-commit-msg.sample
+-rwx------ 1 aesgu001 csmajs 1348 Apr 10 13:23 pre-push.sample
+-rwx------ 1 aesgu001 csmajs 4951 Apr 10 13:23 pre-rebase.sample
+-rwx------ 1 aesgu001 csmajs 3611 Apr 10 13:23 update.sample
+
+./.git/info:
+total 12
+drwx------ 2 aesgu001 csmajs 4096 Apr 10 13:23 .
+drwx------ 8 aesgu001 csmajs 4096 May  2 00:00 ..
+-rw------- 1 aesgu001 csmajs  240 Apr 10 13:23 exclude
+
+./.git/logs:
+total 40
+drwx------ 3 aesgu001 csmajs  4096 Apr 10 13:23 .
+drwx------ 8 aesgu001 csmajs  4096 May  2 00:00 ..
+-rw------- 1 aesgu001 csmajs 25041 May  1 22:20 HEAD
+drwx------ 4 aesgu001 csmajs  4096 Apr 10 13:23 refs
+
+./.git/logs/refs:
+total 16
+drwx------ 4 aesgu001 csmajs 4096 Apr 10 13:23 .
+drwx------ 3 aesgu001 csmajs 4096 Apr 10 13:23 ..
+drwx------ 2 aesgu001 csmajs 4096 Apr 25 14:42 heads
+drwx------ 3 aesgu001 csmajs 4096 Apr 10 13:23 remotes
+
+./.git/logs/refs/heads:
+total 28
+drwx------ 2 aesgu001 csmajs 4096 Apr 25 14:42 .
+drwx------ 4 aesgu001 csmajs 4096 Apr 10 13:23 ..
+-rw------- 1 aesgu001 csmajs 6326 Apr 19 22:07 exec
+-rw------- 1 aesgu001 csmajs 4635 May  1 22:20 ls
+-rw------- 1 aesgu001 csmajs 1142 May  1 20:22 master
+
+./.git/logs/refs/remotes:
+total 12
+drwx------ 3 aesgu001 csmajs 4096 Apr 10 13:23 .
+drwx------ 4 aesgu001 csmajs 4096 Apr 10 13:23 ..
+drwx------ 2 aesgu001 csmajs 4096 May  1 20:19 origin
+
+./.git/logs/refs/remotes/origin:
+total 24
+drwx------ 2 aesgu001 csmajs 4096 May  1 20:19 .
+drwx------ 3 aesgu001 csmajs 4096 Apr 10 13:23 ..
+-rw------- 1 aesgu001 csmajs  477 Apr 19 22:16 exec
+-rw------- 1 aesgu001 csmajs  195 Apr 10 13:23 HEAD
+-rw------- 1 aesgu001 csmajs  159 May  1 20:19 ls
+-rw------- 1 aesgu001 csmajs  803 May  1 20:22 master
+
+./.git/objects:
+total 748
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 .
+drwx------   8 aesgu001 csmajs 4096 May  2 00:00 ..
+drwx------   2 aesgu001 csmajs 4096 Apr 10 13:41 00
+drwx------   2 aesgu001 csmajs 4096 Apr 11 15:48 02
+drwx------   2 aesgu001 csmajs 4096 May  1 21:14 03
+drwx------   2 aesgu001 csmajs 4096 Apr 10 20:34 04
+drwx------   2 aesgu001 csmajs 4096 Apr 18 01:37 05
+drwx------   2 aesgu001 csmajs 4096 Apr 13 17:51 07
+drwx------   2 aesgu001 csmajs 4096 May  1 20:18 08
+drwx------   2 aesgu001 csmajs 4096 Apr 12 04:21 0a
+drwx------   2 aesgu001 csmajs 4096 May  1 21:03 0b
+drwx------   2 aesgu001 csmajs 4096 Apr 13 02:17 0c
+drwx------   2 aesgu001 csmajs 4096 Apr 30 18:18 0d
+drwx------   2 aesgu001 csmajs 4096 Apr 15 17:52 0e
+drwx------   2 aesgu001 csmajs 4096 Apr 10 13:23 0f
+drwx------   2 aesgu001 csmajs 4096 Apr 30 01:32 10
+drwx------   2 aesgu001 csmajs 4096 May  1 20:56 12
+drwx------   2 aesgu001 csmajs 4096 Apr 11 01:18 13
+drwx------   2 aesgu001 csmajs 4096 Apr 16 14:52 14
+drwx------   2 aesgu001 csmajs 4096 Apr 15 17:52 16
+drwx------   2 aesgu001 csmajs 4096 Apr 13 18:07 17
+drwx------   2 aesgu001 csmajs 4096 May  1 21:37 18
+drwx------   2 aesgu001 csmajs 4096 Apr 30 01:53 19
+drwx------   2 aesgu001 csmajs 4096 Apr 13 04:19 1c
+drwx------   2 aesgu001 csmajs 4096 Apr 15 22:03 1e
+drwx------   2 aesgu001 csmajs 4096 Apr 19 14:52 1f
+drwx------   2 aesgu001 csmajs 4096 Apr 13 02:15 21
+drwx------   2 aesgu001 csmajs 4096 Apr 28 20:00 22
+drwx------   2 aesgu001 csmajs 4096 Apr 12 19:35 23
+drwx------   2 aesgu001 csmajs 4096 May  1 20:22 24
+drwx------   2 aesgu001 csmajs 4096 Apr 30 01:32 25
+drwx------   2 aesgu001 csmajs 4096 Apr 13 17:13 26
+drwx------   2 aesgu001 csmajs 4096 Apr 25 14:47 28
+drwx------   2 aesgu001 csmajs 4096 Apr 12 00:38 29
+drwx------   2 aesgu001 csmajs 4096 May  1 01:11 2a
+drwx------   2 aesgu001 csmajs 4096 Apr 11 22:07 2d
+drwx------   2 aesgu001 csmajs 4096 Apr 28 16:58 31
+drwx------   2 aesgu001 csmajs 4096 Apr 30 01:53 33
+drwx------   2 aesgu001 csmajs 4096 May  1 20:18 34
+drwx------   2 aesgu001 csmajs 4096 May  1 20:20 35
+drwx------   2 aesgu001 csmajs 4096 May  1 21:03 37
+drwx------   2 aesgu001 csmajs 4096 Apr 13 17:40 38
+drwx------   2 aesgu001 csmajs 4096 Apr 19 20:50 39
+drwx------   2 aesgu001 csmajs 4096 May  1 20:18 3b
+drwx------   2 aesgu001 csmajs 4096 May  1 21:15 3c
+drwx------   2 aesgu001 csmajs 4096 Apr 12 00:38 3d
+drwx------   2 aesgu001 csmajs 4096 Apr 12 00:38 3e
+drwx------   2 aesgu001 csmajs 4096 Apr 30 19:21 3f
+drwx------   2 aesgu001 csmajs 4096 May  1 21:36 40
+drwx------   2 aesgu001 csmajs 4096 Apr 12 00:38 44
+drwx------   2 aesgu001 csmajs 4096 Apr 13 23:19 45
+drwx------   2 aesgu001 csmajs 4096 Apr 25 15:35 46
+drwx------   2 aesgu001 csmajs 4096 Apr 30 01:32 47
+drwx------   2 aesgu001 csmajs 4096 Apr 11 22:07 4a
+drwx------   2 aesgu001 csmajs 4096 Apr 13 23:19 4b
+drwx------   2 aesgu001 csmajs 4096 Apr 13 01:09 4c
+drwx------   2 aesgu001 csmajs 4096 Apr 14 01:45 4d
+drwx------   2 aesgu001 csmajs 4096 Apr 10 14:46 4e
+drwx------   2 aesgu001 csmajs 4096 May  1 22:19 50
+drwx------   2 aesgu001 csmajs 4096 Apr 11 22:48 53
+drwx------   2 aesgu001 csmajs 4096 Apr 28 23:51 54
+drwx------   2 aesgu001 csmajs 4096 Apr 25 15:00 55
+drwx------   2 aesgu001 csmajs 4096 Apr 28 23:51 56
+drwx------   2 aesgu001 csmajs 4096 Apr 17 12:52 58
+drwx------   2 aesgu001 csmajs 4096 Apr 28 23:42 59
+drwx------   2 aesgu001 csmajs 4096 May  1 20:22 5a
+drwx------   2 aesgu001 csmajs 4096 Apr 10 22:55 5b
+drwx------   2 aesgu001 csmajs 4096 Apr 28 23:51 5c
+drwx------   2 aesgu001 csmajs 4096 Apr 14 01:45 5e
+drwx------   2 aesgu001 csmajs 4096 Apr 11 21:53 61
+drwx------   2 aesgu001 csmajs 4096 Apr 30 19:21 62
+drwx------   2 aesgu001 csmajs 4096 Apr 17 12:49 63
+drwx------   2 aesgu001 csmajs 4096 Apr 17 01:41 65
+drwx------   2 aesgu001 csmajs 4096 Apr 30 23:34 66
+drwx------   2 aesgu001 csmajs 4096 Apr 28 23:42 67
+drwx------   2 aesgu001 csmajs 4096 May  1 22:20 68
+drwx------   2 aesgu001 csmajs 4096 Apr 28 20:01 69
+drwx------   2 aesgu001 csmajs 4096 Apr 13 17:13 6a
+drwx------   2 aesgu001 csmajs 4096 Apr 15 23:26 6b
+drwx------   2 aesgu001 csmajs 4096 Apr 19 22:07 6c
+drwx------   2 aesgu001 csmajs 4096 Apr 10 13:41 6e
+drwx------   2 aesgu001 csmajs 4096 Apr 15 23:27 6f
+drwx------   2 aesgu001 csmajs 4096 May  1 20:54 70
+drwx------   2 aesgu001 csmajs 4096 Apr 13 17:33 71
+drwx------   2 aesgu001 csmajs 4096 May  1 21:15 72
+drwx------   2 aesgu001 csmajs 4096 Apr 30 22:49 73
+drwx------   2 aesgu001 csmajs 4096 Apr 30 22:49 75
+drwx------   2 aesgu001 csmajs 4096 May  1 21:15 76
+drwx------   2 aesgu001 csmajs 4096 Apr 30 22:49 77
+drwx------   2 aesgu001 csmajs 4096 Apr 19 15:06 79
+drwx------   2 aesgu001 csmajs 4096 May  1 20:56 7a
+drwx------   2 aesgu001 csmajs 4096 Apr 25 15:02 7b
+drwx------   2 aesgu001 csmajs 4096 Apr 17 12:59 7c
+drwx------   2 aesgu001 csmajs 4096 Apr 19 16:44 7f
+drwx------   2 aesgu001 csmajs 4096 Apr 11 22:47 81
+drwx------   2 aesgu001 csmajs 4096 Apr 13 02:45 83
+drwx------   2 aesgu001 csmajs 4096 Apr 19 14:50 86
+drwx------   2 aesgu001 csmajs 4096 Apr 19 20:52 87
+drwx------   2 aesgu001 csmajs 4096 Apr 10 13:23 89
+drwx------   2 aesgu001 csmajs 4096 Apr 19 22:06 8a
+drwx------   2 aesgu001 csmajs 4096 May  1 22:20 8b
+drwx------   2 aesgu001 csmajs 4096 May  1 20:21 8c
+drwx------   2 aesgu001 csmajs 4096 May  1 21:37 8d
+drwx------   2 aesgu001 csmajs 4096 Apr 11 22:48 8f
+drwx------   2 aesgu001 csmajs 4096 May  1 20:20 90
+drwx------   2 aesgu001 csmajs 4096 Apr 28 16:58 91
+drwx------   2 aesgu001 csmajs 4096 May  1 20:20 93
+drwx------   2 aesgu001 csmajs 4096 Apr 19 14:54 95
+drwx------   2 aesgu001 csmajs 4096 Apr 19 22:10 96
+drwx------   2 aesgu001 csmajs 4096 Apr 16 14:51 97
+drwx------   2 aesgu001 csmajs 4096 Apr 10 22:55 9a
+drwx------   2 aesgu001 csmajs 4096 Apr 13 04:19 9b
+drwx------   2 aesgu001 csmajs 4096 Apr 28 17:39 9d
+drwx------   2 aesgu001 csmajs 4096 Apr 18 00:20 9f
+drwx------   2 aesgu001 csmajs 4096 Apr 30 01:53 a0
+drwx------   2 aesgu001 csmajs 4096 Apr 10 13:41 a1
+drwx------   2 aesgu001 csmajs 4096 Apr 19 20:52 a3
+drwx------   2 aesgu001 csmajs 4096 Apr 13 23:02 a5
+drwx------   2 aesgu001 csmajs 4096 Apr 30 23:34 a6
+drwx------   2 aesgu001 csmajs 4096 Apr 19 16:59 a7
+drwx------   2 aesgu001 csmajs 4096 Apr 16 00:41 a8
+drwx------   2 aesgu001 csmajs 4096 Apr 13 19:39 aa
+drwx------   2 aesgu001 csmajs 4096 May  1 00:44 ab
+drwx------   2 aesgu001 csmajs 4096 Apr 25 14:47 ac
+drwx------   2 aesgu001 csmajs 4096 May  1 01:13 ad
+drwx------   2 aesgu001 csmajs 4096 Apr 30 23:33 ae
+drwx------   2 aesgu001 csmajs 4096 May  1 20:20 af
+drwx------   2 aesgu001 csmajs 4096 Apr 28 20:01 b0
+drwx------   2 aesgu001 csmajs 4096 Apr 10 22:55 b1
+drwx------   2 aesgu001 csmajs 4096 Apr 30 18:18 b2
+drwx------   2 aesgu001 csmajs 4096 Apr 12 19:04 b3
+drwx------   2 aesgu001 csmajs 4096 Apr 18 23:08 b4
+drwx------   2 aesgu001 csmajs 4096 Apr 11 15:51 b6
+drwx------   2 aesgu001 csmajs 4096 Apr 18 00:20 b7
+drwx------   2 aesgu001 csmajs 4096 Apr 19 16:50 b8
+drwx------   2 aesgu001 csmajs 4096 Apr 17 12:55 b9
+drwx------   2 aesgu001 csmajs 4096 Apr 13 23:02 bb
+drwx------   2 aesgu001 csmajs 4096 Apr 12 18:36 bc
+drwx------   2 aesgu001 csmajs 4096 Apr 11 15:51 bd
+drwx------   2 aesgu001 csmajs 4096 Apr 12 04:21 be
+drwx------   2 aesgu001 csmajs 4096 Apr 11 01:18 bf
+drwx------   2 aesgu001 csmajs 4096 Apr 28 23:42 c0
+drwx------   2 aesgu001 csmajs 4096 Apr 19 16:45 c2
+drwx------   2 aesgu001 csmajs 4096 Apr 10 15:05 c3
+drwx------   2 aesgu001 csmajs 4096 Apr 10 22:55 c5
+drwx------   2 aesgu001 csmajs 4096 Apr 13 23:02 c7
+drwx------   2 aesgu001 csmajs 4096 Apr 19 21:50 c8
+drwx------   2 aesgu001 csmajs 4096 Apr 18 22:09 c9
+drwx------   2 aesgu001 csmajs 4096 Apr 30 22:47 ca
+drwx------   2 aesgu001 csmajs 4096 May  1 20:18 cc
+drwx------   2 aesgu001 csmajs 4096 Apr 28 20:01 cd
+drwx------   2 aesgu001 csmajs 4096 May  1 20:56 ce
+drwx------   2 aesgu001 csmajs 4096 May  1 00:44 d0
+drwx------   2 aesgu001 csmajs 4096 Apr 15 21:44 d3
+drwx------   2 aesgu001 csmajs 4096 May  1 01:13 d4
+drwx------   2 aesgu001 csmajs 4096 Apr 13 23:18 d5
+drwx------   2 aesgu001 csmajs 4096 Apr 30 18:18 d6
+drwx------   2 aesgu001 csmajs 4096 May  1 21:37 d7
+drwx------   2 aesgu001 csmajs 4096 Apr 30 19:20 d8
+drwx------   2 aesgu001 csmajs 4096 Apr 25 15:02 d9
+drwx------   2 aesgu001 csmajs 4096 May  1 22:20 da
+drwx------   2 aesgu001 csmajs 4096 Apr 30 19:21 df
+drwx------   2 aesgu001 csmajs 4096 Apr 19 22:07 e1
+drwx------   2 aesgu001 csmajs 4096 Apr 12 19:04 e2
+drwx------   2 aesgu001 csmajs 4096 May  1 00:42 e3
+drwx------   2 aesgu001 csmajs 4096 Apr 15 22:16 e4
+drwx------   2 aesgu001 csmajs 4096 May  1 20:20 e5
+drwx------   2 aesgu001 csmajs 4096 Apr 30 01:30 e6
+drwx------   2 aesgu001 csmajs 4096 Apr 13 23:19 e7
+drwx------   2 aesgu001 csmajs 4096 May  1 21:03 e9
+drwx------   2 aesgu001 csmajs 4096 Apr 12 00:38 ea
+drwx------   2 aesgu001 csmajs 4096 Apr 18 01:38 eb
+drwx------   2 aesgu001 csmajs 4096 Apr 15 17:52 f1
+drwx------   2 aesgu001 csmajs 4096 Apr 30 01:53 f2
+drwx------   2 aesgu001 csmajs 4096 Apr 25 15:33 f3
+drwx------   2 aesgu001 csmajs 4096 Apr 19 01:13 f4
+drwx------   2 aesgu001 csmajs 4096 Apr 28 17:36 f5
+drwx------   2 aesgu001 csmajs 4096 Apr 19 22:07 f6
+drwx------   2 aesgu001 csmajs 4096 Apr 11 21:53 f7
+drwx------   2 aesgu001 csmajs 4096 Apr 28 17:39 f9
+drwx------   2 aesgu001 csmajs 4096 May  1 01:13 fa
+drwx------   2 aesgu001 csmajs 4096 Apr 11 21:53 fb
+drwx------   2 aesgu001 csmajs 4096 Apr 13 04:18 fe
+drwx------   2 aesgu001 csmajs 4096 Apr 11 01:26 ff
+drwx------   2 aesgu001 csmajs 4096 Apr 10 13:23 info
+drwx------   2 aesgu001 csmajs 4096 Apr 10 13:23 pack
+
+./.git/objects/00:
+total 12
+drwx------   2 aesgu001 csmajs 4096 Apr 10 13:41 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs   52 Apr 10 13:41 5895124bda223ef85362993faf0e0fddfbb94a
+
+./.git/objects/02:
+total 20
+drwx------   2 aesgu001 csmajs 4096 Apr 11 15:48 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  413 Apr 11 15:48 7310d534ac9a2ac319f9461d5d8a856212e75d
+-r--------   1 aesgu001 csmajs  255 Apr 10 20:33 cbb4ee6fb4fec052ef2edc83c3547bd52e3f50
+
+./.git/objects/03:
+total 24
+drwx------   2 aesgu001 csmajs 4096 May  1 21:14 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  270 Apr 11 22:06 2ba2cfe064c248acf7e2500b19326c51cba050
+-r--------   1 aesgu001 csmajs 1760 May  1 21:14 5a7c31b2f5a89b06da5b83b7ba4648270e30cf
+-r--------   1 aesgu001 csmajs  199 Apr 28 17:39 9867ecf877a8c6f8c0335857aff18a0e392b3b
+
+./.git/objects/04:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 10 20:34 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  115 Apr 10 20:34 aac6aafa643becb32fbb4bb4f7099f351a5d2a
+
+./.git/objects/05:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 18 01:37 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  156 Apr 18 01:37 0e6a7b89b8cb8e98b3d08c4cd3ac8efa33e741
+
+./.git/objects/07:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 13 17:51 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  215 Apr 13 17:51 3623c6888126102d69e9e4d74219541f3aeb18
+
+./.git/objects/08:
+total 24
+drwx------   2 aesgu001 csmajs 4096 May  1 20:18 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  176 May  1 00:44 0d7653a2ab4af9b322c01aa36b88295cf7adbe
+-r--------   1 aesgu001 csmajs  109 May  1 20:18 64324c0c3c80d876a35bde25af897f74589e96
+-r--------   1 aesgu001 csmajs   82 Apr 12 18:15 76e4dd0ff25dab6cd53614583bb9217278ca82
+
+./.git/objects/0a:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 12 04:21 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  660 Apr 12 04:21 7488e221dbec1fa47270f7d34033a41624c73d
+
+./.git/objects/0b:
+total 20
+drwx------   2 aesgu001 csmajs 4096 May  1 21:03 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  109 May  1 21:03 0ac91e31ad7bee1021b41a2566c471e1c2364e
+-r--------   1 aesgu001 csmajs  178 Apr 12 00:38 2bb7931bcb33a88fe3cbfa114060f514657376
+
+./.git/objects/0c:
+total 20
+drwx------   2 aesgu001 csmajs 4096 Apr 13 02:17 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  115 Apr 10 13:36 568e77cfe5e3bddefff30bd795a31dabf85d17
+-r--------   1 aesgu001 csmajs  116 Apr 13 02:17 787fe7eebaffb9eb93081f624afde493bd3bef
+
+./.git/objects/0d:
+total 20
+drwx------   2 aesgu001 csmajs 4096 Apr 30 18:18 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  184 Apr 11 01:11 76ce6efe7fa6d1b05d184043cd310dccf39925
+-r--------   1 aesgu001 csmajs  194 Apr 30 18:18 87682a7e5048d1ac895a2167e7b04ad9051ba9
+
+./.git/objects/0e:
+total 20
+drwx------   2 aesgu001 csmajs 4096 Apr 15 17:52 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  193 Apr 15 17:52 30c5fd877f59dc0588e54ca94306762c26e32f
+-r--------   1 aesgu001 csmajs  115 Apr 12 18:37 83bc4572d6906dc51fbd6b665947022d4350c2
+
+./.git/objects/0f:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 10 13:23 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  131 Apr 10 13:23 6a860b0906493c68165a98d9d482a06fab8804
+
+./.git/objects/10:
+total 24
+drwx------   2 aesgu001 csmajs 4096 Apr 30 01:32 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  188 Apr 11 01:25 01d775be84bcc0d8ae8b15e98d612fc0c9bd46
+-r--------   1 aesgu001 csmajs  226 Apr 10 13:23 953f5c6b5ca291ec5ca627cd4306b334be1ab6
+-r--------   1 aesgu001 csmajs  110 Apr 30 01:32 98d0a3c686dd6430ef709de0e184c2dfeff973
+
+./.git/objects/12:
+total 24
+drwx------   2 aesgu001 csmajs 4096 May  1 20:56 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  226 Apr 13 01:09 19cac28863bbf24f2a7dc4440ac7cbcb753afb
+-r--------   1 aesgu001 csmajs  177 May  1 20:56 2485b830ac8cc7fc507e16b570a422bb610fe6
+-r--------   1 aesgu001 csmajs  757 May  1 20:20 cb35cf114df0ed12208cadf5c4f8798412a892
+
+./.git/objects/13:
+total 20
+drwx------   2 aesgu001 csmajs 4096 Apr 11 01:18 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  116 Apr 10 15:06 bb6928bd2e81ff78ef0ee60e7d3084bdc53758
+-r--------   1 aesgu001 csmajs  181 Apr 11 01:18 c29eac57352cdc1709670dc22f397eadb1c21c
+
+./.git/objects/14:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 16 14:52 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  193 Apr 16 14:52 4d9a87d77b97a998ed97cdf11952835fd54bca
+
+./.git/objects/16:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 15 17:52 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs   82 Apr 15 17:52 efffcc7fd7665b817fe8374030ef6889521e66
+
+./.git/objects/17:
+total 20
+drwx------   2 aesgu001 csmajs 4096 Apr 13 18:07 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  192 Apr 12 19:04 79420f9ab47656d225cb7e654484827012c361
+-r--------   1 aesgu001 csmajs   81 Apr 13 18:07 c2022c85ff8d369a263bd0c313ad93c764cb05
+
+./.git/objects/18:
+total 24
+drwx------   2 aesgu001 csmajs 4096 May  1 21:37 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  147 Apr 15 23:27 1ba83e4b7587c170be7bcb8100e10eb5837950
+-r--------   1 aesgu001 csmajs  190 Apr 25 22:42 5f1c7653d1a68ae8230221832f938a8aaa477a
+-r--------   1 aesgu001 csmajs  189 May  1 21:37 7d9daee316dd3362e510aced1d42e56a0750ea
+
+./.git/objects/19:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 30 01:53 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  176 Apr 30 01:53 57b4d0a196d791aaffc0302bf1f72018d27fdb
+
+./.git/objects/1c:
+total 20
+drwx------   2 aesgu001 csmajs 4096 Apr 13 04:19 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs 1127 Apr 12 19:34 99475ddd2b47d7237883d8d74b915a103e9b84
+-r--------   1 aesgu001 csmajs  148 Apr 13 04:19 b76fc4438b2a735b895c77b5e2d0bb99f449cb
+
+./.git/objects/1e:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 15 22:03 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs 1403 Apr 15 22:03 b24f8ad684dc192cefd87769f87bf02414311c
+
+./.git/objects/1f:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 19 14:52 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  147 Apr 19 14:52 e31d076ee9e3481fe8f25ed2706003ed380d31
+
+./.git/objects/21:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 13 02:15 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs 1064 Apr 13 02:15 02d9ce4af655b1326b9002f61721bc4867f422
+
+./.git/objects/22:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 28 20:00 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs 1093 Apr 28 20:00 480ac4508b393b3d930518592efea54f6f6664
+
+./.git/objects/23:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 12 19:35 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  115 Apr 12 19:35 ec773dcb38d06db38251615cff168de1f33b3c
+
+./.git/objects/24:
+total 20
+drwx------   2 aesgu001 csmajs 4096 May  1 20:22 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  180 May  1 20:22 17fb20c3609d9b5cef721644a5162018f12400
+-r--------   1 aesgu001 csmajs  562 Apr 13 19:38 8c699b1ce15e9ce4c091d9fbe41dceea64ecc6
+
+./.git/objects/25:
+total 20
+drwx------   2 aesgu001 csmajs 4096 Apr 30 01:32 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  177 Apr 30 01:32 bd3b6d2c757f27f35dc72fbca0faeb1ede1267
+-r--------   1 aesgu001 csmajs  189 Apr 19 14:52 d6bef0d1858d2af4f9908683048477edcee26f
+
+./.git/objects/26:
+total 20
+drwx------   2 aesgu001 csmajs 4096 Apr 13 17:13 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  101 Apr 10 13:35 4a60cf93e2312633ee16eaa61cef98d52e4ee1
+-r--------   1 aesgu001 csmajs   81 Apr 13 17:13 f1d120f5ba843c3fa767636f64104e9ed8a3be
+
+./.git/objects/28:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 25 14:47 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  171 Apr 25 14:47 519e2f068d37ba9aff4e26d5675f32f72ef2c5
+
+./.git/objects/29:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 12 00:38 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs   82 Apr 12 00:38 f6b033e02395af9e5489eb21b3343d84dba969
+
+./.git/objects/2a:
+total 20
+drwx------   2 aesgu001 csmajs 4096 May  1 01:11 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs   83 Apr 12 19:04 42d8e35abe31ed5e59fdcd1de34880bc8120ee
+-r--------   1 aesgu001 csmajs 1618 May  1 01:11 79ff68434157ed154cf218cad282d4a69a710b
+
+./.git/objects/2d:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 11 22:07 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  116 Apr 11 22:07 0522c78ddd4a8ca7bb268bbb8015cd8ab4b4a4
+-r--------   1 aesgu001 csmajs   52 Apr 10 13:23 47279f2e6e3e22080b6c75884ac7403bdb9318
+
+./.git/objects/31:
+total 20
+drwx------   2 aesgu001 csmajs 4096 Apr 28 16:58 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  448 Apr 11 22:47 84ca53a457c4c2eb0481b24bae5a4a2385572b
+-r--------   1 aesgu001 csmajs  109 Apr 28 16:58 eeb8bbe2ad1bd3c473b5e2904e2cabffb3ad34
+
+./.git/objects/33:
+total 20
+drwx------   2 aesgu001 csmajs 4096 Apr 30 01:53 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  109 Apr 30 01:53 5e1468cd14cf5910af890dcf948093f38df730
+-r--------   1 aesgu001 csmajs   82 Apr 10 15:06 9b953fbd9747d9f394be860340ed7b4e6074ee
+
+./.git/objects/34:
+total 20
+drwx------   2 aesgu001 csmajs 4096 May  1 20:18 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  116 Apr 12 04:24 6b6f4953c684a89e8e601e9e177f9a96600713
+-r--------   1 aesgu001 csmajs  176 May  1 20:18 a2fd65e21384a8eda23d85ce0daf978e420825
+
+./.git/objects/35:
+total 16
+drwx------   2 aesgu001 csmajs 4096 May  1 20:20 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  177 May  1 20:20 8e1eff9f440f1dec92fb5495c5e679070302dd
+
+./.git/objects/37:
+total 28
+drwx------   2 aesgu001 csmajs 4096 May  1 21:03 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs   83 Apr 10 14:46 5d138c1a2b614ce2776e412563e65c8edeea07
+-r--------   1 aesgu001 csmajs  182 May  1 21:03 68d9bcdd6f11c1458c44cfe719e6e3475de176
+-r--------   1 aesgu001 csmajs   82 Apr 12 18:37 7049ab0770377aaf03cf994711b1dab0988243
+-r--------   1 aesgu001 csmajs  147 Apr 16 00:41 766fc0e2ded35de6ac3cdee0788178f9cf7ab0
+
+./.git/objects/38:
+total 20
+drwx------   2 aesgu001 csmajs 4096 Apr 13 17:40 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs 1296 Apr 13 17:40 21d72c83f464fecdb63714da70e74c496d96a6
+-r--------   1 aesgu001 csmajs  985 Apr 13 01:07 71b906d34f264d8c550adb57d6b6f767848628
+
+./.git/objects/39:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 19 20:50 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs 1313 Apr 19 20:50 7c9c7c58b4c6154a1961d582c98c8dcd7deae7
+
+./.git/objects/3b:
+total 16
+drwx------   2 aesgu001 csmajs 4096 May  1 20:18 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  171 May  1 20:18 a70a025218d6ffea47d76937d2799dd5af5d7c
+
+./.git/objects/3c:
+total 20
+drwx------   2 aesgu001 csmajs 4096 May  1 21:15 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  109 May  1 21:15 5fb6d0c0dfd66d4309a3c1b2522adb7ce5d09c
+-r--------   1 aesgu001 csmajs  147 Apr 19 01:13 d1992ffba02c50c0bb2895f0a5723f951a96cb
+
+./.git/objects/3d:
+total 20
+drwx------   2 aesgu001 csmajs 4096 Apr 12 00:38 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  646 Apr 12 00:38 a0e66a9875f52dbf5d2aa3e6d5e85665d54f49
+-r--------   1 aesgu001 csmajs   80 Apr 10 22:55 eeec96701002221b2f603aeb396d687a7c97ae
+
+./.git/objects/3e:
+total 20
+drwx------   2 aesgu001 csmajs 4096 Apr 12 00:38 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  100 Apr 10 13:40 7f8f81eaa9b5823a53579a51522381e764a844
+-r--------   1 aesgu001 csmajs  116 Apr 12 00:38 d6547bb29059774a92533a3708f8c32722510c
+
+./.git/objects/3f:
+total 20
+drwx------   2 aesgu001 csmajs 4096 Apr 30 19:21 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  882 Apr 28 16:57 046c4ba36137678aeef6b55265990e4c048628
+-r--------   1 aesgu001 csmajs  110 Apr 30 19:21 6315ce66839be6b16e23741ae257a4e2125277
+
+./.git/objects/40:
+total 20
+drwx------   2 aesgu001 csmajs 4096 May  1 21:36 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  203 Apr 13 04:19 21b00414aadf99cd347bb52a013baf6ba2adfc
+-r--------   1 aesgu001 csmajs 1853 May  1 21:36 54b6343e4e2b7e8423c69c9e9bf222b752d278
+
+./.git/objects/44:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 12 00:38 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  115 Apr 12 00:38 d09a35e8de9f7335c8499473ab74b32b602bed
+
+./.git/objects/45:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 13 23:19 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs   81 Apr 13 23:19 97318ab92b5f89cb55fde2433c725ef27fc180
+
+./.git/objects/46:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 25 15:35 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  109 Apr 25 15:35 be1c00f53fdcb8f9906cc04221d0a4b544dada
+
+./.git/objects/47:
+total 20
+drwx------   2 aesgu001 csmajs 4096 Apr 30 01:32 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  200 Apr 12 19:35 4c6e32e4697544f7d5500ca142942430a2b39c
+-r--------   1 aesgu001 csmajs  187 Apr 30 01:32 ff844a56302134ee6cf55825e64a3bc46d1647
+
+./.git/objects/4a:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 11 22:07 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs   82 Apr 11 22:07 7d7b081ec03af4e22ef8e21e78b8e0db21ace8
+
+./.git/objects/4b:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 13 23:19 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  147 Apr 13 23:19 027eba3985ff033fa3bc8bd247d0e49f708bd4
+
+./.git/objects/4c:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 13 01:09 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs   82 Apr 13 01:09 fee16dd176605c02fec29ef612a9d842556a92
+
+./.git/objects/4d:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 14 01:45 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  200 Apr 14 01:45 fa0b10036a07e64cbbe834cebf543040db427d
+
+./.git/objects/4e:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 10 14:46 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  189 Apr 10 14:46 c9fa3d6202e47fbf10dfe59cbd242b37e7be71
+
+./.git/objects/50:
+total 16
+drwx------   2 aesgu001 csmajs 4096 May  1 22:19 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs 1858 May  1 22:19 20bceb9e0e8b6d49d8c1943fe5d1f418f8bf58
+
+./.git/objects/53:
+total 20
+drwx------   2 aesgu001 csmajs 4096 Apr 11 22:48 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  116 Apr 11 01:11 2abd83d52c6a19b785487dd62534f5c06ebbc3
+-r--------   1 aesgu001 csmajs   81 Apr 11 22:48 e9a4a6c4fcb49a0a410e4face57879f9ef73e0
+
+./.git/objects/54:
+total 24
+drwx------   2 aesgu001 csmajs 4096 Apr 28 23:51 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  198 Apr 28 16:58 ad82ca9ece21d18f783bffe81c9618b5d2911e
+-r--------   1 aesgu001 csmajs  147 Apr 17 01:41 b328fcf5535b6f8059801981878abded07087d
+-r--------   1 aesgu001 csmajs  184 Apr 28 23:51 c567990ec78b91d6fb3b829ea5060ed06b41a2
+
+./.git/objects/55:
+total 24
+drwx------   2 aesgu001 csmajs 4096 Apr 25 15:00 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs   82 Apr 15 23:27 07d05286595bea017e5b3f1892f504ae6b9ef8
+-r--------   1 aesgu001 csmajs  115 Apr 10 18:58 a4e5c14d6d8b4ecd9e7796cbc66a17d9a1a4db
+-r--------   1 aesgu001 csmajs  173 Apr 25 15:00 fa3c30d8750046e184e3f8fc959a763d332728
+
+./.git/objects/56:
+total 28
+drwx------   2 aesgu001 csmajs 4096 Apr 28 23:51 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  695 Apr 18 23:07 3ce00064119160343dc7ba03eeed99f7e7de5c
+-r--------   1 aesgu001 csmajs  110 Apr 28 23:51 afce1c29eddabfe69f78c0a5e0830b6d335413
+-r--------   1 aesgu001 csmajs  172 Apr 10 13:36 fdff92fb438b623de0fa1822f849cb9c3f57bf
+-r--------   1 aesgu001 csmajs  189 Apr 13 17:33 ffb0a7d9e413bf57f8d83d2b6976297eec642c
+
+./.git/objects/58:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 17 12:52 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  208 Apr 17 12:52 8d45f9c38c8855ad592de6e974db492cf38214
+
+./.git/objects/59:
+total 20
+drwx------   2 aesgu001 csmajs 4096 Apr 28 23:42 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs   82 Apr 11 01:18 5b264270c3ad699477f5f4973b213f612098e8
+-r--------   1 aesgu001 csmajs  176 Apr 28 23:42 a8e2248f1d77c6950c199990cd65abc2524560
+
+./.git/objects/5a:
+total 20
+drwx------   2 aesgu001 csmajs 4096 May  1 20:22 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  216 Apr 19 16:52 5daf5f8e74bb3549eff9b5172f8b02224c06fc
+-r--------   1 aesgu001 csmajs  176 May  1 20:22 9ad25ed0241703ae060ca1a490524c2643adbc
+
+./.git/objects/5b:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 10 22:55 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  117 Apr 10 22:55 16b8550a3f6c7891c9b1467c2e50ea5cc15c7e
+
+./.git/objects/5c:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 28 23:51 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  177 Apr 28 23:51 70bf514623f2c624bf96ceb16536461efc2f14
+
+./.git/objects/5e:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 14 01:45 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  147 Apr 14 01:45 f2c1140fe7133563c0e1e4b7389a32d5d46324
+
+./.git/objects/61:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 11 21:53 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  643 Apr 11 21:53 256284f7137e9f37faa478a73befc107ec6af7
+
+./.git/objects/62:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 30 19:21 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  180 Apr 30 19:21 08ba401971846d16e9df8abf379c241b54025b
+
+./.git/objects/63:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 17 12:49 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  155 Apr 17 12:49 90c0e087388b52b69d45bc8cd0e43144d9fea7
+
+./.git/objects/65:
+total 20
+drwx------   2 aesgu001 csmajs 4096 Apr 17 01:41 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs   82 Apr 13 19:39 a72387c1ca3f30abceeb3bd99e414d69b3fa01
+-r--------   1 aesgu001 csmajs  212 Apr 17 01:41 c5bc32bd85d9b850d81cced545d87bf26c9c1c
+
+./.git/objects/66:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 30 23:34 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  176 Apr 30 23:34 55cf578c1bd511075bd3783a6ea9cfb3bf8604
+
+./.git/objects/67:
+total 20
+drwx------   2 aesgu001 csmajs 4096 Apr 28 23:42 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs 1177 Apr 28 23:42 5d6a2a744f39c3ac790176aa5179f712c4a600
+-r--------   1 aesgu001 csmajs  152 Apr 16 00:40 765f2ebc57d3d0abf0b6190017947f7b6c5c5f
+
+./.git/objects/68:
+total 20
+drwx------   2 aesgu001 csmajs 4096 May  1 22:20 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  485 Apr 13 17:13 5576c1d22e8546586427752d1c7e9ecd2b65ea
+-r--------   1 aesgu001 csmajs  177 May  1 22:20 b4adce3a154c8b678ea7ae6e920ff95d7c90d6
+
+./.git/objects/69:
+total 24
+drwx------   2 aesgu001 csmajs 4096 Apr 28 20:01 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  191 Apr 28 20:01 2fbcd6dc12875d46120dd1dd09274c8ee77df5
+-r--------   1 aesgu001 csmajs  862 Apr 25 22:39 587b84b6c276538cb104eff429e97185fdb0f3
+-r--------   1 aesgu001 csmajs 1308 Apr 18 00:17 86db31713cd6c048500202025f2f0dac412786
+
+./.git/objects/6a:
+total 20
+drwx------   2 aesgu001 csmajs 4096 Apr 13 17:13 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  148 Apr 13 17:13 612e0a6f348c9db6dced5486097bb0ae2d23ab
+-r--------   1 aesgu001 csmajs  168 Apr 11 21:53 75965ede2815197379d6f609f06695bf4d5c6e
+
+./.git/objects/6b:
+total 20
+drwx------   2 aesgu001 csmajs 4096 Apr 15 23:26 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs   81 Apr 13 17:33 0163e48600b40a8197a91b8abec6798964558d
+-r--------   1 aesgu001 csmajs 1430 Apr 15 23:26 d485d28e529822ee81b828a134d6c8da2da2b1
+
+./.git/objects/6c:
+total 12
+drwx------   2 aesgu001 csmajs 4096 Apr 19 22:07 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs   56 Apr 19 22:07 6a7e1fd555dfa0fcee79fa169101ee284a1ecb
+
+./.git/objects/6e:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 10 13:41 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  115 Apr 10 13:41 4f577bd07c9bf4fcb4fd979631afde4ea3f126
+
+./.git/objects/6f:
+total 20
+drwx------   2 aesgu001 csmajs 4096 Apr 15 23:27 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  209 Apr 15 23:27 7458afa13a1a345db89678edfe8c8a58a5af63
+-r--------   1 aesgu001 csmajs 1069 Apr 13 18:05 9ad87024b3488f81ecd0450f9e73477bc3421a
+
+./.git/objects/70:
+total 16
+drwx------   2 aesgu001 csmajs 4096 May  1 20:54 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs 1716 May  1 20:54 5401b93806ed8a37b1f0f21acb61501c7fc5e6
+
+./.git/objects/71:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 13 17:33 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  147 Apr 13 17:33 d61dd599b14748bfc9f61148010515156d808e
+
+./.git/objects/72:
+total 16
+drwx------   2 aesgu001 csmajs 4096 May  1 21:15 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  177 May  1 21:15 97c3ac948be56b205c75029ba1484edfc3cb59
+
+./.git/objects/73:
+total 28
+drwx------   2 aesgu001 csmajs 4096 Apr 30 22:49 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  177 Apr 30 22:49 1236d29925b734af714e6d3f031d1322f1d6a8
+-r--------   1 aesgu001 csmajs 1181 Apr 13 17:13 7ea7e385b00b3bfd56ab07760459943a97e53d
+-r--------   1 aesgu001 csmajs  196 Apr 11 22:07 d075a45bc881e5924280e32673cfdbe0d785cd
+-r--------   1 aesgu001 csmajs  116 Apr 11 01:26 ea4cede0ba979782555903437e8bd2579f34e9
+
+./.git/objects/75:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 30 22:49 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  109 Apr 30 22:49 64fa88b0c898491be50580eefdd5d8c69dd162
+
+./.git/objects/76:
+total 28
+drwx------   2 aesgu001 csmajs 4096 May  1 21:15 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  147 Apr 18 23:08 1b1c3528b3e4e921bf25a8abfda404f407ab4d
+-r--------   1 aesgu001 csmajs  199 May  1 21:15 61a5d99ee678858a7017b53ba8da6925abc514
+-r--------   1 aesgu001 csmajs  109 Apr 25 14:47 a8f6c183fc6be4f8b421b949c5998c7cab048d
+-r--------   1 aesgu001 csmajs  196 Apr 13 18:07 b7207e913ac6356a8c90311b6ab360d6ca2ffc
+
+./.git/objects/77:
+total 24
+drwx------   2 aesgu001 csmajs 4096 Apr 30 22:49 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  147 Apr 16 14:52 46e9deb4c5a082a2ab94f336945f7fed7c08e9
+-r--------   1 aesgu001 csmajs 1060 Apr 13 17:32 6a73494385a6dc86fa7e7a9fb3759a98c21445
+-r--------   1 aesgu001 csmajs  182 Apr 30 22:49 adee0d07a056664b25a645d3f21e5f6078d075
+
+./.git/objects/79:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 19 15:06 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  189 Apr 19 15:06 ebd3867983ed432679691e080c4a38b79ebaef
+
+./.git/objects/7a:
+total 24
+drwx------   2 aesgu001 csmajs 4096 May  1 20:56 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  176 Apr 30 18:18 60342d0da55157b8cb582b21cadac12dad6c33
+-r--------   1 aesgu001 csmajs  672 Apr 19 13:58 8436f502e67f0c81f9378abd8810a3586d8bb3
+-r--------   1 aesgu001 csmajs  109 May  1 20:56 f21a49dec4c6c68206d3b57d9b1eb0d5592e62
+
+./.git/objects/7b:
+total 28
+drwx------   2 aesgu001 csmajs 4096 Apr 25 15:02 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  490 Apr 13 02:15 0bd04f421456c1a95156e7702b113576fe4756
+-r--------   1 aesgu001 csmajs  176 Apr 19 16:45 9863191fd4d2eddd01fe9788d652f03770d359
+-r--------   1 aesgu001 csmajs  187 Apr 19 20:52 9cba577906f8b95ade2046479bca8b33f50ad8
+-r--------   1 aesgu001 csmajs  178 Apr 25 15:02 b8fbc1b6a76838561e997575453b73c92fe04d
+
+./.git/objects/7c:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 17 12:59 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  179 Apr 17 12:59 8b0bade8b5a542d4b5b0de8bfcdf7c092c928c
+
+./.git/objects/7f:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 19 16:44 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  753 Apr 19 16:44 f973fd8d107937788fd5f216164f412af539f3
+
+./.git/objects/81:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 11 22:47 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  620 Apr 11 22:47 9f3b89ce14e2a46b17a3f34a877f2001d3678a
+
+./.git/objects/83:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 13 02:45 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  217 Apr 13 02:45 463ca4eb7b5a676e4d21b0d9d6af844353761f
+
+./.git/objects/86:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 19 14:50 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  755 Apr 19 14:50 e6a1cc2b7e969236db747d481ef8fccade0c8c
+
+./.git/objects/87:
+total 24
+drwx------   2 aesgu001 csmajs 4096 Apr 19 20:52 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  148 Apr 17 12:52 3d6778004380b8e2c86af40d0d41f87babaefd
+-r--------   1 aesgu001 csmajs   82 Apr 11 01:11 d39d7b2a00eb5cbfe793af5ef723a2a99b5836
+-r--------   1 aesgu001 csmajs   81 Apr 19 20:52 f8d35ed2ee20aa3c18faac943ff4b2ed60d88f
+
+./.git/objects/89:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 10 13:23 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs   85 Apr 10 13:23 ef9da645773336c50d049446dfe3de37378100
+
+./.git/objects/8a:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 19 22:06 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  203 Apr 19 22:06 0f275e3e9aa5123f7a2cb8b82d7bbf6ea03467
+
+./.git/objects/8b:
+total 20
+drwx------   2 aesgu001 csmajs 4096 May  1 22:20 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs   81 Apr 18 00:20 1e3ceb8cec320e80232cab0f3389739b1b0bce
+-r--------   1 aesgu001 csmajs  110 May  1 22:20 ca8bac91cf3d59811ceaf1c23c7590ec6a86cd
+
+./.git/objects/8c:
+total 28
+drwx------   2 aesgu001 csmajs 4096 May  1 20:21 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  177 May  1 20:21 b17e010c5d2a51ba314f5445b2b45b00e9eb43
+-r--------   1 aesgu001 csmajs  861 May  1 20:20 bdef66bb1e30e580eeb1aa2018129d2ad89440
+-r--------   1 aesgu001 csmajs 7713 Apr 10 13:23 db8451d9b90c1d4000c6f22eb86471a4568be6
+
+./.git/objects/8d:
+total 20
+drwx------   2 aesgu001 csmajs 4096 May  1 21:37 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  109 May  1 21:37 936b0427a6ab6d3b9b811a8041103f7e00c9f9
+-r--------   1 aesgu001 csmajs 1747 May  1 21:02 d44d0b5678494293dcfcc6638307e1682211ff
+
+./.git/objects/8f:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 11 22:48 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  116 Apr 11 22:48 c290aade8550edbb284c3524e991743e218c28
+
+./.git/objects/90:
+total 20
+drwx------   2 aesgu001 csmajs 4096 May  1 20:20 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  214 May  1 20:20 32e475000a0030405a348fef6f4669b178e2a6
+-r--------   1 aesgu001 csmajs  202 Apr 25 15:35 a36ff857ba55cd43bf320b9114952ac1f13d71
+
+./.git/objects/91:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 28 16:58 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  177 Apr 28 16:58 83f0459b4338833d21207baa3429965f2e947e
+
+./.git/objects/93:
+total 20
+drwx------   2 aesgu001 csmajs 4096 May  1 20:20 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  160 May  1 20:20 679146d129f9a7a05dd1bea537888dda468f2a
+-r--------   1 aesgu001 csmajs  193 Apr 19 14:54 70a16e892d72a170d0c09d66cc579019b5501b
+
+./.git/objects/95:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 19 14:54 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  177 Apr 19 14:54 1a66c25766ffc77fba388a83a79cd04c11ffa8
+
+./.git/objects/96:
+total 20
+drwx------   2 aesgu001 csmajs 4096 Apr 19 22:10 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  202 Apr 11 22:48 c47eea6fee145ebc41b3632c119949d4a40335
+-r--------   1 aesgu001 csmajs  252 Apr 19 22:10 faa802634f86eb7d9fa85d7e2011ee16c0f644
+
+./.git/objects/97:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 16 14:51 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  167 Apr 16 14:51 3bbe635df58d4a5740d60d0393ef0e5a6885da
+
+./.git/objects/9a:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 10 22:55 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  180 Apr 10 22:55 f04e078909cfda2947eebda96e6650d972da5a
+
+./.git/objects/9b:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 13 04:19 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs   82 Apr 13 04:19 a28fc58328e3ac927a08db13f9514cdc628624
+
+./.git/objects/9d:
+total 24
+drwx------   2 aesgu001 csmajs 4096 Apr 28 17:39 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  177 Apr 28 17:39 bed4026125bd65eabb0a969aac598580ebab7a
+-r--------   1 aesgu001 csmajs 1108 Apr 14 01:40 f4c684ef05b1766fbe79faf3e5ba1ef696e5cb
+-r--------   1 aesgu001 csmajs 1248 Apr 17 01:40 fd2b7b927708efc0f5ffac966e105322db159a
+
+./.git/objects/9f:
+total 20
+drwx------   2 aesgu001 csmajs 4096 Apr 18 00:20 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  581 Apr 13 01:07 31846975cefdffa6ac864615f4b396104eeb9d
+-r--------   1 aesgu001 csmajs  221 Apr 18 00:20 a8229b38eeacd181011c50ac232b25c7a9fe52
+
+./.git/objects/a0:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 30 01:53 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs 1214 Apr 30 01:53 beb44c0c0b954ae0a5059e311f963dc9517b57
+
+./.git/objects/a1:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 10 13:41 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  188 Apr 10 13:41 acce2ff1f69f472ba852d31961a9599681a179
+
+./.git/objects/a3:
+total 28
+drwx------   2 aesgu001 csmajs 4096 Apr 19 20:52 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  177 Apr 19 20:52 36a2d9872e34d2cee56ac65d93d53d7b064bc6
+-r--------   1 aesgu001 csmajs  207 Apr 15 22:16 4d217d7d62f9a397905dbb55a8629676d5370d
+-r--------   1 aesgu001 csmajs  190 Apr 13 19:39 9db67012aa6dca75604995d2db3f641a04a157
+-r--------   1 aesgu001 csmajs  140 Apr 13 04:17 cab8e67b4425b2014d215f8af73a4ad61ebeb6
+
+./.git/objects/a5:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 13 23:02 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  147 Apr 13 23:02 a795e7b7bc7d28267be44e93bb549e7683dde5
+
+./.git/objects/a6:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 30 23:34 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  110 Apr 30 23:34 14affa84074d00a1caac4d8119153dc3209afc
+
+./.git/objects/a7:
+total 20
+drwx------   2 aesgu001 csmajs 4096 Apr 19 16:59 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  116 Apr 13 01:09 2ec59a4240350d65035da3bdcc1c75c617a126
+-r--------   1 aesgu001 csmajs  209 Apr 19 16:59 f05d92c1660d6757e4ecd4cf4482c5a5e59d4b
+
+./.git/objects/a8:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 16 00:41 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  200 Apr 16 00:41 d5fd970513782d1b123e29c90a9bff3c2b9dd2
+
+./.git/objects/aa:
+total 24
+drwx------   2 aesgu001 csmajs 4096 Apr 13 19:39 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  148 Apr 13 19:39 0c8a488bb6c5957711e53429f870b6fce0be83
+-r--------   1 aesgu001 csmajs  271 Apr 11 01:10 8a90d2175697e9a6b3f369935669cb7e5e74c2
+-r--------   1 aesgu001 csmajs  499 Apr 12 00:37 b47cf046a4b918bd5b7c858652ae2a5ffd2f39
+
+./.git/objects/ab:
+total 20
+drwx------   2 aesgu001 csmajs 4096 May  1 00:44 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  189 May  1 00:44 7e78186be9d1aaeb6c8df82b8d007b1380e52c
+-r--------   1 aesgu001 csmajs  315 Apr 11 01:18 a73c1cb95456b9ca8518b7ba200f0cd9eb0c63
+
+./.git/objects/ac:
+total 24
+drwx------   2 aesgu001 csmajs 4096 Apr 25 14:47 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  177 Apr 25 14:47 2f04d3d22d1e0193f526678c6265f656ac2821
+-r--------   1 aesgu001 csmajs  180 Apr 10 15:06 9b83b4175f87032eb287991b29915f2d66958e
+-r--------   1 aesgu001 csmajs   83 Apr 12 04:24 c8eacbe6c4fc439dec63569ea166550b830bb4
+
+./.git/objects/ad:
+total 20
+drwx------   2 aesgu001 csmajs 4096 May  1 01:13 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  187 Apr 19 01:13 304742521815286b54960f08e5a087cdeaf76a
+-r--------   1 aesgu001 csmajs  109 May  1 01:13 3f8e12c3e88cd4e7d8a7bb25bb4708734dce16
+
+./.git/objects/ae:
+total 28
+drwx------   2 aesgu001 csmajs 4096 Apr 30 23:33 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs 1400 Apr 30 23:33 620adb259ba7de93ffe81659300368e5a06c73
+-r--------   1 aesgu001 csmajs  171 Apr 10 13:23 6228c9cbc689ec0a6abca5bc070d215062b61b
+-r--------   1 aesgu001 csmajs  163 Apr 17 12:55 6db430616e793a136297f1e608d909ca8514f6
+-r--------   1 aesgu001 csmajs   81 Apr 15 22:16 fdbe9d71583c002dcd19d201d99c312489c17d
+
+./.git/objects/af:
+total 24
+drwx------   2 aesgu001 csmajs 4096 May  1 20:20 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  109 Apr 25 22:42 a3ab0658488c2557f7c1bded6af885cb61ff4e
+-r--------   1 aesgu001 csmajs  139 May  1 20:20 bda2a85d515f408c79e2059440f2120a27c630
+-r--------   1 aesgu001 csmajs  177 Apr 25 22:42 d672fcc63cd617c4a03d617f5a03176ce3dc66
+
+./.git/objects/b0:
+total 24
+drwx------   2 aesgu001 csmajs 4096 Apr 28 20:01 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs   82 Apr 17 01:41 5afa5dd55a9860a6a066de7e3f72cf01663b4b
+-r--------   1 aesgu001 csmajs  109 Apr 28 20:01 781bfde990fa38bf4d2e08330e65f21d3f632a
+-r--------   1 aesgu001 csmajs   82 Apr 11 01:26 eef33c3613f3de9c7ce94381a3209755df9f31
+
+./.git/objects/b1:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 10 22:55 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs   81 Apr 10 22:55 68ea9aa48a372b775e30e962207ca48789da6f
+
+./.git/objects/b2:
+total 20
+drwx------   2 aesgu001 csmajs 4096 Apr 30 18:18 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs   81 Apr 13 02:17 0b0edee584b0e811c6c87b76d5b66004fd7e72
+-r--------   1 aesgu001 csmajs 1223 Apr 30 18:18 dbefe1dcad7500e24b46ff10f97d56f0e09528
+
+./.git/objects/b3:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 12 19:04 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs 1084 Apr 12 19:04 b6edd9c8ae78daf6e890a505b355e4953d2445
+
+./.git/objects/b4:
+total 20
+drwx------   2 aesgu001 csmajs 4096 Apr 18 23:08 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs 1069 Apr 13 23:00 84b10634e9cfcde5d085e25ed36e0060c9f9ec
+-r--------   1 aesgu001 csmajs  210 Apr 18 23:08 aa3a9e2580049dbdf303e5c0a4fa2a513fce86
+
+./.git/objects/b6:
+total 24
+drwx------   2 aesgu001 csmajs 4096 Apr 11 15:51 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  361 Apr 10 14:40 4a609fece1e92b4d6a7a3ccbf1d8e2b995d147
+-r--------   1 aesgu001 csmajs  116 Apr 11 15:51 7e1d775fd20ce71165bdc63e7419b554db813d
+-r--------   1 aesgu001 csmajs  115 Apr 10 14:46 b31482e05bba18d56b41ca4f1efd62d38196bf
+
+./.git/objects/b7:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 18 00:20 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  147 Apr 18 00:20 0ba66d286daa370c734beb3bc1c2e87e6b12a2
+
+./.git/objects/b8:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 19 16:50 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  789 Apr 19 16:50 d59b322c5df98f6847d08a448a97f3177912b1
+
+./.git/objects/b9:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 17 12:55 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  173 Apr 17 12:55 26ac9e42c8d13527c0343ab1f746bf7a0f8395
+
+./.git/objects/bb:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 13 23:02 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs   83 Apr 13 23:02 08b377e07fe593644b6b4a2e4a481f1809566e
+
+./.git/objects/bc:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 12 18:36 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  820 Apr 12 18:36 13295dfa7d9e1db77d6345d048a02931091947
+
+./.git/objects/bd:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 11 15:51 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs   82 Apr 11 15:51 368e3426d2065a40ece68c9fe0bbba3f47f7cb
+
+./.git/objects/be:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 12 04:21 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  478 Apr 12 04:21 50a3db90d2d8ec9816b198382ca38dcfe1caa2
+
+./.git/objects/bf:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 11 01:18 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  115 Apr 11 01:18 ad31c47003dc69cb50573dba6693e3bccaa98f
+
+./.git/objects/c0:
+total 20
+drwx------   2 aesgu001 csmajs 4096 Apr 28 23:42 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  108 Apr 28 23:42 b41d535fd650cf1cfd8a674a7ba11a6556f53b
+-r--------   1 aesgu001 csmajs  148 Apr 13 18:07 fbd51ebf9c84527b08fe4e2deeeee096d3587e
+
+./.git/objects/c2:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 19 16:45 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  188 Apr 19 16:45 959986a5732d771e0630ec433fc491417cd94a
+
+./.git/objects/c3:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 10 15:05 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  125 Apr 10 15:05 08e2fac9c30ba548117ddf697717bcf32f895e
+
+./.git/objects/c5:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 10 22:55 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  115 Apr 10 22:55 9688fd3354e1fb31b034510c9d096c792a21eb
+
+./.git/objects/c7:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 13 23:02 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  188 Apr 13 23:02 344ceb0abb9369005e0e96afa6207f25e42f04
+-r--------   1 aesgu001 csmajs   24 Apr 10 13:23 3b9803d4e5585a8cb370e25ecc156503a27ca8
+
+./.git/objects/c8:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 19 21:50 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  775 Apr 19 21:50 2c35b4a5d13627fc5fd4c3cc21845200595ae1
+
+./.git/objects/c9:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 18 22:09 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  185 Apr 18 22:09 b3b90c16d85992a46b5e214ed3e1b9f6a419c0
+
+./.git/objects/ca:
+total 20
+drwx------   2 aesgu001 csmajs 4096 Apr 30 22:47 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  187 Apr 12 18:37 21b8329f1eb0fb79e2c6c6c8198739d3d68da4
+-r--------   1 aesgu001 csmajs 1283 Apr 30 22:47 8973875d9f5e07e1c475852117d94568bb9fee
+
+./.git/objects/cc:
+total 24
+drwx------   2 aesgu001 csmajs 4096 May  1 20:18 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs 1661 May  1 20:18 4de1bd0a4155ab7288554937f151f45dedfa9c
+-r--------   1 aesgu001 csmajs  177 Apr 19 22:07 a0092289846c8218cbce34575051ee23fe65fa
+-r--------   1 aesgu001 csmajs  223 Apr 12 04:24 a19b3a261034a339271600b718e59749f82517
+
+./.git/objects/cd:
+total 20
+drwx------   2 aesgu001 csmajs 4096 Apr 28 20:01 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  176 Apr 28 20:01 7cf8076f5e1d332447a6bb138bb624bf5a76a5
+-r--------   1 aesgu001 csmajs   56 Apr 19 14:54 e8d903cde4ef079311b6c7766dc659303f1280
+-r--------   1 aesgu001 csmajs  441 Apr 18 22:06 e9a6d91e6d2c258f9cab327a63b033c79ea97c
+
+./.git/objects/ce:
+total 16
+drwx------   2 aesgu001 csmajs 4096 May  1 20:56 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  178 May  1 20:56 65506cf48ef9fc2c1db56a967da8b477a99e19
+
+./.git/objects/d0:
+total 32
+drwx------   2 aesgu001 csmajs 4096 May  1 00:44 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs   82 Apr 10 20:34 1a0d9e8a15f41043a1f58e4f209a772e771a06
+-r--------   1 aesgu001 csmajs  198 Apr 10 18:58 4b15c7c3ee46d782ec015a87fcbf45105a0168
+-r--------   1 aesgu001 csmajs  184 Apr 28 23:42 ea9af986b23e62690002a7409b9e01c0ca3ec8
+-r--------   1 aesgu001 csmajs  110 May  1 00:44 fbf0add5db5c3d309702632b5581a9fd6d7b05
+-r--------   1 aesgu001 csmajs 3936 Apr 19 14:52 fd9ef19bac1338e1bf88ca7878c37b2c232eb7
+
+./.git/objects/d3:
+total 20
+drwx------   2 aesgu001 csmajs 4096 Apr 15 21:44 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs 1464 Apr 15 21:44 b49f410827c778097aed0cb5ffdf75f54a972e
+-r--------   1 aesgu001 csmajs   82 Apr 10 18:58 eab03881b2413d1b3e7f1c8d99e6979fb53716
+
+./.git/objects/d4:
+total 16
+drwx------   2 aesgu001 csmajs 4096 May  1 01:13 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  193 May  1 01:13 00ae15260a604beb32855aaf9add35cbafb0e6
+
+./.git/objects/d5:
+total 20
+drwx------   2 aesgu001 csmajs 4096 Apr 13 23:18 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  170 Apr 13 17:13 104a465dfcec45674ec09a20bf51e6a3f14d0c
+-r--------   1 aesgu001 csmajs 1059 Apr 13 23:18 322f36a6393161df010a8bb0c523f0242a77ed
+
+./.git/objects/d6:
+total 24
+drwx------   2 aesgu001 csmajs 4096 Apr 30 18:18 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs 1187 Apr 28 23:50 89d9300e5eecaef995933292d6ff392941ef73
+-r--------   1 aesgu001 csmajs  110 Apr 30 18:18 a15160830972e498e275e74589319a2ebd7499
+-r--------   1 aesgu001 csmajs  110 Apr 10 14:40 e119c922f2db30ce6258b2af7aaa889368aa90
+
+./.git/objects/d7:
+total 20
+drwx------   2 aesgu001 csmajs 4096 May  1 21:37 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  194 Apr 30 23:34 473d42dbab48dd470b94837667de201fdc5c22
+-r--------   1 aesgu001 csmajs  176 May  1 21:37 722bad1a5bbefe4341cc7e92843b5f4793fc75
+
+./.git/objects/d8:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 30 19:20 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs 1256 Apr 30 19:20 b29c09b8de8db5d750be04f9acc9a833cafa7a
+
+./.git/objects/d9:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 25 15:02 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  177 Apr 25 15:02 9e84f330a4f6017e5bf7dfa6703288b5653eb6
+
+./.git/objects/da:
+total 20
+drwx------   2 aesgu001 csmajs 4096 May  1 22:20 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  193 Apr 10 20:34 002b83ac9a6c8fe3eb3f8f001a1681ecfe8be9
+-r--------   1 aesgu001 csmajs  191 May  1 22:20 501020a2aa8e9124038f5e0f7456a08e35e4b4
+
+./.git/objects/df:
+total 20
+drwx------   2 aesgu001 csmajs 4096 Apr 30 19:21 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  176 Apr 30 19:21 b482902615119691235578ea96f321b5bf969b
+-r--------   1 aesgu001 csmajs   82 Apr 12 19:35 c777d6bf3499b8a0e23b6227b272237d718d72
+
+./.git/objects/e1:
+total 20
+drwx------   2 aesgu001 csmajs 4096 Apr 19 22:07 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  192 Apr 19 22:07 317df27e07aba4d2c30b4f6a15f29168ced95e
+-r--------   1 aesgu001 csmajs  190 Apr 12 18:15 4936c3f4a7ed8d468c8c71d3bd1b75387c58fa
+
+./.git/objects/e2:
+total 20
+drwx------   2 aesgu001 csmajs 4096 Apr 12 19:04 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  681 Apr 12 18:14 71b8a1d78873734e2d738b3e2e165c0f984a81
+-r--------   1 aesgu001 csmajs  115 Apr 12 19:04 9819636280b6e5ef6472b7a73cb29f1938d26b
+
+./.git/objects/e3:
+total 16
+drwx------   2 aesgu001 csmajs 4096 May  1 00:42 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs 1605 May  1 00:42 f5d7c2dd4ff68360d7d26c706189c24d90c0f0
+
+./.git/objects/e4:
+total 20
+drwx------   2 aesgu001 csmajs 4096 Apr 15 22:16 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs   82 Apr 14 01:45 1f9f38fc7f22143bbef86c4d374e3313f29fa6
+-r--------   1 aesgu001 csmajs  148 Apr 15 22:16 a8beb002151ca0b01488a6c82f101a8593060e
+
+./.git/objects/e5:
+total 16
+drwx------   2 aesgu001 csmajs 4096 May  1 20:20 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  176 May  1 20:20 5010db3306e6d42bfe2d0397f8b9b44ec96bea
+
+./.git/objects/e6:
+total 24
+drwx------   2 aesgu001 csmajs 4096 Apr 30 01:30 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs   82 Apr 12 00:38 17c0192dea27a26d8cd96b67737f95727eab3b
+-r--------   1 aesgu001 csmajs  177 Apr 25 15:35 ce90d99500ba121c26c5f0861f3ab9b48ea789
+-r--------   1 aesgu001 csmajs 1174 Apr 30 01:30 d5ed853ac3b3704807fdeda13e7b714bbe7cf0
+
+./.git/objects/e7:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 13 23:19 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  192 Apr 13 23:19 c64bcc2a01914ebd11bbf17eeb4117fa70bc3d
+
+./.git/objects/e9:
+total 16
+drwx------   2 aesgu001 csmajs 4096 May  1 21:03 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  176 May  1 21:03 dcb3fd1c6eefbf036e938744483d78ea7ff4b4
+
+./.git/objects/ea:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 12 00:38 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  192 Apr 12 00:38 fef220551683b41503f9dd6088be4ef8f290f5
+
+./.git/objects/eb:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 18 01:38 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  172 Apr 18 01:38 b1089141aae1fd7ff5cc17610b09390ccafc58
+
+./.git/objects/f1:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 15 17:52 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs 1188 Apr 15 17:52 c82369356ad2ef0806c6849d909bd7fec9e3cc
+
+./.git/objects/f2:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 30 01:53 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  198 Apr 30 01:53 f23beb55631371ec3115232888ccc7a9902d57
+
+./.git/objects/f3:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 25 15:33 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  303 Apr 25 15:33 45aa084d2f476a0acb91b06d00d91e360fd8a4
+
+./.git/objects/f4:
+total 24
+drwx------   2 aesgu001 csmajs 4096 Apr 19 01:13 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  287 Apr 11 15:48 0ab54e2ce0ea11b534cd6269ca30a4bb97d5df
+-r--------   1 aesgu001 csmajs  115 Apr 12 18:15 1d106cdeb03ca9d3e8bb2ebcefc2543f98e349
+-r--------   1 aesgu001 csmajs  694 Apr 19 01:13 5fef53d065f59082c7504ac7d20c3316371bce
+
+./.git/objects/f5:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 28 17:36 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  864 Apr 28 17:36 b0338143ab5bcc92db811c5f19c82dfe5d55f9
+
+./.git/objects/f6:
+total 32
+drwx------   2 aesgu001 csmajs 4096 Apr 19 22:07 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  189 Apr 11 15:51 5ad2bb71d23ad70b20615022b85f4788cd9486
+-r--------   1 aesgu001 csmajs 5119 Apr 19 22:07 ae4462f6f0a5760164f0dbfd282957ad0d66b3
+-r--------   1 aesgu001 csmajs  147 Apr 15 17:52 c6b94db08f835270608ee2eed96ea0df0097c4
+-r--------   1 aesgu001 csmajs  147 Apr 17 12:55 cd8b390762d544ef57a4b303177619a320b0ea
+
+./.git/objects/f7:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 11 21:53 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs   53 Apr 10 13:36 169b764e77cd8fd1799d1956cc7b51a6073a58
+-r--------   1 aesgu001 csmajs   53 Apr 11 21:53 7255dca7f202e3ca4b9c0542c4bc6265257e7e
+-r--------   1 aesgu001 csmajs  321 Apr 10 18:56 f7b00eccba41e848daed716b2d2f695587b501
+
+./.git/objects/f9:
+total 24
+drwx------   2 aesgu001 csmajs 4096 Apr 28 17:39 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  109 Apr 28 17:39 95fb1d45caea91fb41eede887b4a263dc61c09
+-r--------   1 aesgu001 csmajs  147 Apr 18 01:38 969ac443d42d488d474be7dd91d81c66d3d760
+-r--------   1 aesgu001 csmajs  177 Apr 19 22:06 ed985b3d7533f5ca553001b07a404e3f0b5bb0
+
+./.git/objects/fa:
+total 20
+drwx------   2 aesgu001 csmajs 4096 May  1 01:13 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  177 May  1 01:13 2b2b6ee370304c4fbd401822891a748101cdbd
+-r--------   1 aesgu001 csmajs  147 Apr 18 22:09 452732e70cd6116eba1cc862ea035307bf507c
+
+./.git/objects/fb:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 11 21:53 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  115 Apr 11 21:53 7d713716209ef8c8555fdcb909d24207df78be
+
+./.git/objects/fe:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 13 04:18 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs 1073 Apr 13 04:18 0f02c3d2981ea1cab6d54cf7ac9df0ba6ca259
+
+./.git/objects/ff:
+total 16
+drwx------   2 aesgu001 csmajs 4096 Apr 11 01:26 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+-r--------   1 aesgu001 csmajs  180 Apr 11 01:26 5629f384de7ac26e89b2e43bebdfc1a823b209
+
+./.git/objects/info:
+total 12
+drwx------   2 aesgu001 csmajs 4096 Apr 10 13:23 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+
+./.git/objects/pack:
+total 12
+drwx------   2 aesgu001 csmajs 4096 Apr 10 13:23 .
+drwx------ 186 aesgu001 csmajs 8192 May  1 22:19 ..
+
+./.git/refs:
+total 20
+drwx------ 5 aesgu001 csmajs 4096 Apr 10 13:23 .
+drwx------ 8 aesgu001 csmajs 4096 May  2 00:00 ..
+drwx------ 2 aesgu001 csmajs 4096 May  1 22:20 heads
+drwx------ 3 aesgu001 csmajs 4096 Apr 10 13:23 remotes
+drwx------ 2 aesgu001 csmajs 4096 Apr 19 22:14 tags
+
+./.git/refs/heads:
+total 8
+drwx------ 2 aesgu001 csmajs 4096 May  1 22:20 .
+drwx------ 5 aesgu001 csmajs 4096 Apr 10 13:23 ..
+-rw------- 1 aesgu001 csmajs   41 Apr 19 22:07 exec
+-rw------- 1 aesgu001 csmajs   41 May  1 22:20 ls
+-rw------- 1 aesgu001 csmajs   41 May  1 20:22 master
+
+./.git/refs/remotes:
+total 12
+drwx------ 3 aesgu001 csmajs 4096 Apr 10 13:23 .
+drwx------ 5 aesgu001 csmajs 4096 Apr 10 13:23 ..
+drwx------ 2 aesgu001 csmajs 4096 May  1 20:22 origin
+
+./.git/refs/remotes/origin:
+total 8
+drwx------ 2 aesgu001 csmajs 4096 May  1 20:22 .
+drwx------ 3 aesgu001 csmajs 4096 Apr 10 13:23 ..
+-rw------- 1 aesgu001 csmajs   41 Apr 19 22:16 exec
+-rw------- 1 aesgu001 csmajs   32 Apr 10 13:23 HEAD
+-rw------- 1 aesgu001 csmajs   41 May  1 20:19 ls
+-rw------- 1 aesgu001 csmajs   41 May  1 20:22 master
+
+./.git/refs/tags:
+total 8
+drwx------ 2 aesgu001 csmajs 4096 Apr 19 22:14 .
+drwx------ 5 aesgu001 csmajs 4096 Apr 10 13:23 ..
+-rw------- 1 aesgu001 csmajs   41 Apr 19 22:14 hw0
+
+./src:
+total 24
+drwx------ 2 aesgu001 csmajs 4096 May  1 22:22 .
+drwx------ 7 aesgu001 csmajs 4096 May  2 00:11 ..
+-rw------- 1 aesgu001 csmajs 1353 Apr 19 15:01 cmd.h
+-rw------- 1 aesgu001 csmajs 6300 May  1 22:10 ls.cpp
+-rw------- 1 aesgu001 csmajs 4087 Apr 19 22:10 main.cpp
+
+./test_dir:
+total 12
+drwx------ 3 aesgu001 csmajs 4096 May  2 00:11 .
+drwx------ 7 aesgu001 csmajs 4096 May  2 00:11 ..
+drwx------ 2 aesgu001 csmajs 4096 May  2 00:11 test_dir1
+
+./test_dir/test_dir1:
+total 8
+drwx------ 2 aesgu001 csmajs 4096 May  2 00:11 .
+drwx------ 3 aesgu001 csmajs 4096 May  2 00:11 ..
+
+./tests:
+total 108
+drwx------ 2 aesgu001 csmajs  4096 May  2 00:01 .
+drwx------ 7 aesgu001 csmajs  4096 May  2 00:11 ..
+-rw------- 1 aesgu001 csmajs 35497 May  1 23:59 exec.script
+-rw------- 1 aesgu001 csmajs 65536 May  2 00:29 ls.script
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m bin/ls -a -R -l
+.:
+total 56
+drwx------ 7 aesgu001 csmajs  4096 May  2 00:11 [0;34m.[39;49m
+drwx------ 5 aesgu001 csmajs  4096 Apr 29 16:01 [0;34m..[39;49m
+drwx------ 8 aesgu001 csmajs  4096 May  2 00:00 [0;34m.git[39;49m
+-rw------- 1 aesgu001 csmajs 18047 Apr 10 13:23 LICENSE
+-rw------- 1 aesgu001 csmajs   264 May  1 20:23 Makefile
+-rw------- 1 aesgu001 csmajs  1385 Apr 19 22:10 README.md
+drwx------ 2 aesgu001 csmajs  4096 May  2 00:03 [0;34mbin[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 22:22 [0;34msrc[39;49m
+drwx------ 3 aesgu001 csmajs  4096 May  2 00:11 [0;34mtest_dir[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  2 00:01 [0;34mtests[39;49m
+
+./.git:
+total 64
+-rw------- 1 aesgu001 csmajs   540 Apr 13 02:28 #COMMIT_EDITMSG#
+-rw------- 1 aesgu001 csmajs   287 Apr 19 17:03 #MERGE_MSG#
+drwx------ 8 aesgu001 csmajs  4096 May  2 00:00 [0;34m.[39;49m
+drwx------ 7 aesgu001 csmajs  4096 May  2 00:11 [0;34m..[39;49m
+-rw------- 1 aesgu001 csmajs    49 May  1 22:20 COMMIT_EDITMSG
+-rw------- 1 aesgu001 csmajs   308 May  1 20:20 FETCH_HEAD
+-rw------- 1 aesgu001 csmajs    19 May  1 20:23 HEAD
+-rw------- 1 aesgu001 csmajs    41 Apr 25 14:34 ORIG_HEAD
+drwx------ 2 aesgu001 csmajs  4096 Apr 10 13:23 [0;34mbranches[39;49m
+-rw------- 1 aesgu001 csmajs   321 Apr 19 21:52 config
+-rw------- 1 aesgu001 csmajs    73 Apr 10 13:23 description
+drwx------ 2 aesgu001 csmajs  4096 Apr 10 13:23 [0;34mhooks[39;49m
+-rw------- 1 aesgu001 csmajs   560 May  2 00:00 index
+drwx------ 2 aesgu001 csmajs  4096 Apr 10 13:23 [0;34minfo[39;49m
+drwx------ 3 aesgu001 csmajs  4096 Apr 10 13:23 [0;34mlogs[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34mobjects[39;49m
+-rw------- 1 aesgu001 csmajs   173 Apr 10 13:23 packed-refs
+drwx------ 5 aesgu001 csmajs  4096 Apr 10 13:23 [0;34mrefs[39;49m
+
+./.git/branches:
+total 8
+drwx------ 2 aesgu001 csmajs  4096 Apr 10 13:23 [0;34m.[39;49m
+drwx------ 8 aesgu001 csmajs  4096 May  2 00:00 [0;34m..[39;49m
+
+./.git/hooks:
+total 48
+drwx------ 2 aesgu001 csmajs  4096 Apr 10 13:23 [0;34m.[39;49m
+drwx------ 8 aesgu001 csmajs  4096 May  2 00:00 [0;34m..[39;49m
+-rwx------ 1 aesgu001 csmajs   452 Apr 10 13:23 [0;32mapplypatch-msg.sample[39;49m
+-rwx------ 1 aesgu001 csmajs   896 Apr 10 13:23 [0;32mcommit-msg.sample[39;49m
+-rwx------ 1 aesgu001 csmajs   189 Apr 10 13:23 [0;32mpost-update.sample[39;49m
+-rwx------ 1 aesgu001 csmajs   398 Apr 10 13:23 [0;32mpre-applypatch.sample[39;49m
+-rwx------ 1 aesgu001 csmajs  1635 Apr 10 13:23 [0;32mpre-commit.sample[39;49m
+-rwx------ 1 aesgu001 csmajs  1348 Apr 10 13:23 [0;32mpre-push.sample[39;49m
+-rwx------ 1 aesgu001 csmajs  4951 Apr 10 13:23 [0;32mpre-rebase.sample[39;49m
+-rwx------ 1 aesgu001 csmajs  1239 Apr 10 13:23 [0;32mprepare-commit-msg.sample[39;49m
+-rwx------ 1 aesgu001 csmajs  3611 Apr 10 13:23 [0;32mupdate.sample[39;49m
+
+./.git/info:
+total 12
+drwx------ 2 aesgu001 csmajs  4096 Apr 10 13:23 [0;34m.[39;49m
+drwx------ 8 aesgu001 csmajs  4096 May  2 00:00 [0;34m..[39;49m
+-rw------- 1 aesgu001 csmajs   240 Apr 10 13:23 exclude
+
+./.git/logs:
+total 40
+drwx------ 3 aesgu001 csmajs  4096 Apr 10 13:23 [0;34m.[39;49m
+drwx------ 8 aesgu001 csmajs  4096 May  2 00:00 [0;34m..[39;49m
+-rw------- 1 aesgu001 csmajs 25041 May  1 22:20 HEAD
+drwx------ 4 aesgu001 csmajs  4096 Apr 10 13:23 [0;34mrefs[39;49m
+
+./.git/logs/refs:
+total 16
+drwx------ 4 aesgu001 csmajs  4096 Apr 10 13:23 [0;34m.[39;49m
+drwx------ 3 aesgu001 csmajs  4096 Apr 10 13:23 [0;34m..[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 25 14:42 [0;34mheads[39;49m
+drwx------ 3 aesgu001 csmajs  4096 Apr 10 13:23 [0;34mremotes[39;49m
+
+./.git/logs/refs/heads:
+total 28
+drwx------ 2 aesgu001 csmajs  4096 Apr 25 14:42 [0;34m.[39;49m
+drwx------ 4 aesgu001 csmajs  4096 Apr 10 13:23 [0;34m..[39;49m
+-rw------- 1 aesgu001 csmajs  6326 Apr 19 22:07 exec
+-rw------- 1 aesgu001 csmajs  4635 May  1 22:20 ls
+-rw------- 1 aesgu001 csmajs  1142 May  1 20:22 master
+
+./.git/logs/refs/remotes:
+total 12
+drwx------ 3 aesgu001 csmajs  4096 Apr 10 13:23 [0;34m.[39;49m
+drwx------ 4 aesgu001 csmajs  4096 Apr 10 13:23 [0;34m..[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 20:19 [0;34morigin[39;49m
+
+./.git/logs/refs/remotes/origin:
+total 24
+drwx------ 2 aesgu001 csmajs  4096 May  1 20:19 [0;34m.[39;49m
+drwx------ 3 aesgu001 csmajs  4096 Apr 10 13:23 [0;34m..[39;49m
+-rw------- 1 aesgu001 csmajs   195 Apr 10 13:23 HEAD
+-rw------- 1 aesgu001 csmajs   477 Apr 19 22:16 exec
+-rw------- 1 aesgu001 csmajs   159 May  1 20:19 ls
+-rw------- 1 aesgu001 csmajs   803 May  1 20:22 master
+
+./.git/objects:
+total 748
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m.[39;49m
+drwx------ 8 aesgu001 csmajs  4096 May  2 00:00 [0;34m..[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 10 13:41 [0;34m00[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 11 15:48 [0;34m02[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 21:14 [0;34m03[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 10 20:34 [0;34m04[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 18 01:37 [0;34m05[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 13 17:51 [0;34m07[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 20:18 [0;34m08[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 12 04:21 [0;34m0a[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 21:03 [0;34m0b[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 13 02:17 [0;34m0c[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 30 18:18 [0;34m0d[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 15 17:52 [0;34m0e[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 10 13:23 [0;34m0f[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 30 01:32 [0;34m10[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 20:56 [0;34m12[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 11 01:18 [0;34m13[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 16 14:52 [0;34m14[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 15 17:52 [0;34m16[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 13 18:07 [0;34m17[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 21:37 [0;34m18[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 30 01:53 [0;34m19[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 13 04:19 [0;34m1c[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 15 22:03 [0;34m1e[39;49m
+do_ypcall: clnt_call: RPC: Unable to send; errno = Operation not permitted
+drwx------ 2 aesgu001 csmajs  4096 Apr 19 14:52 [0;34m1f[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 13 02:15 [0;34m21[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 28 20:00 [0;34m22[39;49m
+do_ypcall: clnt_call: RPC: Unable to send; errno = Operation not permitted
+drwx------ 2 aesgu001 csmajs  4096 Apr 12 19:35 [0;34m23[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 20:22 [0;34m24[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 30 01:32 [0;34m25[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 13 17:13 [0;34m26[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 25 14:47 [0;34m28[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 12 00:38 [0;34m29[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 01:11 [0;34m2a[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 11 22:07 [0;34m2d[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 28 16:58 [0;34m31[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 30 01:53 [0;34m33[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 20:18 [0;34m34[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 20:20 [0;34m35[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 21:03 [0;34m37[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 13 17:40 [0;34m38[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 19 20:50 [0;34m39[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 20:18 [0;34m3b[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 21:15 [0;34m3c[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 12 00:38 [0;34m3d[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 12 00:38 [0;34m3e[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 30 19:21 [0;34m3f[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 21:36 [0;34m40[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 12 00:38 [0;34m44[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 13 23:19 [0;34m45[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 25 15:35 [0;34m46[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 30 01:32 [0;34m47[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 11 22:07 [0;34m4a[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 13 23:19 [0;34m4b[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 13 01:09 [0;34m4c[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 14 01:45 [0;34m4d[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 10 14:46 [0;34m4e[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 22:19 [0;34m50[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 11 22:48 [0;34m53[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 28 23:51 [0;34m54[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 25 15:00 [0;34m55[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 28 23:51 [0;34m56[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 17 12:52 [0;34m58[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 28 23:42 [0;34m59[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 20:22 [0;34m5a[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 10 22:55 [0;34m5b[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 28 23:51 [0;34m5c[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 14 01:45 [0;34m5e[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 11 21:53 [0;34m61[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 30 19:21 [0;34m62[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 17 12:49 [0;34m63[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 17 01:41 [0;34m65[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 30 23:34 [0;34m66[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 28 23:42 [0;34m67[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 22:20 [0;34m68[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 28 20:01 [0;34m69[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 13 17:13 [0;34m6a[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 15 23:26 [0;34m6b[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 19 22:07 [0;34m6c[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 10 13:41 [0;34m6e[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 15 23:27 [0;34m6f[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 20:54 [0;34m70[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 13 17:33 [0;34m71[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 21:15 [0;34m72[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 30 22:49 [0;34m73[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 30 22:49 [0;34m75[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 21:15 [0;34m76[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 30 22:49 [0;34m77[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 19 15:06 [0;34m79[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 20:56 [0;34m7a[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 25 15:02 [0;34m7b[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 17 12:59 [0;34m7c[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 19 16:44 [0;34m7f[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 11 22:47 [0;34m81[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 13 02:45 [0;34m83[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 19 14:50 [0;34m86[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 19 20:52 [0;34m87[39;49m
+do_ypcall: clnt_call: RPC: Unable to send; errno = Operation not permitted
+drwx------ 2 aesgu001 csmajs  4096 Apr 10 13:23 [0;34m89[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 19 22:06 [0;34m8a[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 22:20 [0;34m8b[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 20:21 [0;34m8c[39;49m
+do_ypcall: clnt_call: RPC: Unable to send; errno = Operation not permitted
+drwx------ 2 aesgu001 csmajs  4096 May  1 21:37 [0;34m8d[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 11 22:48 [0;34m8f[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 20:20 [0;34m90[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 28 16:58 [0;34m91[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 20:20 [0;34m93[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 19 14:54 [0;34m95[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 19 22:10 [0;34m96[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 16 14:51 [0;34m97[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 10 22:55 [0;34m9a[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 13 04:19 [0;34m9b[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 28 17:39 [0;34m9d[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 18 00:20 [0;34m9f[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 30 01:53 [0;34ma0[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 10 13:41 [0;34ma1[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 19 20:52 [0;34ma3[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 13 23:02 [0;34ma5[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 30 23:34 [0;34ma6[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 19 16:59 [0;34ma7[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 16 00:41 [0;34ma8[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 13 19:39 [0;34maa[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 00:44 [0;34mab[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 25 14:47 [0;34mac[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 01:13 [0;34mad[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 30 23:33 [0;34mae[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 20:20 [0;34maf[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 28 20:01 [0;34mb0[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 10 22:55 [0;34mb1[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 30 18:18 [0;34mb2[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 12 19:04 [0;34mb3[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 18 23:08 [0;34mb4[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 11 15:51 [0;34mb6[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 18 00:20 [0;34mb7[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 19 16:50 [0;34mb8[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 17 12:55 [0;34mb9[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 13 23:02 [0;34mbb[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 12 18:36 [0;34mbc[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 11 15:51 [0;34mbd[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 12 04:21 [0;34mbe[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 11 01:18 [0;34mbf[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 28 23:42 [0;34mc0[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 19 16:45 [0;34mc2[39;49m
+do_ypcall: clnt_call: RPC: Unable to send; errno = Operation not permitted
+drwx------ 2 aesgu001 csmajs  4096 Apr 10 15:05 [0;34mc3[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 10 22:55 [0;34mc5[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 13 23:02 [0;34mc7[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 19 21:50 [0;34mc8[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 18 22:09 [0;34mc9[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 30 22:47 [0;34mca[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 20:18 [0;34mcc[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 28 20:01 [0;34mcd[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 20:56 [0;34mce[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 00:44 [0;34md0[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 15 21:44 [0;34md3[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 01:13 [0;34md4[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 13 23:18 [0;34md5[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 30 18:18 [0;34md6[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 21:37 [0;34md7[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 30 19:20 [0;34md8[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 25 15:02 [0;34md9[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 22:20 [0;34mda[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 30 19:21 [0;34mdf[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 19 22:07 [0;34me1[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 12 19:04 [0;34me2[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 00:42 [0;34me3[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 15 22:16 [0;34me4[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 20:20 [0;34me5[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 30 01:30 [0;34me6[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 13 23:19 [0;34me7[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 21:03 [0;34me9[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 12 00:38 [0;34mea[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 18 01:38 [0;34meb[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 15 17:52 [0;34mf1[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 30 01:53 [0;34mf2[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 25 15:33 [0;34mf3[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 19 01:13 [0;34mf4[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 28 17:36 [0;34mf5[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 19 22:07 [0;34mf6[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 11 21:53 [0;34mf7[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 28 17:39 [0;34mf9[39;49m
+drwx------ 2 aesgu001 csmajs  4096 May  1 01:13 [0;34mfa[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 11 21:53 [0;34mfb[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 13 04:18 [0;34mfe[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 11 01:26 [0;34mff[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 10 13:23 [0;34minfo[39;49m
+drwx------ 2 aesgu001 csmajs  4096 Apr 10 13:23 [0;34mpack[39;49m
+
+./.git/objects/00:
+total 12
+drwx------ 2 aesgu001 csmajs  4096 Apr 10 13:41 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs    52 Apr 10 13:41 5895124bda223ef85362993faf0e0fddfbb94a
+
+./.git/objects/02:
+total 20
+drwx------ 2 aesgu001 csmajs  4096 Apr 11 15:48 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   413 Apr 11 15:48 7310d534ac9a2ac319f9461d5d8a856212e75d
+-r-------- 1 aesgu001 csmajs   255 Apr 10 20:33 cbb4ee6fb4fec052ef2edc83c3547bd52e3f50
+
+./.git/objects/03:
+total 24
+drwx------ 2 aesgu001 csmajs  4096 May  1 21:14 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   270 Apr 11 22:06 2ba2cfe064c248acf7e2500b19326c51cba050
+do_ypcall: clnt_call: RPC: Unable to send; errno = Operation not permitted
+-r-------- 1 aesgu001 csmajs  1760 May  1 21:14 5a7c31b2f5a89b06da5b83b7ba4648270e30cf
+-r-------- 1 aesgu001 csmajs   199 Apr 28 17:39 9867ecf877a8c6f8c0335857aff18a0e392b3b
+
+./.git/objects/04:
+total 16
+drwx------ 2 aesgu001 csmajs  4096 Apr 10 20:34 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   115 Apr 10 20:34 aac6aafa643becb32fbb4bb4f7099f351a5d2a
+
+./.git/objects/05:
+total 16
+drwx------ 2 aesgu001 csmajs  4096 Apr 18 01:37 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   156 Apr 18 01:37 0e6a7b89b8cb8e98b3d08c4cd3ac8efa33e741
+
+./.git/objects/07:
+total 16
+drwx------ 2 aesgu001 csmajs  4096 Apr 13 17:51 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   215 Apr 13 17:51 3623c6888126102d69e9e4d74219541f3aeb18
+
+./.git/objects/08:
+total 24
+drwx------ 2 aesgu001 csmajs  4096 May  1 20:18 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   176 May  1 00:44 0d7653a2ab4af9b322c01aa36b88295cf7adbe
+-r-------- 1 aesgu001 csmajs   109 May  1 20:18 64324c0c3c80d876a35bde25af897f74589e96
+-r-------- 1 aesgu001 csmajs    82 Apr 12 18:15 76e4dd0ff25dab6cd53614583bb9217278ca82
+
+./.git/objects/0a:
+total 16
+drwx------ 2 aesgu001 csmajs  4096 Apr 12 04:21 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   660 Apr 12 04:21 7488e221dbec1fa47270f7d34033a41624c73d
+
+./.git/objects/0b:
+total 20
+drwx------ 2 aesgu001 csmajs  4096 May  1 21:03 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   109 May  1 21:03 0ac91e31ad7bee1021b41a2566c471e1c2364e
+-r-------- 1 aesgu001 csmajs   178 Apr 12 00:38 2bb7931bcb33a88fe3cbfa114060f514657376
+
+./.git/objects/0c:
+total 20
+drwx------ 2 aesgu001 csmajs  4096 Apr 13 02:17 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   115 Apr 10 13:36 568e77cfe5e3bddefff30bd795a31dabf85d17
+-r-------- 1 aesgu001 csmajs   116 Apr 13 02:17 787fe7eebaffb9eb93081f624afde493bd3bef
+
+./.git/objects/0d:
+total 20
+do_ypcall: clnt_call: RPC: Unable to send; errno = Operation not permitted
+drwx------ 2 aesgu001 csmajs  4096 Apr 30 18:18 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   184 Apr 11 01:11 76ce6efe7fa6d1b05d184043cd310dccf39925
+-r-------- 1 aesgu001 csmajs   194 Apr 30 18:18 87682a7e5048d1ac895a2167e7b04ad9051ba9
+
+./.git/objects/0e:
+total 20
+drwx------ 2 aesgu001 csmajs  4096 Apr 15 17:52 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   193 Apr 15 17:52 30c5fd877f59dc0588e54ca94306762c26e32f
+-r-------- 1 aesgu001 csmajs   115 Apr 12 18:37 83bc4572d6906dc51fbd6b665947022d4350c2
+
+./.git/objects/0f:
+total 16
+drwx------ 2 aesgu001 csmajs  4096 Apr 10 13:23 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+do_ypcall: clnt_call: RPC: Unable to send; errno = Operation not permitted
+-r-------- 1 aesgu001 csmajs   131 Apr 10 13:23 6a860b0906493c68165a98d9d482a06fab8804
+
+./.git/objects/10:
+total 24
+drwx------ 2 aesgu001 csmajs  4096 Apr 30 01:32 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   188 Apr 11 01:25 01d775be84bcc0d8ae8b15e98d612fc0c9bd46
+-r-------- 1 aesgu001 csmajs   226 Apr 10 13:23 953f5c6b5ca291ec5ca627cd4306b334be1ab6
+-r-------- 1 aesgu001 csmajs   110 Apr 30 01:32 98d0a3c686dd6430ef709de0e184c2dfeff973
+
+./.git/objects/12:
+total 24
+drwx------ 2 aesgu001 csmajs  4096 May  1 20:56 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+do_ypcall: clnt_call: RPC: Unable to send; errno = Operation not permitted
+-r-------- 1 aesgu001 csmajs   226 Apr 13 01:09 19cac28863bbf24f2a7dc4440ac7cbcb753afb
+-r-------- 1 aesgu001 csmajs   177 May  1 20:56 2485b830ac8cc7fc507e16b570a422bb610fe6
+do_ypcall: clnt_call: RPC: Unable to send; errno = Operation not permitted
+-r-------- 1 aesgu001 csmajs   757 May  1 20:20 cb35cf114df0ed12208cadf5c4f8798412a892
+
+./.git/objects/13:
+total 20
+drwx------ 2 aesgu001 csmajs  4096 Apr 11 01:18 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   116 Apr 10 15:06 bb6928bd2e81ff78ef0ee60e7d3084bdc53758
+-r-------- 1 aesgu001 csmajs   181 Apr 11 01:18 c29eac57352cdc1709670dc22f397eadb1c21c
+
+./.git/objects/14:
+total 16
+drwx------ 2 aesgu001 csmajs  4096 Apr 16 14:52 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   193 Apr 16 14:52 4d9a87d77b97a998ed97cdf11952835fd54bca
+
+./.git/objects/16:
+total 16
+drwx------ 2 aesgu001 csmajs  4096 Apr 15 17:52 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs    82 Apr 15 17:52 efffcc7fd7665b817fe8374030ef6889521e66
+
+./.git/objects/17:
+total 20
+drwx------ 2 aesgu001 csmajs  4096 Apr 13 18:07 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   192 Apr 12 19:04 79420f9ab47656d225cb7e654484827012c361
+-r-------- 1 aesgu001 csmajs    81 Apr 13 18:07 c2022c85ff8d369a263bd0c313ad93c764cb05
+
+./.git/objects/18:
+total 24
+drwx------ 2 aesgu001 csmajs  4096 May  1 21:37 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   147 Apr 15 23:27 1ba83e4b7587c170be7bcb8100e10eb5837950
+-r-------- 1 aesgu001 csmajs   190 Apr 25 22:42 5f1c7653d1a68ae8230221832f938a8aaa477a
+-r-------- 1 aesgu001 csmajs   189 May  1 21:37 7d9daee316dd3362e510aced1d42e56a0750ea
+
+./.git/objects/19:
+total 16
+drwx------ 2 aesgu001 csmajs  4096 Apr 30 01:53 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   176 Apr 30 01:53 57b4d0a196d791aaffc0302bf1f72018d27fdb
+
+./.git/objects/1c:
+total 20
+drwx------ 2 aesgu001 csmajs  4096 Apr 13 04:19 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+do_ypcall: clnt_call: RPC: Unable to send; errno = Operation not permitted
+-r-------- 1 aesgu001 csmajs  1127 Apr 12 19:34 99475ddd2b47d7237883d8d74b915a103e9b84
+-r-------- 1 aesgu001 csmajs   148 Apr 13 04:19 b76fc4438b2a735b895c77b5e2d0bb99f449cb
+
+./.git/objects/1e:
+total 16
+drwx------ 2 aesgu001 csmajs  4096 Apr 15 22:03 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs  1403 Apr 15 22:03 b24f8ad684dc192cefd87769f87bf02414311c
+
+./.git/objects/1f:
+total 16
+drwx------ 2 aesgu001 csmajs  4096 Apr 19 14:52 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   147 Apr 19 14:52 e31d076ee9e3481fe8f25ed2706003ed380d31
+
+./.git/objects/21:
+total 16
+drwx------ 2 aesgu001 csmajs  4096 Apr 13 02:15 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs  1064 Apr 13 02:15 02d9ce4af655b1326b9002f61721bc4867f422
+
+./.git/objects/22:
+total 16
+drwx------ 2 aesgu001 csmajs  4096 Apr 28 20:00 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs  1093 Apr 28 20:00 480ac4508b393b3d930518592efea54f6f6664
+
+./.git/objects/23:
+total 16
+drwx------ 2 aesgu001 csmajs  4096 Apr 12 19:35 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   115 Apr 12 19:35 ec773dcb38d06db38251615cff168de1f33b3c
+
+./.git/objects/24:
+total 20
+drwx------ 2 aesgu001 csmajs  4096 May  1 20:22 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   180 May  1 20:22 17fb20c3609d9b5cef721644a5162018f12400
+-r-------- 1 aesgu001 csmajs   562 Apr 13 19:38 8c699b1ce15e9ce4c091d9fbe41dceea64ecc6
+
+./.git/objects/25:
+total 20
+drwx------ 2 aesgu001 csmajs  4096 Apr 30 01:32 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   177 Apr 30 01:32 bd3b6d2c757f27f35dc72fbca0faeb1ede1267
+-r-------- 1 aesgu001 csmajs   189 Apr 19 14:52 d6bef0d1858d2af4f9908683048477edcee26f
+
+./.git/objects/26:
+total 20
+drwx------ 2 aesgu001 csmajs  4096 Apr 13 17:13 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   101 Apr 10 13:35 4a60cf93e2312633ee16eaa61cef98d52e4ee1
+-r-------- 1 aesgu001 csmajs    81 Apr 13 17:13 f1d120f5ba843c3fa767636f64104e9ed8a3be
+
+./.git/objects/28:
+total 16
+drwx------ 2 aesgu001 csmajs  4096 Apr 25 14:47 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   171 Apr 25 14:47 519e2f068d37ba9aff4e26d5675f32f72ef2c5
+
+./.git/objects/29:
+total 16
+do_ypcall: clnt_call: RPC: Unable to send; errno = Operation not permitted
+drwx------ 2 aesgu001 csmajs  4096 Apr 12 00:38 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs    82 Apr 12 00:38 f6b033e02395af9e5489eb21b3343d84dba969
+
+./.git/objects/2a:
+total 20
+drwx------ 2 aesgu001 csmajs  4096 May  1 01:11 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs    83 Apr 12 19:04 42d8e35abe31ed5e59fdcd1de34880bc8120ee
+-r-------- 1 aesgu001 csmajs  1618 May  1 01:11 79ff68434157ed154cf218cad282d4a69a710b
+
+./.git/objects/2d:
+total 16
+drwx------ 2 aesgu001 csmajs  4096 Apr 11 22:07 [0;34m.[39;49m
+do_ypcall: clnt_call: RPC: Unable to send; errno = Operation not permitted
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   116 Apr 11 22:07 0522c78ddd4a8ca7bb268bbb8015cd8ab4b4a4
+-r-------- 1 aesgu001 csmajs    52 Apr 10 13:23 47279f2e6e3e22080b6c75884ac7403bdb9318
+
+./.git/objects/31:
+total 20
+drwx------ 2 aesgu001 csmajs  4096 Apr 28 16:58 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   448 Apr 11 22:47 84ca53a457c4c2eb0481b24bae5a4a2385572b
+-r-------- 1 aesgu001 csmajs   109 Apr 28 16:58 eeb8bbe2ad1bd3c473b5e2904e2cabffb3ad34
+
+./.git/objects/33:
+total 20
+drwx------ 2 aesgu001 csmajs  4096 Apr 30 01:53 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   109 Apr 30 01:53 5e1468cd14cf5910af890dcf948093f38df730
+-r-------- 1 aesgu001 csmajs    82 Apr 10 15:06 9b953fbd9747d9f394be860340ed7b4e6074ee
+
+./.git/objects/34:
+total 20
+drwx------ 2 aesgu001 csmajs  4096 May  1 20:18 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   116 Apr 12 04:24 6b6f4953c684a89e8e601e9e177f9a96600713
+-r-------- 1 aesgu001 csmajs   176 May  1 20:18 a2fd65e21384a8eda23d85ce0daf978e420825
+
+./.git/objects/35:
+total 16
+drwx------ 2 aesgu001 csmajs  4096 May  1 20:20 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   177 May  1 20:20 8e1eff9f440f1dec92fb5495c5e679070302dd
+
+./.git/objects/37:
+total 28
+drwx------ 2 aesgu001 csmajs  4096 May  1 21:03 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs    83 Apr 10 14:46 5d138c1a2b614ce2776e412563e65c8edeea07
+-r-------- 1 aesgu001 csmajs   182 May  1 21:03 68d9bcdd6f11c1458c44cfe719e6e3475de176
+-r-------- 1 aesgu001 csmajs    82 Apr 12 18:37 7049ab0770377aaf03cf994711b1dab0988243
+-r-------- 1 aesgu001 csmajs   147 Apr 16 00:41 766fc0e2ded35de6ac3cdee0788178f9cf7ab0
+
+./.git/objects/38:
+total 20
+drwx------ 2 aesgu001 csmajs  4096 Apr 13 17:40 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs  1296 Apr 13 17:40 21d72c83f464fecdb63714da70e74c496d96a6
+-r-------- 1 aesgu001 csmajs   985 Apr 13 01:07 71b906d34f264d8c550adb57d6b6f767848628
+
+./.git/objects/39:
+total 16
+drwx------ 2 aesgu001 csmajs  4096 Apr 19 20:50 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs  1313 Apr 19 20:50 7c9c7c58b4c6154a1961d582c98c8dcd7deae7
+
+./.git/objects/3b:
+total 16
+drwx------ 2 aesgu001 csmajs  4096 May  1 20:18 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   171 May  1 20:18 a70a025218d6ffea47d76937d2799dd5af5d7c
+
+./.git/objects/3c:
+total 20
+drwx------ 2 aesgu001 csmajs  4096 May  1 21:15 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   109 May  1 21:15 5fb6d0c0dfd66d4309a3c1b2522adb7ce5d09c
+-r-------- 1 aesgu001 csmajs   147 Apr 19 01:13 d1992ffba02c50c0bb2895f0a5723f951a96cb
+
+./.git/objects/3d:
+total 20
+drwx------ 2 aesgu001 csmajs  4096 Apr 12 00:38 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   646 Apr 12 00:38 a0e66a9875f52dbf5d2aa3e6d5e85665d54f49
+-r-------- 1 aesgu001 csmajs    80 Apr 10 22:55 eeec96701002221b2f603aeb396d687a7c97ae
+
+./.git/objects/3e:
+total 20
+do_ypcall: clnt_call: RPC: Unable to send; errno = Operation not permitted
+drwx------ 2 aesgu001 csmajs  4096 Apr 12 00:38 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   100 Apr 10 13:40 7f8f81eaa9b5823a53579a51522381e764a844
+-r-------- 1 aesgu001 csmajs   116 Apr 12 00:38 d6547bb29059774a92533a3708f8c32722510c
+
+./.git/objects/3f:
+total 20
+drwx------ 2 aesgu001 csmajs  4096 Apr 30 19:21 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   882 Apr 28 16:57 046c4ba36137678aeef6b55265990e4c048628
+-r-------- 1 aesgu001 csmajs   110 Apr 30 19:21 6315ce66839be6b16e23741ae257a4e2125277
+
+./.git/objects/40:
+total 20
+drwx------ 2 aesgu001 csmajs  4096 May  1 21:36 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   203 Apr 13 04:19 21b00414aadf99cd347bb52a013baf6ba2adfc
+-r-------- 1 aesgu001 csmajs  1853 May  1 21:36 54b6343e4e2b7e8423c69c9e9bf222b752d278
+
+./.git/objects/44:
+total 16
+drwx------ 2 aesgu001 csmajs  4096 Apr 12 00:38 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   115 Apr 12 00:38 d09a35e8de9f7335c8499473ab74b32b602bed
+
+./.git/objects/45:
+total 16
+drwx------ 2 aesgu001 csmajs  4096 Apr 13 23:19 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs    81 Apr 13 23:19 97318ab92b5f89cb55fde2433c725ef27fc180
+
+./.git/objects/46:
+total 16
+drwx------ 2 aesgu001 csmajs  4096 Apr 25 15:35 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   109 Apr 25 15:35 be1c00f53fdcb8f9906cc04221d0a4b544dada
+
+./.git/objects/47:
+total 20
+drwx------ 2 aesgu001 csmajs  4096 Apr 30 01:32 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   200 Apr 12 19:35 4c6e32e4697544f7d5500ca142942430a2b39c
+-r-------- 1 aesgu001 csmajs   187 Apr 30 01:32 ff844a56302134ee6cf55825e64a3bc46d1647
+
+./.git/objects/4a:
+total 16
+drwx------ 2 aesgu001 csmajs  4096 Apr 11 22:07 [0;34m.[39;49m
+do_ypcall: clnt_call: RPC: Unable to send; errno = Operation not permitted
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs    82 Apr 11 22:07 7d7b081ec03af4e22ef8e21e78b8e0db21ace8
+
+./.git/objects/4b:
+total 16
+drwx------ 2 aesgu001 csmajs  4096 Apr 13 23:19 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   147 Apr 13 23:19 027eba3985ff033fa3bc8bd247d0e49f708bd4
+
+./.git/objects/4c:
+total 16
+drwx------ 2 aesgu001 csmajs  4096 Apr 13 01:09 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs    82 Apr 13 01:09 fee16dd176605c02fec29ef612a9d842556a92
+
+./.git/objects/4d:
+total 16
+drwx------ 2 aesgu001 csmajs  4096 Apr 14 01:45 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   200 Apr 14 01:45 fa0b10036a07e64cbbe834cebf543040db427d
+
+./.git/objects/4e:
+total 16
+drwx------ 2 aesgu001 csmajs  4096 Apr 10 14:46 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+do_ypcall: clnt_call: RPC: Unable to send; errno = Operation not permitted
+-r-------- 1 aesgu001 csmajs   189 Apr 10 14:46 c9fa3d6202e47fbf10dfe59cbd242b37e7be71
+
+./.git/objects/50:
+total 16
+drwx------ 2 aesgu001 csmajs  4096 May  1 22:19 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs  1858 May  1 22:19 20bceb9e0e8b6d49d8c1943fe5d1f418f8bf58
+
+./.git/objects/53:
+total 20
+drwx------ 2 aesgu001 csmajs  4096 Apr 11 22:48 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   116 Apr 11 01:11 2abd83d52c6a19b785487dd62534f5c06ebbc3
+-r-------- 1 aesgu001 csmajs    81 Apr 11 22:48 e9a4a6c4fcb49a0a410e4face57879f9ef73e0
+
+./.git/objects/54:
+total 24
+drwx------ 2 aesgu001 csmajs  4096 Apr 28 23:51 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+do_ypcall: clnt_call: RPC: Unable to send; errno = Operation not permitted
+-r-------- 1 aesgu001 csmajs   198 Apr 28 16:58 ad82ca9ece21d18f783bffe81c9618b5d2911e
+-r-------- 1 aesgu001 csmajs   147 Apr 17 01:41 b328fcf5535b6f8059801981878abded07087d
+-r-------- 1 aesgu001 csmajs   184 Apr 28 23:51 c567990ec78b91d6fb3b829ea5060ed06b41a2
+
+./.git/objects/55:
+total 24
+drwx------ 2 aesgu001 csmajs  4096 Apr 25 15:00 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs    82 Apr 15 23:27 07d05286595bea017e5b3f1892f504ae6b9ef8
+-r-------- 1 aesgu001 csmajs   115 Apr 10 18:58 a4e5c14d6d8b4ecd9e7796cbc66a17d9a1a4db
+-r-------- 1 aesgu001 csmajs   173 Apr 25 15:00 fa3c30d8750046e184e3f8fc959a763d332728
+
+./.git/objects/56:
+total 28
+do_ypcall: clnt_call: RPC: Unable to send; errno = Operation not permitted
+drwx------ 2 aesgu001 csmajs  4096 Apr 28 23:51 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   695 Apr 18 23:07 3ce00064119160343dc7ba03eeed99f7e7de5c
+-r-------- 1 aesgu001 csmajs   110 Apr 28 23:51 afce1c29eddabfe69f78c0a5e0830b6d335413
+-r-------- 1 aesgu001 csmajs   172 Apr 10 13:36 fdff92fb438b623de0fa1822f849cb9c3f57bf
+-r-------- 1 aesgu001 csmajs   189 Apr 13 17:33 ffb0a7d9e413bf57f8d83d2b6976297eec642c
+
+./.git/objects/58:
+total 16
+drwx------ 2 aesgu001 csmajs  4096 Apr 17 12:52 [0;34m.[39;49m
+do_ypcall: clnt_call: RPC: Unable to send; errno = Operation not permitted
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   208 Apr 17 12:52 8d45f9c38c8855ad592de6e974db492cf38214
+
+./.git/objects/59:
+total 20
+drwx------ 2 aesgu001 csmajs  4096 Apr 28 23:42 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs    82 Apr 11 01:18 5b264270c3ad699477f5f4973b213f612098e8
+-r-------- 1 aesgu001 csmajs   176 Apr 28 23:42 a8e2248f1d77c6950c199990cd65abc2524560
+
+./.git/objects/5a:
+total 20
+drwx------ 2 aesgu001 csmajs  4096 May  1 20:22 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   216 Apr 19 16:52 5daf5f8e74bb3549eff9b5172f8b02224c06fc
+-r-------- 1 aesgu001 csmajs   176 May  1 20:22 9ad25ed0241703ae060ca1a490524c2643adbc
+
+./.git/objects/5b:
+total 16
+drwx------ 2 aesgu001 csmajs  4096 Apr 10 22:55 [0;34m.[39;49m
+do_ypcall: clnt_call: RPC: Unable to send; errno = Operation not permitted
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   117 Apr 10 22:55 16b8550a3f6c7891c9b1467c2e50ea5cc15c7e
+
+./.git/objects/5c:
+total 16
+drwx------ 2 aesgu001 csmajs  4096 Apr 28 23:51 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   177 Apr 28 23:51 70bf514623f2c624bf96ceb16536461efc2f14
+
+./.git/objects/5e:
+total 16
+drwx------ 2 aesgu001 csmajs  4096 Apr 14 01:45 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   147 Apr 14 01:45 f2c1140fe7133563c0e1e4b7389a32d5d46324
+
+./.git/objects/61:
+total 16
+drwx------ 2 aesgu001 csmajs  4096 Apr 11 21:53 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   643 Apr 11 21:53 256284f7137e9f37faa478a73befc107ec6af7
+
+./.git/objects/62:
+total 16
+drwx------ 2 aesgu001 csmajs  4096 Apr 30 19:21 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+-r-------- 1 aesgu001 csmajs   180 Apr 30 19:21 08ba401971846d16e9df8abf379c241b54025b
+
+./.git/objects/63:
+total 16
+drwx------ 2 aesgu001 csmajs  4096 Apr 17 12:49 [0;34m.[39;49m
+drwx------ 186 aesgu001 csmajs  8192 May  1 22:19 [0;34m..[39;49m
+do_ypcall: clnt_call: RPC: Unable to send; errno = Operation not permitted
+do_ypcall: clnt_call: RPC: Unable to send; errno = Operation not permitted
+getgrgid: Success
+-r-------- 1 aesgu001 [s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m #------------------------------------
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m # EXITITNG TEST
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m #----------------------------------------------------------
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (ls) [0;36m$[0m exit
+exit
+~
+aesgu001@hammer $ exit
+exit
+
+Script done on Sat 02 May 2015 12:36:10 AM PDT
