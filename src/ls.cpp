@@ -25,11 +25,17 @@ struct file {
             perror(s_err.c_str());
             nil=true;
         }
+        if (NULL==(usr=getpwuid(buf.st_uid)))
+            perror("getpwuid");
+        if (NULL==(grp=getgrgid(buf.st_gid)))
+            perror("getgrgid");
     }
     const bool operator<(const file &rhs) const {
         return nname>rhs.nname;
     }
     struct stat buf;
+    struct passwd *usr;
+    struct group *grp;
     string name,nname;
     bool nil;
 };
@@ -93,18 +99,14 @@ void print_l_count(const priority_queue<file> &list) {
 
 void execute_print_l(const priority_queue<file> &list, const bool &count) {
     priority_queue<file> temp=list;
-    struct passwd *usr;
-    struct group *grp;
     string stime;
     if (count) print_l_count(list);
     while (!temp.empty()) {
         print_l_pms(temp.top());
         cout<<" ";
         cout<<temp.top().buf.st_nlink<<" ";
-        usr=getpwuid(temp.top().buf.st_uid);
-        cout<<usr->pw_name<<" ";
-        grp=getgrgid(temp.top().buf.st_gid);
-        cout<<grp->gr_name<<" ";
+        cout<<temp.top().usr->pw_name<<" ";
+        cout<<temp.top().grp->gr_name<<" ";
         cout<<setw(5)<<temp.top().buf.st_size<<" ";
         stime=ctime(&temp.top().buf.st_mtime);
         stime=stime.substr(4,12);
