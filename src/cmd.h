@@ -1,6 +1,8 @@
 #ifndef CMD_H
 #define CMD_H
 
+#include <string.h>
+
 class cmd {
     private:
     std::string executable;
@@ -14,17 +16,17 @@ class cmd {
         arlist_cap*=2;
         char **temp=argument_list;
         argument_list=new char*[arlist_cap+1];
-        if (arlist_sz<=1) return;
+        if (temp==NULL) return;
         for (std::size_t i=0;i<arlist_sz;i++)
-            *(argument_list+i)=*(temp+i);
+            argument_list[i]=temp[i];
     }
 
     public:
-    cmd() : executable(""), argument_list(NULL), arlist_sz(0),
+    cmd(): executable(""), argument_list(NULL), arlist_sz(0),
         arlist_cap(0), connector("") {}
-    cmd(const std::string &exec) : executable(exec), argument_list(NULL),
+    cmd(const std::string &exec): executable(exec), argument_list(NULL),
         arlist_sz(0), arlist_cap(0), connector("") {}
-    cmd(const std::string &exec, const std::string &conn) :
+    cmd(const std::string &exec, const std::string &conn):
         executable(exec), argument_list(NULL), arlist_sz(0), arlist_cap(0),
         connector(conn) {}
 
@@ -37,7 +39,12 @@ class cmd {
     void push(char *s) {
         arlist_sz++;
         if (arlist_sz>arlist_cap) expand();
-        *(argument_list+arlist_sz-1)=s;
+        if (s==NULL)
+            argument_list[arlist_sz-1]=NULL;
+        else {
+            argument_list[arlist_sz-1]=new char[strlen(s)+1];
+            strcpy(argument_list[arlist_sz-1],s);
+        }
     }
 };
 
