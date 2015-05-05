@@ -92,6 +92,7 @@ bool parse_help(std::queue<cmd> &commands, const std::string &l,
     }
     command.push(NULL);
     commands.push(command);
+    delete[] c_line;
     return true;
 }
 
