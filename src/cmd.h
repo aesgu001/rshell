@@ -13,7 +13,7 @@ class cmd {
         if (arlist_cap==0) arlist_cap=arlist_sz;
         arlist_cap*=2;
         char **temp=argument_list;
-        argument_list=new char*[arlist_cap];
+        argument_list=new char*[arlist_cap+1];
         if (arlist_sz<=1) return;
         for (std::size_t i=0;i<arlist_sz;i++)
             *(argument_list+i)=*(temp+i);
