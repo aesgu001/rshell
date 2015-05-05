@@ -1,8 +1,11 @@
 #ifndef LOGIN_H
 #define LOGIN_H
 
-#include <unistd.h>
+#include <errno.h>
+#include <limits.h>
+#include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 
 void login() {
     char *user_host;
