@@ -9,6 +9,7 @@
 #include <limits.h>
 #include <queue>
 #include "cmd.h"
+#include "login.h"
 using namespace std;
 
 void skip_quote(const string &s, size_t &pos) {
@@ -142,16 +143,9 @@ void execute(queue<cmd> &commands, bool &exit_called) {
 int main(int argc, char **argv) {
     queue<cmd> commands;
     string line;
-    char *user_host;
     bool exit_called=false;
     while (!exit_called) {
-        user_host=getlogin();
-        if (user_host==NULL) { perror("getlogin"); exit(1); }
-        cout << user_host << "@";
-        if (-1==gethostname(user_host,HOST_NAME_MAX)) {
-            perror("gethostname"); exit(1);
-        }
-        cout << user_host << "$ ";
+        login();
         getline(cin,line);
         parse(line,commands,argv[0]);
         execute(commands,exit_called);

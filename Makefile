@@ -4,7 +4,7 @@ DFLAGS = -Wall -Werror -ansi -pedantic
 
 all: rshell ls
 
-rshell: src/main.cpp src/cmd.h
+rshell: src/main.cpp src/cmd.h src/login.h
 	mkdir -p bin
 	$(CXX) $(CPPFLAGS) $(DFLAGS) -o bin/rshell src/main.cpp
 
