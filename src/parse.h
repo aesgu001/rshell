@@ -5,18 +5,14 @@
 #include <queue>
 #include "cmd.h"
 
-void skip_quote(const std::string &s, std::size_t &pos) {
-    for (std::size_t i=pos+1;i<s.length();i++)
-        if (s.at(i)=='"') {
-            pos=i;
-            return;
-        }
-}
-
 std::size_t find_hashtag(const std::string &s) {
-    for (size_t i=0;i<s.length();i++) {
+    for (std::size_t i=0;i<s.length();i++) {
         if (s.at(i)=='"') {
-            skip_quote(s,i);
+            for (std::size_t j=i+1;j<s.length();j++)
+                if (s.at(j)=='"') {
+                    i=j;
+                    break;
+                }
             continue;
         }
         else if (s.at(i)=='#') {
@@ -29,7 +25,11 @@ std::size_t find_hashtag(const std::string &s) {
 std::size_t find_connector(const std::string &s) {
     for (std::size_t i=0;i<s.length();i++) {
         if (s.at(i)=='"') {
-            skip_quote(s,i);
+            for (std::size_t j=i+1;j<s.length();j++)
+                if (s.at(j)=='"') {
+                    i=j;
+                    break;
+                }
             continue;
         }
         else if (s.at(i)==';') {
