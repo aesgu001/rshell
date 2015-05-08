@@ -5,24 +5,24 @@
 
 class cmd {
     private:
-    std::string executable;
-    char **argument_list;
+    std::string exec;
+    char **arlist;
     std::size_t arlist_sz;
     std::size_t arlist_cap;
-    std::string connector;
+    std::string conn;
 
     void expand() {
         arlist_cap=arlist_sz;
         arlist_cap*=2;
-        char **temp=argument_list;
-        argument_list=new char*[arlist_cap];
+        char **temp=arlist;
+        arlist=new char*[arlist_cap];
         if (temp==NULL) return;
         for (std::size_t i=0;i<arlist_sz-1;i++) {
             if (temp[i]==NULL)
-                argument_list[i]=NULL;
+                arlist[i]=NULL;
             else {
-                argument_list[i]=new char[strlen(temp[i])+1];
-                strcpy(argument_list[i],temp[i]);
+                arlist[i]=new char[strlen(temp[i])+1];
+                strcpy(arlist[i],temp[i]);
             }
             delete[] temp[i];
         }
@@ -30,24 +30,24 @@ class cmd {
     }
 
     public:
-    cmd(): executable(""), argument_list(NULL), arlist_sz(0),
-        arlist_cap(0), connector("") {}
+    cmd(): exec(""), arlist(NULL), arlist_sz(0),
+        arlist_cap(0), conn("") {}
     ~cmd() {}
 
-    const std::string get_exec() const { return executable; }
-    char **get_arlist() const { return argument_list; }
-    const std::string get_conn() const { return connector; }
+    const std::string get_executable() const { return exec; }
+    char **get_arlist() const { return arlist; }
+    const std::string get_connector() const { return conn; }
 
-    void set_exec(const std::string &exec) { executable=exec; }
-    void set_conn(const std::string &conn) { connector=conn; }
-    void push(const char *s) {
+    void set_executable(const std::string &e) { exec=e; }
+    void set_connector(const std::string &c) { conn=c; }
+    void push(const char *arg) {
         arlist_sz++;
         if (arlist_sz>arlist_cap) expand();
-        if (s==NULL)
-            argument_list[arlist_sz-1]=NULL;
+        if (arg==NULL)
+            arlist[arlist_sz-1]=NULL;
         else {
-            argument_list[arlist_sz-1]=new char[strlen(s)+1];
-            strcpy(argument_list[arlist_sz-1],s);
+            arlist[arlist_sz-1]=new char[strlen(arg)+1];
+            strcpy(arlist[arlist_sz-1],arg);
         }
     }
 };

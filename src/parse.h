@@ -82,8 +82,8 @@ bool parse_help(std::queue<cmd> &commands, const std::string &l,
     char *c_line=new char[l.length()+1],*p;
     strcpy(c_line,l.c_str());
     exec=strtok(c_line," ");
-    command.set_exec(exec);
-    command.set_conn(conn);
+    command.set_executable(exec);
+    command.set_connector(conn);
     command.push(s);
     p=strtok(NULL," ");
     while (p!=0) {

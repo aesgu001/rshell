@@ -17,7 +17,7 @@ bool execute_help(const cmd &command) {
         exit(1);
     }
     else if (pid==0) {
-        if (-1==execvp(command.get_exec().c_str(),command.get_arlist())) {
+        if (-1==execvp(command.get_executable().c_str(),command.get_arlist())) {
             perror("execvp");
             exit(1);
         }
@@ -36,15 +36,15 @@ void execute(std::queue<cmd> &commands, bool &exit_called) {
     while (!commands.empty()) {
         command=commands.front();
         commands.pop();
-        if (command.get_exec()=="exit") {
+        if (command.get_executable()=="exit") {
             exit_called=true;
             return;
         }
         exec_success=execute_help(command);
         while (!commands.empty()&&
-            ((exec_success&&command.get_conn()=="||")||
-            (!exec_success&&command.get_conn()=="&&"))) {
-            command.set_conn(commands.front().get_conn());
+            ((exec_success&&command.get_connector()=="||")||
+            (!exec_success&&command.get_connector()=="&&"))) {
+            command.set_connector(commands.front().get_connector());
             commands.pop();
         }
     }
