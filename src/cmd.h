@@ -12,23 +12,27 @@ class cmd {
     std::string connector;
 
     void expand() {
-        if (arlist_cap==0) arlist_cap=arlist_sz;
+        arlist_cap=arlist_sz;
         arlist_cap*=2;
         char **temp=argument_list;
-        argument_list=new char*[arlist_cap+1];
+        argument_list=new char*[arlist_cap];
         if (temp==NULL) return;
-        for (std::size_t i=0;i<arlist_sz;i++)
-            argument_list[i]=temp[i];
+        for (std::size_t i=0;i<arlist_sz-1;i++) {
+            if (temp[i]==NULL)
+                argument_list[i]=NULL;
+            else {
+                argument_list[i]=new char[strlen(temp[i])+1];
+                strcpy(argument_list[i],temp[i]);
+            }
+            delete[] temp[i];
+        }
+        delete[] temp;
     }
 
     public:
     cmd(): executable(""), argument_list(NULL), arlist_sz(0),
         arlist_cap(0), connector("") {}
-    cmd(const std::string &exec): executable(exec), argument_list(NULL),
-        arlist_sz(0), arlist_cap(0), connector("") {}
-    cmd(const std::string &exec, const std::string &conn):
-        executable(exec), argument_list(NULL), arlist_sz(0), arlist_cap(0),
-        connector(conn) {}
+    ~cmd() {}
 
     const std::string get_exec() const { return executable; }
     char **get_arlist() const { return argument_list; }
@@ -36,7 +40,7 @@ class cmd {
 
     void set_exec(const std::string &exec) { executable=exec; }
     void set_conn(const std::string &conn) { connector=conn; }
-    void push(char *s) {
+    void push(const char *s) {
         arlist_sz++;
         if (arlist_sz>arlist_cap) expand();
         if (s==NULL)

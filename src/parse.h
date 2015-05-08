@@ -90,7 +90,7 @@ bool parse_help(std::queue<cmd> &commands, const std::string &l,
         command.push(p);
         p=strtok(NULL," ");
     }
-    command.push(NULL);
+    command.push(p);
     commands.push(command);
     delete[] c_line;
     return true;
