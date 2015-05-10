@@ -4,20 +4,29 @@
 #include <errno.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <queue>
+#include <vector>
 #include "cmd.h"
 
 bool execute_help(const cmd &command) {
     int status=0;
+    std::vector<std::string> v=command.get_arlist();
+    char **arlist=new char*[v.size()+1];
+    for (std::size_t i=0;i<v.size();i++) {
+        arlist[i]=new char[v.at(i).length()+1];
+        strcpy(arlist[i],v.at(i).c_str());
+    }
+    arlist[v.size()]=NULL;
     pid_t pid=fork();
     if (pid<0) {
         perror("fork");
         exit(1);
     }
     else if (pid==0) {
-        if (-1==execvp(command.get_executable().c_str(),command.get_arlist())) {
+        if (-1==execvp(command.get_executable().c_str(),arlist)) {
             perror("execvp");
             exit(1);
         }
@@ -27,6 +36,9 @@ bool execute_help(const cmd &command) {
         perror("wait");
         exit(1);
     }
+    for (std::size_t i=0;i<v.size()+1;i++)
+        delete[] arlist[i];
+    delete[] arlist;
     return status==0? true:false;
 }
 

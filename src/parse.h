@@ -77,22 +77,22 @@ bool parse_help(std::queue<cmd> &commands, const std::string &l,
         }
         return true;
     }
+    char *c_l=new char[l.length()+1];
+    strcpy(c_l,l.c_str());
     cmd command;
-    std::string exec;
-    char *c_line=new char[l.length()+1],*p;
-    strcpy(c_line,l.c_str());
-    exec=strtok(c_line," ");
-    command.set_executable(exec);
+    command.set_executable(strtok(c_l," "));
     command.set_connector(conn);
     command.push(s);
+    char *p;
+    std::string str_p;
     p=strtok(NULL," ");
-    while (p!=0) {
-        command.push(p);
+    while (p!=NULL) {
+        str_p=p;
+        command.push(str_p);
         p=strtok(NULL," ");
     }
-    command.push(p);
     commands.push(command);
-    delete[] c_line;
+    delete[] c_l;
     return true;
 }
 
