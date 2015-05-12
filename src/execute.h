@@ -85,7 +85,7 @@ bool execute_help(const cmd &command) {
     }
     if (command.get_ordir()!="") {
         flag_ordir=true;
-        int flags=command.get_ordir()==">"? O_WRONLY|O_CREAT:
+        int flags=command.get_ordir()==">"? O_WRONLY|O_CREAT|O_TRUNC:
             O_WRONLY|O_CREAT|O_APPEND;
         if (-1==(fdo=open(command.get_ofile(),flags,S_IRUSR|S_IWUSR))) {
             perror("open");
