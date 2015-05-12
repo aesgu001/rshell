@@ -62,12 +62,16 @@ bool is_blank(const std::string &s) {
     return true;
 }
 
+void print_error_token(const char *arg0, const std::string &s) {
+    std::cout<<arg0<<": syntax error near unexpected token `"<<s<<"'"
+        <<std::endl;
+}
+
 bool parse_help(std::queue<cmd> &commands, const std::string &l,
-    const std::string &conn, char *s) {
+    const std::string &conn, const char *arg0) {
     if (is_blank(l)) {
         if (conn!="") {
-            std::cout<<s<<": syntax error near unexpected token `"<<conn<<"'"
-                <<std::endl;
+            print_error_token(arg0,conn);
             return false;
         }
         return true;
@@ -77,14 +81,33 @@ bool parse_help(std::queue<cmd> &commands, const std::string &l,
     cmd command;
     command.set_exec(strtok(c_l," "));
     command.set_conn(conn);
-    command.push_arg(s);
+    command.push_arg(arg0);
     char *p;
-    std::string str_p;
-    p=strtok(NULL," ");
-    while (p!=NULL) {
+    std::string str_p,str_f;
+    while (NULL!=(p=strtok(NULL," "))) {
         str_p=p;
-        command.push_arg(str_p);
-        p=strtok(NULL," ");
+        if (str_p==">"||str_p==">>") {
+            command.set_odir(str_p);
+            if (NULL==(p=strtok(NULL," "))) {
+                print_error_token(arg0,"newline");
+                return false;
+            }
+            else {
+                str_p=p;
+                command.set_ofile(str_p);
+            }
+        }
+        else if (str_p=="<") {
+            if (NULL==(p=strtok(NULL," "))) {
+                print_error_token(arg0,"newline");
+                return false;
+            }
+            else {
+                str_p=p;
+                command.set_ifile(str_p);
+            }
+        }
+        else command.push_arg(str_p);
     }
     commands.push(command);
     delete[] c_l;
@@ -96,21 +119,22 @@ void dump_queue(std::queue<cmd> &commands) {
         commands.pop();
 }
 
-void parse(std::queue<cmd> &commands, const std::string &line, char *s) {
+void parse(std::queue<cmd> &commands, const std::string &line,
+    const char *arg0) {
     std::size_t pos_htag,pos_conn;
     if (std::string::npos!=(pos_htag=find_hashtag(line))) {
-        parse(commands,line.substr(0,pos_htag),s);
+        parse(commands,line.substr(0,pos_htag),arg0);
         return;
     }
     else if (std::string::npos==(pos_conn=find_connector(line))) {
-        if (!parse_help(commands,line,"",s))
+        if (!parse_help(commands,line,"",arg0))
             dump_queue(commands);
         return;
     }
     std::string conn=get_nearest_connector(line,pos_conn);
-    if (!parse_help(commands,line.substr(0,pos_conn),conn,s))
+    if (!parse_help(commands,line.substr(0,pos_conn),conn,arg0))
         dump_queue(commands);
-    else parse(commands,line.substr(pos_conn+conn.length(),std::string::npos),s);
+    else parse(commands,line.substr(pos_conn+conn.length(),std::string::npos),arg0);
 }
 
 #endif
