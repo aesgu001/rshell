@@ -62,11 +62,6 @@ bool is_blank(const std::string &s) {
     return true;
 }
 
-void dump_queue(std::queue<cmd> &commands) {
-    while (!commands.empty())
-        commands.pop();
-}
-
 bool parse_help(std::queue<cmd> &commands, const std::string &l,
     const std::string &conn, char *s) {
     if (is_blank(l)) {
@@ -80,20 +75,25 @@ bool parse_help(std::queue<cmd> &commands, const std::string &l,
     char *c_l=new char[l.length()+1];
     strcpy(c_l,l.c_str());
     cmd command;
-    command.set_executable(strtok(c_l," "));
-    command.set_connector(conn);
-    command.push(s);
+    command.set_exec(strtok(c_l," "));
+    command.set_conn(conn);
+    command.push_arg(s);
     char *p;
     std::string str_p;
     p=strtok(NULL," ");
     while (p!=NULL) {
         str_p=p;
-        command.push(str_p);
+        command.push_arg(str_p);
         p=strtok(NULL," ");
     }
     commands.push(command);
     delete[] c_l;
     return true;
+}
+
+void dump_queue(std::queue<cmd> &commands) {
+    while (!commands.empty())
+        commands.pop();
 }
 
 void parse(std::queue<cmd> &commands, const std::string &line, char *s) {

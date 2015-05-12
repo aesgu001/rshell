@@ -1,29 +1,28 @@
 #ifndef CMD_H
 #define CMD_H
 
-#include <string.h>
 #include <vector>
 
 class cmd {
     private:
-    std::string exec;
+    std::string exec,conn,fin,fout;
     std::vector<std::string> arlist;
-    std::string conn;
-    std::string rdir;
 
     public:
-    cmd(): exec(""), arlist(std::vector<std::string>()), conn(""),
-        rdir("") {}
+    cmd(): exec(""), conn(""), fin(""), fout(""),
+        arlist(std::vector<std::string>()) {}
 
-    const std::string get_executable() const { return exec; }
+    const char *get_exec() const { return exec.c_str(); }
+    const char *get_conn() const { return conn.c_str(); }
+    const char *get_ifile() const { return fin.c_str(); }
+    const char *get_ofile() const { return fout.c_str(); }
     const std::vector<std::string> get_arlist() const { return arlist; }
-    const std::string get_connector() const { return conn; }
-    const std::string get_redirection() const { return rdir; }
 
-    void set_executable(const std::string &e) { exec=e; }
-    void set_connector(const std::string &c) { conn=c; }
-    void push(const std::string &arg) { arlist.push_back(arg); }
-    void set_redirection(const std::string &rd) { rdir=rd; }
+    void set_exec(const std::string &e) { exec=e; }
+    void set_conn(const std::string &c) { conn=c; }
+    void set_ifile(const std::string &i) { fin=i; }
+    void set_ofile(const std::string &o) { fout=o; }
+    void push_arg(const std::string &arg) { arlist.push_back(arg); }
 };
 
 #endif
