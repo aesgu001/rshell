@@ -87,7 +87,7 @@ bool parse_help(std::queue<cmd> &commands, const std::string &l,
     while (NULL!=(p=strtok(NULL," "))) {
         str_p=p;
         if (str_p==">"||str_p==">>") {
-            command.set_odir(str_p);
+            command.set_ordir(str_p);
             if (NULL==(p=strtok(NULL," "))) {
                 print_error_token(arg0,"newline");
                 return false;
