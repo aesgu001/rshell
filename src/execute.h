@@ -32,7 +32,7 @@ bool execute_child(const cmd& command, char **arlist,
     return true;
 }
 
-bool restore_fds(const bool &flag_irdir, const bool &flag_ordir,
+bool execute_restore_fds(const bool &flag_irdir, const bool &flag_ordir,
     const int &sstdin, const int &sstdout) {
     if (flag_irdir) {
         if (-1==dup2(sstdin,0)) {
@@ -49,8 +49,8 @@ bool restore_fds(const bool &flag_irdir, const bool &flag_ordir,
     return true;
 }
 
-bool close_fds(const bool &flag_irdir, const bool &flag_ordir,
-    const int &fdi, const int &fdo) {
+bool execute_close_fds(const bool &flag_irdir, const bool &flag_ordir, int &fdi,
+    int &fdo) {
     if (flag_irdir) {
         if (-1==close(fdi)) {
             perror("close");
@@ -74,7 +74,15 @@ bool execute_help(const cmd &command) {
         strcpy(arlist[i],v.at(i).c_str());
     }
     arlist[v.size()]=NULL;
-    int fdi,fdo;
+    int fdi,fdo,sstdin,sstdout;
+    if (-1==(sstdin=dup(0))) {
+        perror("dup");
+        exit(1);
+    }
+    if (-1==(sstdout=dup(1))) {
+        perror("dup");
+        exit(1);
+    }
     bool flag_irdir=false,flag_ordir=false;
     if (strcmp(command.get_ifile(),"")!=0) {
         flag_irdir=true;
@@ -83,7 +91,7 @@ bool execute_help(const cmd &command) {
             return false;
         }
     }
-    if (command.get_ordir()!="") {
+    if (strcmp(command.get_ofile(),"")!=0) {
         flag_ordir=true;
         int flags=command.get_ordir()==">"? O_WRONLY|O_CREAT|O_TRUNC:
             O_WRONLY|O_CREAT|O_APPEND;
@@ -103,22 +111,13 @@ bool execute_help(const cmd &command) {
             exit(1);
         else exit(0);
     }
-    int sstdin,sstdout;
-    if (-1==(sstdin=dup(0))) {
-        perror("dup");
-        exit(1);
-    }
-    if (-1==(sstdout=dup(1))) {
-        perror("dup");
-        exit(1);
-    }
     if (-1==waitpid(-1,&status,0)) {
         perror("wait");
         exit(1);
     }
-    if (!restore_fds(flag_irdir,flag_ordir,sstdin,sstdout))
+    if (!execute_restore_fds(flag_irdir,flag_ordir,sstdin,sstdout))
         exit(1);
-    if (!close_fds(flag_irdir,flag_ordir,fdi,fdo))
+    if (!execute_close_fds(flag_irdir,flag_ordir,fdi,fdo))
         exit(1);
     for (std::size_t i=0;i<v.size()+1;i++)
         delete[] arlist[i];
