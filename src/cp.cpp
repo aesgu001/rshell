@@ -24,7 +24,7 @@ int main(int argc, char** argv)
         struct stat buf;
         if(0 == stat(argv[2], &buf))
         {
-            cout << "Fail: " << argv[2] << " exists" << endl;
+            perror("stat");
             exit(1);
         }
         //method1(argv);
