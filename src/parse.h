@@ -4,6 +4,7 @@
 #include <string.h>
 #include <queue>
 #include "cmd.h"
+#include "misc.h"
 
 bool is_blank(const std::string &s) {
     for (std::size_t i=0;i<s.length();i++)
@@ -12,16 +13,11 @@ bool is_blank(const std::string &s) {
     return true;
 }
 
-void print_error_token(const char *arg0, const std::string &s) {
-    std::cout<<arg0<<": syntax error near unexpected token `"<<s<<"'"
-        <<std::endl;
-}
-
 bool parse_help(std::queue<cmd> &commands, const std::string &l,
     const std::string &conn, const char *arg0) {
     if (is_blank(l)) {
         if (conn!="") {
-            print_error_token(arg0,conn);
+            print_error_token(arg0,conn.c_str());
             return false;
         }
         return true;
@@ -40,6 +36,7 @@ bool parse_help(std::queue<cmd> &commands, const std::string &l,
             command.set_ordir(str_p);
             if (NULL==(p=strtok(NULL," "))) {
                 print_error_token(arg0,"newline");
+                delete[] c_l;
                 return false;
             }
             else {
@@ -50,6 +47,7 @@ bool parse_help(std::queue<cmd> &commands, const std::string &l,
         else if (str_p=="<") {
             if (NULL==(p=strtok(NULL," "))) {
                 print_error_token(arg0,"newline");
+                delete[] c_l;
                 return false;
             }
             else {
@@ -98,23 +96,20 @@ std::size_t find_connector(const std::string &s) {
             if (i+1<s.length()&&s.at(i+1)=='&')
                 return i;
         }
-        else if (s.at(i)=='|') {
-            if (i+1<s.length()&&s.at(i+1)=='|')
+        else if (s.at(i)=='|')
                 return i;
-        }
     }
     return std::string::npos;
-}
-
-void dump_queue(std::queue<cmd> &commands) {
-    while (!commands.empty())
-        commands.pop();
 }
 
 std::string get_nearest_connector(const std::string &s,
     const std::size_t &pos_conn) {
     if (pos_conn==std::string::npos) return "";
-    else if (s.at(pos_conn)=='|') return "||";
+    else if (s.at(pos_conn)=='|') {
+        if (pos_conn+1<s.length()&&s.at(pos_conn+1)=='|')
+            return "||";
+        return "|";
+    }
     else if (s.at(pos_conn)=='&') return "&&";
     return ";";
 }
