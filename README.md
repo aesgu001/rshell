@@ -18,10 +18,16 @@ Running this software requires **only 5 steps** using your terminal:
 ```
 git clone https://github.com/aesgu001/rshell.git
 cd rshell
-git checkout hw0
+git checkout hw2
 make
 bin/rshell
 ```
+
+### Added Features
+
+1. Input/Output Redirection:\n
+This shell can now read from an existing file with the `<` character,
+and write to a new or existing file either by truncating `>` or appending `>>`.
 
 ### Bugs/Issues/Limitations
 
@@ -29,13 +35,10 @@ bin/rshell
 Returning to the bash shell would require you to enter `exit` exactly the number of times you enter the previous command.
 
 2. The `echo` command will include quotation marks when printing quoted arguments.
-It cannot send text to a new or existing file using the `>` character, either.
 
-3. Connectors entered first will not return a syntax error.
+3. The `cd` command will not be executed successfully.
 
-4. The `cd` command will not be executed successfully.
-
-5. The `git commit -m <message>` command will not be executed successfully.
+4. The `git commit -m <message>` command will not be executed successfully.
 
 ### ls Bugs/Issues/Limitations
 
