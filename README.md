@@ -28,7 +28,9 @@ bin/rshell
 1. **Input/Output Redirection:** This shell can now read from an existing file with the `<` operator,
 and write to a new or existing file by either truncating `>` or appending `>>`.
 
-2. **Piping:**
+2. **Piping:** Piping is now implemented into this shell,
+allowing results from a previous successful command to be passed in to the next one.
+It can pipe two or more commands.
 
 ### Bugs/Issues/Limitations
 
@@ -45,6 +47,12 @@ Returning to the bash shell would require you to enter `exit` exactly the number
 
 6. Redirection operators passed in first per command will be recognized as executables,
 which will not be executed successfully.
+
+7. Piping commands do not follow the logic of other connectors, regardless of their order.
+Subsequent commands will always be executed, and only the foremost piping command will be ignored,
+should the previous one fail.
+
+8. Piping commands without operands, such as `ls -r |`, will be treated as a syntax error.
 
 ### ls Bugs/Issues/Limitations
 
