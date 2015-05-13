@@ -25,8 +25,7 @@ bin/rshell
 
 ### Added Features
 
-1. Input/Output Redirection:\n
-This shell can now read from an existing file with the `<` character,
+1. **Input/Output Redirection:** This shell can now read from an existing file with the `<` operator,
 and write to a new or existing file either by truncating `>` or appending `>>`.
 
 ### Bugs/Issues/Limitations
@@ -39,6 +38,11 @@ Returning to the bash shell would require you to enter `exit` exactly the number
 3. The `cd` command will not be executed successfully.
 
 4. The `git commit -m <message>` command will not be executed successfully.
+
+5. Appended redirection operators will not perform redirection.
+
+6. Redirection operators passed in first per command will be recognized as executables,
+which will not be executed successfully.
 
 ### ls Bugs/Issues/Limitations
 
