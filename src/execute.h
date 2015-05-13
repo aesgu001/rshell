@@ -11,6 +11,7 @@
 #include <unistd.h>
 #include <vector>
 #include "cmd.h"
+#include "misc.h"
 
 bool execute_child(const cmd& command, char **arlist,
     const bool &flag_irdir, const bool &flag_ordir,
@@ -32,19 +33,14 @@ bool execute_child(const cmd& command, char **arlist,
     return true;
 }
 
-bool execute_restore_fds(const bool &flag_irdir, const bool &flag_ordir,
-    const int &sstdin, const int &sstdout) {
-    if (flag_irdir) {
-        if (-1==dup2(sstdin,0)) {
-            perror("dup2");
-            return false;
-        }
+bool restore_fds(const int &sstdin, const int &sstdout) {
+    if (-1==dup2(sstdin,0)) {
+        perror("dup2");
+        return false;
     }
-    if (flag_ordir) {
-        if (-1==dup2(sstdout,1)) {
-            perror("dup2");
-            return false;
-        }
+    else if (-1==dup2(sstdout,1)) {
+        perror("dup2");
+        return false;
     }
     return true;
 }
@@ -74,15 +70,15 @@ bool execute_help(const cmd &command) {
         strcpy(arlist[i],v.at(i).c_str());
     }
     arlist[v.size()]=NULL;
-    int fdi,fdo,sstdin,sstdout;
-    if (-1==(sstdin=dup(0))) {
+    int fdi,fdo;//,sstdin,sstdout;
+    /*if (-1==(sstdin=dup(0))) {
         perror("dup");
         exit(1);
     }
     if (-1==(sstdout=dup(1))) {
         perror("dup");
         exit(1);
-    }
+    }*/
     bool flag_irdir=false,flag_ordir=false;
     if (strcmp(command.get_ifile(),"")!=0) {
         flag_irdir=true;
@@ -112,17 +108,137 @@ bool execute_help(const cmd &command) {
         else exit(0);
     }
     if (-1==waitpid(-1,&status,0)) {
-        perror("wait");
+        perror("waitpid");
         exit(1);
     }
-    if (!execute_restore_fds(flag_irdir,flag_ordir,sstdin,sstdout))
-        exit(1);
+    //if (!execute_restore_fds(flag_irdir,flag_ordir,sstdin,sstdout))
+        //exit(1);
     if (!execute_close_fds(flag_irdir,flag_ordir,fdi,fdo))
         exit(1);
     for (std::size_t i=0;i<v.size()+1;i++)
         delete[] arlist[i];
     delete[] arlist;
     return status==0? true:false;
+}
+
+bool store_fds(int &sstdin, int &sstdout) {
+    if (-1==(sstdin=dup(0))) {
+        perror("dup");
+        return false;
+    }
+    else if (-1==(sstdout=dup(1))) {
+        perror("dup");
+        return false;
+    }
+    return true;
+}
+
+bool execute_pipe(std::queue<cmd> &commands, const cmd &command) {
+    if (commands.empty()) {
+        print_error_token(command.get_arlist().at(0).c_str(),"|");
+        return false;
+    }
+    cmd command1;
+    int pipefd[2];
+    int status,sstdin,sstdout;
+    pid_t pid;
+    command1=commands.front();
+    commands.pop();
+    if (!store_fds(sstdin,sstdout))
+        exit(1);
+    if (-1==pipe(pipefd)) {
+        perror("pipe");
+        exit(1);
+    }
+    if (0>(pid=fork())) {
+        perror("fork");
+        exit(1);
+    }
+    else if (pid==0) {
+        //if (!prev) {
+        if (-1==close(pipefd[0])) {
+            perror("close");
+            exit(1);
+        }
+        if (-1==dup2(pipefd[1],1)) {
+            perror("dup2");
+            exit(1);
+        }
+        if (!execute_help(command))
+            exit(1);
+        //}
+        exit(0);
+    }
+    if (-1==close(pipefd[1])) {
+        perror("close");
+        exit(1);
+    }
+    if (-1==dup2(pipefd[0],0)) {
+        perror("dup2");
+        exit(1);
+    }
+    if (-1==waitpid(-1,&status,0)) {
+        perror("waitpid");
+        exit(1);
+    }
+    if (status==0) {
+        /*if (!execute_help(command1)) {
+            if (-1==close(pipefd[0])) {
+                perror("close");
+                exit(1);
+            }
+            if (!restore_fds(sstdin,sstdout))
+                exit(1);
+            return false;
+        }
+        else {
+            if (-1==close(pipefd[0])) {
+                perror("close");
+                exit(1);
+            }
+            if (!restore_fds(sstdin,sstdout))
+                exit(1);
+            if (commands.empty()||strcmp(command1.get_conn(),"|")!=0)
+                return true;
+            return execute_pipe(commands,command1,true);
+        }*/
+        if (strcmp(command1.get_conn(),"|")==0) {
+            if (!execute_pipe(commands,command1)) {
+                if (-1==close(pipefd[0])) {
+                    perror("close");
+                    exit(1);
+                }
+                if (!restore_fds(sstdin,sstdout))
+                    exit(1);
+                return false;
+            }
+        }
+        else if (!execute_help(command1)) {
+            if (-1==close(pipefd[0])) {
+                perror("close");
+                exit(1);
+            }
+            if (!restore_fds(sstdin,sstdout))
+                exit(1);
+            return false;
+        }
+        if (-1==close(pipefd[0])) {
+                perror("close");
+                exit(1);
+        }
+        if (!restore_fds(sstdin,sstdout))
+            exit(1);
+        return true;
+    }
+    else {
+        if (-1==close(pipefd[0])) {
+            perror("close");
+            exit(1);
+        }
+        if (!restore_fds(sstdin,sstdout))
+            exit(1);
+        return false;
+    }
 }
 
 void execute(std::queue<cmd> &commands, bool &exit_called) {
@@ -135,7 +251,9 @@ void execute(std::queue<cmd> &commands, bool &exit_called) {
             exit_called=true;
             return;
         }
-        exec_success=execute_help(command);
+        if (strcmp(command.get_conn(),"|")==0)
+            exec_success=execute_pipe(commands,command);
+        else exec_success=execute_help(command);
         while (!commands.empty()&&
             ((exec_success&&strcmp(command.get_conn(),"||")==0)||
             (!exec_success&&strcmp(command.get_conn(),"&&")==0))) {
