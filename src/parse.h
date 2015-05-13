@@ -4,13 +4,17 @@
 #include <string.h>
 #include <queue>
 #include "cmd.h"
-#include "misc.h"
 
 bool is_blank(const std::string &s) {
     for (std::size_t i=0;i<s.length();i++)
         if (s.at(i)!=' ')
             return false;
     return true;
+}
+
+void print_error_token(const char *arg0, const char *tok) {
+    std::cout<<arg0<<": syntax error near unexpected token `"<<tok<<"'"
+        <<std::endl;
 }
 
 bool parse_help(std::queue<cmd> &commands, const std::string &l,
@@ -112,6 +116,11 @@ std::string get_nearest_connector(const std::string &s,
     }
     else if (s.at(pos_conn)=='&') return "&&";
     return ";";
+}
+
+void dump_queue(std::queue<cmd> &commands) {
+    while (!commands.empty())
+        commands.pop();
 }
 
 void parse(std::queue<cmd> &commands, const std::string &line,

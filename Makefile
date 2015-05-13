@@ -1,6 +1,6 @@
 BIN = mkdir -p bin
 OCP = src/cp.cpp src/Timer.h
-ORSHELL = src/main.cpp src/cmd.h src/login.h src/parse.h src/execute.h src/misc.h
+ORSHELL = src/main.cpp src/cmd.h src/login.h src/parse.h src/execute.h
 
 CXX = g++
 CPPFLAGS = -std=c++11
