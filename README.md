@@ -28,6 +28,8 @@ bin/rshell
 1. **Input/Output Redirection:** This shell can now read from an existing file with the `<` operator,
 and write to a new or existing file either by truncating `>` or appending `>>`.
 
+2. **Piping:**
+
 ### Bugs/Issues/Limitations
 
 1. Entering `bin/rshell` in the shell simulator runs a duplication of the application.
