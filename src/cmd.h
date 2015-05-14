@@ -13,7 +13,7 @@ class cmd {
         arlist(std::vector<std::string>()) {}
 
     const char *get_exec() const { return exec.c_str(); }
-    const char *get_conn() const { return conn.c_str(); }
+    const std::string get_conn() const { return conn; }
     const std::string get_ordir() const { return ordir; }
     const char *get_ifile() const { return fin.c_str(); }
     const char *get_ofile() const { return fout.c_str(); }
