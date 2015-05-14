@@ -5,41 +5,40 @@
 #include <queue>
 #include "cmd.h"
 
-bool is_blank(const std::string &s) {
+bool parse_isblank(const std::string &s) {
     for (std::size_t i=0;i<s.length();i++)
         if (s.at(i)!=' ')
             return false;
     return true;
 }
 
-void print_error_token(const char *arg0, const char *tok) {
+void parse_perrtok(const char *arg0, const char *tok) {
     std::cout<<arg0<<": syntax error near unexpected token `"<<tok<<"'"
         <<std::endl;
 }
 
 bool parse_help(std::queue<cmd> &commands, const std::string &l,
     const std::string &conn, const char *arg0) {
-    if (is_blank(l)) {
+    if (parse_isblank(l)) {
         if (conn!="") {
-            print_error_token(arg0,conn.c_str());
+            parse_perrtok(arg0,conn.c_str());
             return false;
         }
         return true;
     }
-    char *c_l=new char[l.length()+1];
-    strcpy(c_l,l.c_str());
     cmd command;
+    char *c_l=new char[l.length()+1],*p;
+    std::string str_p;
+    strcpy(c_l,l.c_str());
     command.set_exec(strtok(c_l," "));
-    command.set_conn(conn);
     command.push_arg(arg0);
-    char *p;
-    std::string str_p,str_f;
+    command.set_conn(conn);
     while (NULL!=(p=strtok(NULL," "))) {
         str_p=p;
         if (str_p==">"||str_p==">>") {
             command.set_ordir(str_p);
             if (NULL==(p=strtok(NULL," "))) {
-                print_error_token(arg0,"newline");
+                parse_perrtok(arg0,"newline");
                 delete[] c_l;
                 return false;
             }
@@ -50,7 +49,7 @@ bool parse_help(std::queue<cmd> &commands, const std::string &l,
         }
         else if (str_p=="<") {
             if (NULL==(p=strtok(NULL," "))) {
-                print_error_token(arg0,"newline");
+                parse_perrtok(arg0,"newline");
                 delete[] c_l;
                 return false;
             }
@@ -66,7 +65,7 @@ bool parse_help(std::queue<cmd> &commands, const std::string &l,
     return true;
 }
 
-std::size_t find_hashtag(const std::string &s) {
+std::size_t parse_findhtag(const std::string &s) {
     for (std::size_t i=0;i<s.length();i++) {
         if (s.at(i)=='"') {
             for (std::size_t j=i+1;j<s.length();j++)
@@ -83,7 +82,7 @@ std::size_t find_hashtag(const std::string &s) {
     return std::string::npos;
 }
 
-std::size_t find_connector(const std::string &s) {
+std::size_t parse_findconn(const std::string &s) {
     for (std::size_t i=0;i<s.length();i++) {
         if (s.at(i)=='"') {
             for (std::size_t j=i+1;j<s.length();j++)
@@ -106,7 +105,7 @@ std::size_t find_connector(const std::string &s) {
     return std::string::npos;
 }
 
-std::string get_nearest_connector(const std::string &s,
+std::string parse_getconn(const std::string &s,
     const std::size_t &pos_conn) {
     if (pos_conn==std::string::npos) return "";
     else if (s.at(pos_conn)=='|') {
@@ -118,7 +117,7 @@ std::string get_nearest_connector(const std::string &s,
     return ";";
 }
 
-void dump_queue(std::queue<cmd> &commands) {
+void parse_dumpqueue(std::queue<cmd> &commands) {
     while (!commands.empty())
         commands.pop();
 }
@@ -126,19 +125,20 @@ void dump_queue(std::queue<cmd> &commands) {
 void parse(std::queue<cmd> &commands, const std::string &line,
     const char *arg0) {
     std::size_t pos_htag,pos_conn;
-    if (std::string::npos!=(pos_htag=find_hashtag(line))) {
+    if (std::string::npos!=(pos_htag=parse_findhtag(line))) {
         parse(commands,line.substr(0,pos_htag),arg0);
         return;
     }
-    else if (std::string::npos==(pos_conn=find_connector(line))) {
+    else if (std::string::npos==(pos_conn=parse_findconn(line))) {
         if (!parse_help(commands,line,"",arg0))
-            dump_queue(commands);
+            parse_dumpqueue(commands);
         return;
     }
-    std::string conn=get_nearest_connector(line,pos_conn);
+    std::string conn=parse_getconn(line,pos_conn);
     if (!parse_help(commands,line.substr(0,pos_conn),conn,arg0))
-        dump_queue(commands);
-    else parse(commands,line.substr(pos_conn+conn.length(),std::string::npos),arg0);
+        parse_dumpqueue(commands);
+    else parse(commands,line.substr(pos_conn+conn.length(),std::string::npos),
+        arg0);
 }
 
 #endif
