@@ -59,9 +59,9 @@ bool execute_help(const cmd &command) {
         flag_irdir=true;
         if (-1==(fdi=open(command.get_ifile(),O_RDONLY))) {
             perror("open");
-            /*for (std::size_t i=0;i<v.size()+1;i++)
+            for (std::size_t i=0;i<v.size()+1;i++)
                 delete[] arlist[i];
-            delete[] arlist;*/
+            delete[] arlist;
             return false;
         }
     }
@@ -71,10 +71,7 @@ bool execute_help(const cmd &command) {
             O_WRONLY|O_CREAT|O_APPEND;
         if (-1==(fdo=open(command.get_ofile(),flags,S_IRUSR|S_IWUSR))) {
             perror("open");
-            /*for (std::size_t i=0;i<v.size()+1;i++)
-                delete[] arlist[i];
-            delete[] arlist;*/
-            return false;
+            exit(1);
         }
     }
     if (0>(pid=fork())) {
@@ -88,7 +85,6 @@ bool execute_help(const cmd &command) {
             perror("execvp");
             exit(1);
         }
-        exit(0);
     }
     if (-1==waitpid(-1,&status,0)) {
         perror("waitpid");
@@ -130,16 +126,14 @@ bool execute_restorefd(int &fd, const int &sstdin, const int &sstdout) {
     return true;
 }
 
-bool execute_pipe(std::queue<cmd> &commands, const cmd &command) {
+bool execute_pipe(std::queue<cmd> &commands, cmd &command) {
     if (commands.empty()) {
         std::cout<<command.get_arlist().at(0)<<": missing operand for token `|'"
             <<std::endl;
         return false;
     }
-    cmd command1=commands.front();
-    int pipefd[2],status=0,sstdin,sstdout;
+    int pipefd[2],sstdin,sstdout;
     pid_t pid;
-    commands.pop();
     if (!execute_savefd(sstdin,sstdout))
         exit(1);
     if (-1==pipe(pipefd)) {
@@ -171,32 +165,27 @@ bool execute_pipe(std::queue<cmd> &commands, const cmd &command) {
         perror("dup2");
         exit(1);
     }
-    if (-1==waitpid(-1,&status,0)) {
-        perror("waitpid");
+    if (-1==wait(NULL)) {
+        perror("wait");
         exit(1);
     }
-    if (status==0) {
-        if (command1.get_conn()=="|") {
-            if (!execute_pipe(commands,command1)) {
-                if (!execute_restorefd(pipefd[0],sstdin,sstdout))
-                    exit(1);
-                return false;
-            }
-        }
-        else if (!execute_help(command1)) {
+    command=commands.front();
+    commands.pop();
+    if (command.get_conn()=="|") {
+        if (!execute_pipe(commands,command)) {
             if (!execute_restorefd(pipefd[0],sstdin,sstdout))
                 exit(1);
             return false;
         }
-        if (!execute_restorefd(pipefd[0],sstdin,sstdout))
-            exit(1);
-        return true;
     }
-    else {
+    else if (!execute_help(command)) {
         if (!execute_restorefd(pipefd[0],sstdin,sstdout))
             exit(1);
         return false;
     }
+    if (!execute_restorefd(pipefd[0],sstdin,sstdout))
+        exit(1);
+    return true;
 }
 
 void execute(std::queue<cmd> &commands, bool &exit_called) {
