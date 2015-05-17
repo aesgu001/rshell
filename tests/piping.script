@@ -1,4 +1,4 @@
-Script started on Thu 14 May 2015 05:43:41 PM PDT
+Script started on Sat 16 May 2015 09:54:14 PM PDT
 ~
 aesgu001@hammer $ cs100
 [0;91m
@@ -24,7 +24,7 @@ aesgu001@hammer $ cs100
 [s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~[0;95m [0;36m$[0m cd Documents/rshell
 [s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (redirect) [0;36m$[0m bin/rshell
 aesgu001@hammer.cs.ucr.edu$ #----------------------------
-aesgu001@hammer.cs.ucr.edu$ #	TESTING PIPING
+aesgu001@hammer.cs.ucr.edu$ #	TESG TING PIPING
 aesgu001@hammer.cs.ucr.edu$ #----------------------------
 aesgu001@hammer.cs.ucr.edu$ 
 aesgu001@hammer.cs.ucr.edu$ # preparing for the first set of test cases...
@@ -37,7 +37,7 @@ aesgu001@hammer.cs.ucr.edu$ # a. '<' with existing files
 aesgu001@hammer.cs.ucr.edu$ 
 aesgu001@hammer.cs.ucr.edu$ cat < file1
 hello world!
-aesgu001@hammer.cs.ucr.edu$ cat < f       sort < file2 # 'ls'
+aesgu001@hammer.cs.ucr.edu$ sort < file2
 bin
 file1
 file2
@@ -47,7 +47,7 @@ README.md
 src
 tests
 aesgu001@hammer.cs.ucr.edu$ 
-aesgu001@hammer.cs.ucr.edu$ # b. '<' with non-existing files (should throw an error message)
+aesgu001@hammer.cs.ucr.edu$ # b. '<' with non-existing files (should print an error message)
 aesgu001@hammer.cs.ucr.edu$ 
 aesgu001@hammer.cs.ucr.edu$ cat < file3
 open: No such file or directory
@@ -60,9 +60,9 @@ aesgu001@hammer.cs.ucr.edu$ echo goodbye! > file1
 aesgu001@hammer.cs.ucr.edu$ cat file1 # post-out
 goodbye!
 aesgu001@hammer.cs.ucr.edu$ 
-aesgu001@hammer.cs.ucr.edu$ # d. '>>' with existing files (shop ould      uld append)
+aesgu001@hammer.cs.ucr.edu$ # d. '>>' with existing files (should append)
 aesgu001@hammer.cs.ucr.edu$ 
-aesgu001@hammer.cs.ucr.edu$ at  cat file2 # pre-out
+aesgu001@hammer.cs.ucr.edu$ cat file2 # pre-out
 tests
 src
 README.md
@@ -83,7 +83,7 @@ file1
 bin
 /home/csmajs/aesgu001/Documents/rshell
 aesgu001@hammer.cs.ucr.edu$ 
-aesgu001@hammer.cs.ucr.edu$ # e. '>' with non-existing files (shoudl  ld create)
+aesgu001@hammer.cs.ucr.edu$ # e. '>' with non-xisting files (should create)
 aesgu001@hammer.cs.ucr.edu$ 
 aesgu001@hammer.cs.ucr.edu$ cat file3 # showing file does not exist
 bin/rshell: file3: No such file or directory
@@ -91,38 +91,39 @@ aesgu001@hammer.cs.ucr.edu$ echo pathos logos ethos > file3
 aesgu001@hammer.cs.ucr.edu$ cat file3 # 'echo pathos...'
 pathos logos ethos
 aesgu001@hammer.cs.ucr.edu$ 
-aesgu001@hammer.cs.ucr.edu$ # f. '>>' with non-existing fiel  les (should create)
+aesgu001@hammer.cs.ucr.edu$ # f. '>>' with non-existinf g files (should create)
 aesgu001@hammer.cs.ucr.edu$ 
 aesgu001@hammer.cs.ucr.edu$ cat file4 # showing file does not exist
 bin/rshell: file4: No such file or directory
 aesgu001@hammer.cs.ucr.edu$ ps >> file4
 aesgu001@hammer.cs.ucr.edu$ cat file4 # 'ps'
   PID TTY          TIME CMD
-27965 pts/43   00:00:00 bash
-27973 pts/43   00:00:00 rshell
-28608 pts/43   00:00:00 ps
+12964 pts/40   00:00:00 bash
+13008 pts/40   00:00:00 rshell
+14354 pts/40   00:00:00 ps
 aesgu001@hammer.cs.ucr.edu$ 
-aesgu001@hammer.cs.ucr.edu$ # cleaning up and preparinf   g for the next set of cases...
+aesgu001@hammer.cs.ucr.edu$ # cleaning up and preparing for the next set of test cases...
 aesgu001@hammer.cs.ucr.edu$ ls
 bin  file1  file2  file3  file4  LICENSE  Makefile  README.md  src  tests
 aesgu001@hammer.cs.ucr.edu$ rm file1 file2 file3 file4
-aesgu001@hammer.cs.ucr.edu$ echo hello world > file1
+aesgu001@hammer.cs.ucr.edu$ echo hello world! > file1
 aesgu001@hammer.cs.ucr.edu$ ls -r > file2
-aesgu001@hammer.cs.ucr.edu$ # done!
+aesgu001@hammer.cs.ucr.edu$ #done!
 aesgu001@hammer.cs.ucr.edu$ 
-aesgu001@hammer.cs.ucr.edu$ # 2. multiple i/o redirection (order does not matter)
+aesgu001@hammer.cs.ucr.edu$ # 2. multiple i/o redirection (order does not matter) , except non-standard i/o redirection)
+aesgu001@hammer.cs.ucr.edu$ 
 aesgu001@hammer.cs.ucr.edu$ # a. non-existing files
 aesgu001@hammer.cs.ucr.edu$ 
 aesgu001@hammer.cs.ucr.edu$ cat file3 # showing file does not exist
 bin/rshell: file3: No such file or directory
 aesgu001@hammer.cs.ucr.edu$ cat < file1 > file3
-aesgu001@hammer.cs.ucr.edu$ cat fui  ile3 # 'cat < file1'
-hello world
+aesgu001@hammer.cs.ucr.edu$ cate  file3 # 'cat < file1'
+hello world!
 aesgu001@hammer.cs.ucr.edu$ 
-aesgu001@hammer.cs.ucr.edu$ cat file4 # shwo  owing file does not exist
+aesgu001@hammer.cs.ucr.edu$ cat file4 # showing file does not exist
 bin/rshell: file4: No such file or directory
-aesgu001@hammer.cs.ucr.edu$ sort >  > file4 < file2
-aesgu001@hammer.cs.ucr.edu$ cat file4 # sort    'sort < file2'
+aesgu001@hammer.cs.ucr.edu$ sort > file4 < file2
+aesgu001@hammer.cs.ucr.edu$ cat file4 # sort < file2'
 bin
 file1
 file2
@@ -131,16 +132,19 @@ Makefile
 README.md
 src
 tests
-aesgu001@hammer.cs.ucr.edu$ sort < file5 >> file6 # will    sh  fail    throw an error message; file6 f will not be created
+aesgu001@hammer.cs.ucr.edu$ 
+aesgu001@hammer.cs.ucr.edu$ cat file5 # showing file does not exist
+bin/rshell: file5: No such file or directory
+aesgu001@hammer.cs.ucr.edu$ sort < file5 >> file6 # will throw an error message; file6 will not be created
 open: No such file or directory
-aesgu001@hammer.cs.ucr.edu$ a cat file6 # showing file does not exist
+aesgu001@hammer.cs.ucr.edu$ cat file6 # showing file does not exist
 bin/rshell: file6: No such file or directory
 aesgu001@hammer.cs.ucr.edu$ 
 aesgu001@hammer.cs.ucr.edu$ # b. existing files
 aesgu001@hammer.cs.ucr.edu$ 
-aesgu001@hammer.cs.ucr.edu$ cat   sort >> file1 < file2
+aesgu001@hammer.cs.ucr.edu$ sort >> file1 < file2
 aesgu001@hammer.cs.ucr.edu$ cat file1 # file1 is appended
-hello world
+hello world!
 bin
 file1
 file2
@@ -149,9 +153,9 @@ Makefile
 README.md
 src
 tests
-aesgu001@hammer.cs.ucr.edu$ cat < file3 > file1
-aesgu001@hammer.cs.ucr.edu$ cat file1 # file1 is truncated
-hello world
+aesgu001@hammer.cs.ucr.edu$ cat file    < file3 > file1
+aesgu001@hammer.cs.ucr.edu$ cat file1 # file1 is runcated
+hello world!
 aesgu001@hammer.cs.ucr.edu$ 
 aesgu001@hammer.cs.ucr.edu$ # cleaning up and preparing for the next set of test cases...
 aesgu001@hammer.cs.ucr.edu$ ls
@@ -171,26 +175,26 @@ Makefile
 README.md
 src
 tests
-aesgu001@hammer.cs.ucr.edu$ # b. two or more piped s
 aesgu001@hammer.cs.ucr.edu$ 
-aesgu001@hammer.cs.ucr.edu$ ls -al | grep drwx | grep bin # only 'bin  ' will be displayed
-drwx------ 2 aesgu001 csmajs  4096 May 14 17:36 bin
+aesgu001@hammer.cs.ucr.edu$ # b. two or more pipes
 aesgu001@hammer.cs.ucr.edu$ 
-aesgu001@hammer.cs.ucr.edu$ ls -rR | sort | grep i | grep file
-file1
-Makefile
-aesgu001@hammer.cs.ucr.edu$ # d. i/o redirection
+aesgu001@hammer.cs.ucr.edu$ ls -al | grep drwx | grep bin # only 'bin' will be displayed
+drwx------ 2 aesgu001 csmajs  4096 May 16 21:41 bin
+aesgu001@hammer.cs.ucr.edu$ ls -rR | sort | grep i | tr a-z A-Z | grep FILE
+FILE1
+MAKEFILE
 aesgu001@hammer.cs.ucr.edu$ 
-aesgu001@hammer.cs.ucr.edu$ cat < file1 | tr a-z     A-Z a-z | tee file2 | tr a-z A-Z > file3
+aesgu001@hammer.cs.ucr.edu$ # c. i/o redirection
+aesgu001@hammer.cs.ucr.edu$ 
+aesgu001@hammer.cs.ucr.edu$ cat < file1 | tr a-z A-Z \   | tee file2 | tr A-Z a-z > file3
 aesgu001@hammer.cs.ucr.edu$ cat file1 # 'hElLo...'
 hElLo WoRlD!
-aesgu001@hammer.cs.ucr.edu$ cat file2 # 'hello...'
-hello world!
-aesgu001@hammer.cs.ucr.edu$ cat file3 # 'HELLO...'
+aesgu001@hammer.cs.ucr.edu$ cat file2 # 'HELLO...; '
 HELLO WORLD!
-aesgu001@hammer.cs.ucr.edu$ 
-aesgu001@hammer.cs.ucr.edu$ ls -r | sort >> file2 | cat < file2
+aesgu001@hammer.cs.ucr.edu$ cat file3 # 'hello...'
 hello world!
+aesgu001@hammer.cs.ucr.edu$ ls -r | sort >> file2 | cat < file2 # 'HELLO... + ls'
+HELLO WORLD!
 bin
 file1
 file2
@@ -210,89 +214,91 @@ aesgu001@hammer.cs.ucr.edu$ ls -r > file2
 aesgu001@hammer.cs.ucr.edu$ # done!
 aesgu001@hammer.cs.ucr.edu$ 
 aesgu001@hammer.cs.ucr.edu$ # 4. special cases
-aesgu001@hammer.cs.ucr.edu$ # a. no spaces(  (i/o redirection will fail)
+aesgu001@hammer.cs.ucr.edu$ # a. no spaces (i/o redirection will fail)
 aesgu001@hammer.cs.ucr.edu$ 
 aesgu001@hammer.cs.ucr.edu$ ls>file4
 execvp: No such file or directory
 aesgu001@hammer.cs.ucr.edu$ sort<file2>>file1
 execvp: No such file or directory
 aesgu001@hammer.cs.ucr.edu$ 
-aesgu001@hammer.cs.ucr.edu$ cat < file1|cat
+aesgu001@hammer.cs.ucr.edu$ cat < file1|cat # 'cat < file1'
 hello world!
-aesgu001@hammer.cs.ucr.edu$ ls -al|grep drwx| grep     grep bin # only 'bin' will be displayed
-drwx------ 2 aesgu001 csmajs  4096 May 14 17:36 bin
-aesgu001@hammer.cs.ucr.edu$ cat < file1|tr A-Z a-z|tee file3|tr a-z A-Z > file4
-aesgu001@hammer.cs.ucr.edu$ cat file1 # 'hello...; '
-hello world!
-aesgu001@hammer.cs.ucr.edu$ cat file3 # 'hello...'
-hello world!
-aesgu001@hammer.cs.ucr.edu$ cat file4 # 'HELLO...'
-HELLO WORLD!
+aesgu001@hammer.cs.ucr.edu$ ls -al|grepdrwx     drwx|grep bin # only 'bin' will be displayed
+drwx------ 2 aesgu001 csmajs  4096 May 16 21:41 bin
 aesgu001@hammer.cs.ucr.edu$ 
-aesgu001@hammer.cs.ucr.edu$ # b. wide spaces
+aesgu001@hammer.cs.ucr.edu$ # b. wide spaes  ces
 aesgu001@hammer.cs.ucr.edu$ 
-aesgu001@hammer.cs.ucr.edu$ cat   <     file1
+do_ypcall: clnt_call: RPC: Unable to send; errno = Operation not permitted
+aesgu001@hammer.cs.ucr.edu$ cat    <   file1
 hello world!
-aesgu001@hammer.cs.ucr.edu$ echo  >          goodbye world!               >    >  file3
-aesgu001@hammer.cs.ucr.edu$ cat file3 # 'hello... goodbye...'
-hello world!
+aesgu001@hammer.cs.ucr.edu$ echo goodbye world! >     file3
+aesgu001@hammer.cs.ucr.edu$ cat file3 # 'good...'
 goodbye world!
 aesgu001@hammer.cs.ucr.edu$ 
-aesgu001@hammer.cs.ucr.edu$ ls -r    |                     sort # 'ls'
+aesgu001@hammer.cs.ucr.edu$ ls -r   |   sort # 'ls'
 bin
 file1
 file2
 file3
-file4
 LICENSE
 Makefile
 README.md
 src
 tests
-aesgu001@hammer.cs.ucr.edu$ ls -al |    grep drwx     |        grep i     | grep         grep bin # only 'bin' will be displayed
-drwx------ 2 aesgu001 csmajs  4096 May 14 17:36 bin
+do_ypcall: clnt_call: RPC: Unable to send; errno = Operation not permitted
+aesgu001@hammer.cs.ucr.edu$ cat <  file1   |  tr A-Z a-z   |      tee file4     |  tr a-z A-Z     > file5
+aesgu001@hammer.cs.ucr.edu$ cat file4 # 'hello...'
+hello world!
+aesgu001@hammer.cs.ucr.edu$ cat file5 # 'HELLO...'
+HELLO WORLD!
 aesgu001@hammer.cs.ucr.edu$ 
-aesgu001@hammer.cs.ucr.edu$ # c. non-standard i/o redirection (will print an error message)
+aesgu001@hammer.cs.ucr.edu$ # c. non-standard i/o redirection (  will trhow an error message)
 aesgu001@hammer.cs.ucr.edu$ 
 aesgu001@hammer.cs.ucr.edu$ < file2 sort >> file1
 execvp: No such file or directory
 aesgu001@hammer.cs.ucr.edu$ 
-aesgu001@hammer.cs.ucr.edu$ # d. failing piped commands (piping will fail)
+aesgu001@hammer.cs.ucr.edu$ # d. failing piped commands (piping will resume)
 aesgu001@hammer.cs.ucr.edu$ 
-aesgu001@hammer.cs.ucr.edu$ ls -r | sort abc | grep file
+aesgu001@hammer.cs.ucr.edu$ ls -r | sort abc | grep file #   
 bin/rshell: open failed: abc: No such file or directory
-aesgu001@hammer.cs.ucr.edu$ cat < file2 | sort | grep ,;'asd'
+aesgu001@hammer.cs.ucr.edu$ abcde | cat < file2 | sort
 execvp: No such file or directory
+bin
+file1
+file2
+LICENSE
+Makefile
+README.md
+src
+tests
 aesgu001@hammer.cs.ucr.edu$ 
-aesgu001@hammer.cs.ucr.edu$ # e. quotation marks (i/o and piping will be ignored)           not function)
+aesgu001@hammer.cs.ucr.edu$ # e. quotation marks (i/o and piping will not function)
 aesgu001@hammer.cs.ucr.edu$ 
-aesgu001@hammer.cs.ucr.edu$ ls  act   cat "<" file1
+aesgu001@hammer.cs.ucr.edu$ cat "<" file1
 bin/rshell: "<": No such file or directory
 hello world!
-aesgu001@hammer.cs.ucr.edu$ echo bingo ">>" file10! 
+aesgu001@hammer.cs.ucr.edu$ echo bingo ">>" file10
 bingo ">>" file10
 aesgu001@hammer.cs.ucr.edu$ 
-aesgu001@hammer.cs.ucr.edu$ ls -r "|" sort > file2 3
+aesgu001@hammer.cs.ucr.edu$ ls -r "|" sort > fle  ile2
 bin/rshell: cannot access "|": No such file or directory
 bin/rshell: cannot access sort: No such file or directory
 aesgu001@hammer.cs.ucr.edu$ 
-aesgu001@hammer.cs.ucr.edu$ # 4 f. operand-missing pipes(  (  treated as an error)
+aesgu001@hammer.cs.ucr.edu$ # f. missing operand (both will treat it as an error)
 aesgu001@hammer.cs.ucr.edu$ 
 aesgu001@hammer.cs.ucr.edu$ ps | sort |
 bin/rshell: missing operand for token `|'
-aesgu001@hammer.cs.ucr.edu$ ls -r | grp ep file | grep Make |
+aesgu001@hammer.cs.ucr.edu$ ls -al | grep drwx | sort |
 bin/rshell: missing operand for token `|'
-aesgu001@hammer.cs.ucr.edu$ 
-aesgu001@hammer.cs.ucr.edu$ # g. operand-missing i/o redirection (also treated as an error)
 aesgu001@hammer.cs.ucr.edu$ 
 aesgu001@hammer.cs.ucr.edu$ pwd >
 bin/rshell: syntax error near unexpected token `newline'
 aesgu001@hammer.cs.ucr.edu$ cat < file1 >> file3 >
 bin/rshell: syntax error near unexpected token `newline'
 aesgu001@hammer.cs.ucr.edu$ 
-aesgu001@hammer.cs.ucr.edu$ #---------------------------
+aesgu001@hammer.cs.ucr.edu$ #----------------------------
 aesgu001@hammer.cs.ucr.edu$ #	EXITING TEST
-aesgu001@hammer.cs.ucr.edu$ #---------------------------
+aesgu001@hammer.cs.ucr.edu$ #----------------------------
 aesgu001@hammer.cs.ucr.edu$ exit
 [s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (redirect) [0;36m$[0m exit
 exit
@@ -300,4 +306,4 @@ exit
 aesgu001@hammer $ exit
 exit
 
-Script done on Thu 14 May 2015 06:29:05 PM PDT
+Script done on Sat 16 May 2015 10:57:48 PM PDT
