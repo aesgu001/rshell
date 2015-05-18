@@ -27,9 +27,8 @@ bin/rshell
 
 1. **Input/Output Redirection:** This shell can now read from an existing file with the `<` operator,
 and write to a new or existing file by either truncating `>` or appending `>>`.
-
-**Note:** It can only do *1 input and/or 1 output* redirection,
-and only *the rightmost* redirection arguments will be passed in per command.
+**Note, however, that it can only do 1 input and/or 1 output redirection,
+and only the rightmost redirection arguments will be passed in per command.**
 
 2. **Piping:** Piping is now implemented into this shell,
 allowing information from a previous command to be passed in to the next one.
