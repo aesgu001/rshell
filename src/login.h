@@ -13,12 +13,12 @@ void login() {
         perror("getlogin");
         exit(1);
     }
-    std::cout<<user_host<<"@";
+    std::cerr<<user_host<<"@";
     if (-1==gethostname(user_host,HOST_NAME_MAX)) {
         perror("gethostname");
         exit(1);
     }
-    std::cout<<user_host<<"$ ";
+    std::cerr<<user_host<<"$ ";
 }
 
 #endif
