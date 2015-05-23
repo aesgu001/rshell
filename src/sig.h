@@ -4,12 +4,20 @@
 #include <errno.h>
 #include <signal.h>
 #include <stdio.h>
+#include <queue>
+#include "cmd.h"
 #include "login.h"
+#include "parse.h"
+
+std::queue<cmd> *commands_ptr;
+bool waiting=false;
 
 void handler(int signum) {
     if (signum==SIGINT) {
         std::cerr<<"\n";
-        login();
+        if (!waiting)
+            login();
+        parse_dumpqueue(*commands_ptr);
     }
 }
 

@@ -11,6 +11,7 @@
 #include <unistd.h>
 #include <vector>
 #include "cmd.h"
+#include "sig.h"
 
 bool execute_redirect(const bool &flag_irdir, const bool &flag_ordir,
     const int &fdi, const int &fdo) {
@@ -74,6 +75,7 @@ bool execute_help(const cmd &command) {
             exit(1);
         }
     }
+    waiting=true;
     if (0>(pid=fork())) {
         perror("fork");
         exit(1);
@@ -90,6 +92,7 @@ bool execute_help(const cmd &command) {
         perror("waitpid");
         exit(1);
     }
+    waiting=false;
     if (!execute_closefd(flag_irdir,flag_ordir,fdi,fdo))
         exit(1);
     for (std::size_t i=0;i<v.size()+1;i++)

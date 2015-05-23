@@ -18,6 +18,7 @@ int main(int argc, char **argv) {
     sigemptyset(&act.sa_mask);
     if (!sig_init(SIGINT,act))
         return 1;
+    commands_ptr=&commands;
     while (!exit_called) {
         login();
         getline(cin,line);
