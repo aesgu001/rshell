@@ -58,7 +58,7 @@ which will not be executed successfully.
 
 7. Piping commands without operands, such as `ls -r |`, will be treated as a syntax error.
 
-8. The "." and ".." hidden directories will be displayed in the prompt if the user passes either of them as `cd`'s argument,
+8. The `.` and `..` hidden directories will be displayed in the prompt if the user passes either of them as `cd`'s argument,
 resulting an awkward representation of the current working directory.
 **Note that doing so still works.**
 The user could "undo" this bug by simply entering `cd` in the prompt.
