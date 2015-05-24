@@ -18,7 +18,7 @@ Running this software requires **only 5 steps** using your terminal:
 ```
 git clone https://github.com/aesgu001/rshell.git
 cd rshell
-git checkout hw2
+git checkout hw3
 make
 bin/rshell
 ```
@@ -34,6 +34,12 @@ and only the rightmost redirection arguments will be passed in per command.**
 allowing information from a previous command to be passed in to the next one.
 It can pipe two or more commands.
 
+3. **Change Directory:** The new `cd` command feature allows the user to work under more than one existing directory.
+The shell's prompt also displays the current working directory.
+
+4. **Interrupt Signal:** The interrupt signal or `^C` now returns the user to the shell's prompt,
+cancelling commands without the shell exiting itself!
+
 ### Bugs/Issues/Limitations
 
 1. Entering `bin/rshell` in the shell simulator runs a duplication of the application.
@@ -41,18 +47,21 @@ Returning to the bash shell would require you to enter `exit` exactly the number
 
 2. The `echo` command will include quotation marks when printing quoted arguments.
 
-3. The `cd` command will not be executed successfully.
+3. The `git commit -m <message>` command will not be executed successfully.
 
-4. The `git commit -m <message>` command will not be executed successfully.
+4. Appended redirection operators will not perform redirection.
 
-5. Appended redirection operators will not perform redirection.
-
-6. Redirection operators passed in first per command will be recognized as executables,
+5. Redirection operators passed in first per command will be recognized as executables,
 which will not be executed successfully.
 
-7. Any output redirection will be ignored should any input redirection fail in one command.
+6. Any output redirection will be ignored should any input redirection fail in one command.
 
-8. Piping commands without operands, such as `ls -r |`, will be treated as a syntax error.
+7. Piping commands without operands, such as `ls -r |`, will be treated as a syntax error.
+
+8. The "." and ".." hidden directories will be displayed in the prompt if the user passes either of them as `cd`'s argument,
+resulting an awkward representation of the current working directory.
+**Note that doing so still works.**
+The user could "undo" this bug by simply entering `cd` in the prompt.
 
 ### ls Bugs/Issues/Limitations
 
