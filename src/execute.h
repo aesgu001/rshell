@@ -11,7 +11,8 @@
 #include <unistd.h>
 #include <vector>
 #include "cmd.h"
-#include "sig.h"
+
+bool waiting=false;
 
 bool execute_redirect(const bool &flag_irdir, const bool &flag_ordir,
     const int &fdi, const int &fdo) {

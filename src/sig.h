@@ -2,21 +2,22 @@
 #define SIG_H
 
 #include <errno.h>
+#include <queue>
 #include <signal.h>
 #include <stdio.h>
-#include <queue>
+#include <unistd.h>
 #include "cmd.h"
 #include "login.h"
 #include "parse.h"
+#include "execute.h"
 
 std::queue<cmd> *commands_ptr;
-bool waiting=false;
 
 void handler(int signum) {
     if (signum==SIGINT) {
         std::cerr<<"\n";
         if (!waiting)
-            login();
+            login(get_current_dir_name());
         parse_dumpqueue(*commands_ptr);
     }
 }
