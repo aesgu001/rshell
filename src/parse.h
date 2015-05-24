@@ -1,8 +1,8 @@
 #ifndef PARSE_H
 #define PARSE_H
 
-#include <string.h>
 #include <queue>
+#include <string.h>
 #include "cmd.h"
 
 bool parse_isblank(const std::string &s) {
