@@ -1,6 +1,7 @@
 #include <iostream>
 #include <queue>
 #include <signal.h>
+#include <unistd.h>
 #include "cmd.h"
 #include "login.h"
 #include "sig.h"
@@ -20,7 +21,7 @@ int main(int argc, char **argv) {
         return 1;
     commands_ptr=&commands;
     while (!exit_called) {
-        login();
+        login(get_current_dir_name());
         getline(cin,line);
         parse(commands,line,argv[0]);
         execute(commands,exit_called);
