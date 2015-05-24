@@ -21,7 +21,7 @@ int main(int argc, char **argv) {
         return 1;
     commands_ptr=&commands;
     while (!exit_called) {
-        login(get_current_dir_name());
+        login(getenv("PWD"));
         getline(cin,line);
         parse(commands,line,argv[0]);
         execute(commands,exit_called);

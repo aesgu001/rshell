@@ -3,16 +3,52 @@
 
 #include <errno.h>
 #include <fcntl.h>
+#include <queue>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <queue>
 #include <unistd.h>
 #include <vector>
 #include "cmd.h"
 
 bool waiting=false;
+
+bool cd_help(const char *nwd, const char *pwd) {
+    if (-1==setenv("OLDPWD",getenv("PWD"),1)) {
+        perror("setenv"); // checksyscalls doesn't count this syscall
+        return false;
+    }
+    if (-1==chdir(nwd)) {
+        perror("chdir");
+        return false;
+    }
+    if (-1==setenv("PWD",pwd,1)) {
+        perror("setenv"); // same here
+        return false;
+    }
+    return true;
+}
+
+bool cd(const cmd &command) {
+    if (command.get_arlist().size()<=1||
+        command.get_arlist().at(1)=="~") {
+        if (!cd_help(getenv("HOME"),getenv("HOME")))
+            return false;
+    }
+    else if (command.get_arlist().at(1)=="-") {
+        std::cerr<<getenv("OLDPWD")<<"\n";
+        if (!cd_help(getenv("OLDPWD"),getenv("OLDPWD")))
+            return false;
+    }
+    else {
+        std::string path=getenv("PWD");
+        path+="/"+command.get_arlist().at(1);
+        if (!cd_help(command.get_arlist().at(1).c_str(),path.c_str()))
+            return false;
+    }
+    return true;
+}
 
 bool execute_redirect(const bool &flag_irdir, const bool &flag_ordir,
     const int &fdi, const int &fdo) {
@@ -47,6 +83,8 @@ bool execute_closefd(const bool &flag_irdir, const bool &flag_ordir,
 }
 
 bool execute_help(const cmd &command) {
+    if (strcmp(command.get_exec(),"cd")==0)
+        return cd(command);
     std::vector<std::string> v=command.get_arlist();
     char **arlist=new char*[v.size()+1];
     bool flag_irdir=false,flag_ordir=false;

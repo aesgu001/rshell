@@ -8,17 +8,21 @@
 #include <unistd.h>
 #include "cmd.h"
 #include "login.h"
-#include "parse.h"
 #include "execute.h"
 
 std::queue<cmd> *commands_ptr;
+
+void sig_dumpqueue(std::queue<cmd> &commands) {
+    while (!commands.empty())
+        commands.pop();
+}
 
 void handler(int signum) {
     if (signum==SIGINT) {
         std::cerr<<"\n";
         if (!waiting)
-            login(get_current_dir_name());
-        parse_dumpqueue(*commands_ptr);
+            login(getenv("PWD"));
+        sig_dumpqueue(*commands_ptr);
     }
 }
 
