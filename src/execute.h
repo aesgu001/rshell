@@ -14,37 +14,38 @@
 
 bool waiting=false;
 
-bool cd_help(const char *nwd, const char *pwd) {
+bool cd_help(const char *pwd) {
+    if (-1==chdir(pwd)) {
+        perror("chdir");
+        return false;
+    }
     if (-1==setenv("OLDPWD",getenv("PWD"),1)) {
         perror("setenv"); // checksyscalls doesn't count this syscall
         return false;
     }
-    if (-1==chdir(nwd)) {
-        perror("chdir");
-        return false;
-    }
-    if (-1==setenv("PWD",pwd,1)) {
+    char *cdir=get_current_dir_name();
+    if (-1==setenv("PWD",cdir,1)) {
         perror("setenv"); // same here
+        free(cdir);
         return false;
     }
+    free(cdir);
     return true;
 }
 
 bool cd(const cmd &command) {
     if (command.get_arlist().size()<=1||
         command.get_arlist().at(1)=="~") {
-        if (!cd_help(getenv("HOME"),getenv("HOME")))
+        if (!cd_help(getenv("HOME")))
             return false;
     }
     else if (command.get_arlist().at(1)=="-") {
         std::cerr<<getenv("OLDPWD")<<"\n";
-        if (!cd_help(getenv("OLDPWD"),getenv("OLDPWD")))
+        if (!cd_help(getenv("OLDPWD")))
             return false;
     }
     else {
-        std::string path=getenv("PWD");
-        path+="/"+command.get_arlist().at(1);
-        if (!cd_help(command.get_arlist().at(1).c_str(),path.c_str()))
+        if (!cd_help(command.get_arlist().at(1).c_str()))
             return false;
     }
     return true;
