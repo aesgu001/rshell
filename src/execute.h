@@ -114,7 +114,6 @@ bool execute_help(const cmd &command) {
             exit(1);
         }
     }
-    waiting=true;
     if (0>(pid=fork())) {
         perror("fork");
         exit(1);
@@ -127,6 +126,7 @@ bool execute_help(const cmd &command) {
             exit(1);
         }
     }
+    waiting=true;
     if (-1==waitpid(-1,&status,0)) {
         perror("waitpid");
         exit(1);
