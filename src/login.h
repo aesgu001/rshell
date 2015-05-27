@@ -20,7 +20,7 @@ void login(const char *cwd) {
         exit(1);
     }
     std::cerr<<user_host<<":~";
-    if (strcmp(cwd,getenv("HOME"))!=0) {
+    if (strcmp(cwd,getenv("HOME"))>0) {
         std::string home=getenv("HOME"),
             path=cwd;
         std::cerr<<path.substr(path.find(home)+home.length(),
