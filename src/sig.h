@@ -1,33 +1,33 @@
 #ifndef SIG_H
 #define SIG_H
 
-#include <errno.h>
 #include <queue>
 #include <signal.h>
 #include <stdio.h>
 #include <unistd.h>
 #include "cmd.h"
-#include "login.h"
 #include "execute.h"
+#include "login.h"
+#include "misc.h"
 
-std::queue<cmd> *commands_ptr;
-
-void sig_dumpqueue(std::queue<cmd> &commands) {
-    while (!commands.empty())
-        commands.pop();
-}
+std::queue<cmd> *cmds_ptr;
+struct sigaction act;
 
 void handler(int signum) {
     if (signum==SIGINT) {
         std::cerr<<"\n";
         if (!waiting)
             login(getenv("PWD"));
-        sig_dumpqueue(*commands_ptr);
+        dump_queue(*cmds_ptr);
     }
 }
 
-bool sig_init(int signum, struct sigaction &act) {
-    if (-1==sigaction(signum,&act,NULL)) {
+bool sig_init(std::queue<cmd> &commands) {
+    act.sa_handler=handler;
+    act.sa_flags=SA_RESTART;
+    sigemptyset(&act.sa_mask);
+    cmds_ptr=&commands;
+    if (-1==sigaction(SIGINT,&act,NULL)) {
         perror("sigaction");
         return false;
     }

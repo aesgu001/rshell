@@ -1,55 +1,19 @@
 #ifndef EXECUTE_H
 #define EXECUTE_H
 
-#include <errno.h>
 #include <fcntl.h>
 #include <queue>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
 #include <vector>
+#include "cd.h"
 #include "cmd.h"
 
 bool waiting=false;
-
-bool cd_help(const char *pwd) {
-    if (-1==chdir(pwd)) {
-        perror("chdir");
-        return false;
-    }
-    if (-1==setenv("OLDPWD",getenv("PWD"),1)) {
-        perror("setenv"); // checksyscalls doesn't count this syscall
-        return false;
-    }
-    char *cdir=get_current_dir_name();
-    if (-1==setenv("PWD",cdir,1)) {
-        perror("setenv"); // same here
-        free(cdir);
-        return false;
-    }
-    free(cdir);
-    return true;
-}
-
-bool cd(const cmd &command) {
-    if (command.get_arlist().size()<=1||
-        command.get_arlist().at(1)=="~") {
-        if (!cd_help(getenv("HOME")))
-            return false;
-    }
-    else if (command.get_arlist().at(1)=="-") {
-        std::cerr<<getenv("OLDPWD")<<"\n";
-        if (!cd_help(getenv("OLDPWD")))
-            return false;
-    }
-    else {
-        if (!cd_help(command.get_arlist().at(1).c_str()))
-            return false;
-    }
-    return true;
-}
 
 bool execute_redirect(const bool &flag_irdir, const bool &flag_ordir,
     const int &fdi, const int &fdo) {
@@ -86,21 +50,20 @@ bool execute_closefd(const bool &flag_irdir, const bool &flag_ordir,
 bool execute_help(const cmd &command) {
     if (strcmp(command.get_exec(),"cd")==0)
         return cd(command);
-    std::vector<std::string> v=command.get_arlist();
-    char **arlist=new char*[v.size()+1];
+    char **arlist=new char*[command.get_arlist().size()+1];
     bool flag_irdir=false,flag_ordir=false;
     int status=0,fdi,fdo;
     pid_t pid;
-    for (std::size_t i=0;i<v.size();i++) {
-        arlist[i]=new char[v.at(i).length()+1];
-        strcpy(arlist[i],v.at(i).c_str());
+    for (std::size_t i=0;i<command.get_arlist().size();i++) {
+        arlist[i]=new char[command.get_arlist().at(i).length()+1];
+        strcpy(arlist[i],command.get_arlist().at(i).c_str());
     }
-    arlist[v.size()]=NULL;
+    arlist[command.get_arlist().size()]=NULL;
     if (strcmp(command.get_ifile(),"")!=0) {
         flag_irdir=true;
         if (-1==(fdi=open(command.get_ifile(),O_RDONLY))) {
             perror("open");
-            for (std::size_t i=0;i<v.size()+1;i++)
+            for (std::size_t i=0;i<command.get_arlist().size()+1;i++)
                 delete[] arlist[i];
             delete[] arlist;
             return false;
@@ -135,7 +98,7 @@ bool execute_help(const cmd &command) {
     waiting=false;
     if (!execute_closefd(flag_irdir,flag_ordir,fdi,fdo))
         exit(1);
-    for (std::size_t i=0;i<v.size()+1;i++)
+    for (std::size_t i=0;i<command.get_arlist().size()+1;i++)
         delete[] arlist[i];
     delete[] arlist;
     return status==0? true:false;

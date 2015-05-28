@@ -4,6 +4,7 @@
 #include <queue>
 #include <string.h>
 #include "cmd.h"
+#include "misc.h"
 
 bool parse_isblank(const std::string &s) {
     for (std::size_t i=0;i<s.length();i++)
@@ -117,11 +118,6 @@ std::string parse_getconn(const std::string &s,
     return ";";
 }
 
-void parse_dumpqueue(std::queue<cmd> &commands) {
-    while (!commands.empty())
-        commands.pop();
-}
-
 void parse(std::queue<cmd> &commands, const std::string &line,
     const char *arg0) {
     std::size_t pos_htag,pos_conn;
@@ -131,12 +127,12 @@ void parse(std::queue<cmd> &commands, const std::string &line,
     }
     else if (std::string::npos==(pos_conn=parse_findconn(line))) {
         if (!parse_help(commands,line,"",arg0))
-            parse_dumpqueue(commands);
+            dump_queue(commands);
         return;
     }
     std::string conn=parse_getconn(line,pos_conn);
     if (!parse_help(commands,line.substr(0,pos_conn),conn,arg0))
-        parse_dumpqueue(commands);
+        dump_queue(commands);
     else parse(commands,line.substr(pos_conn+conn.length(),std::string::npos),
         arg0);
 }

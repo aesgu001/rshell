@@ -1,25 +1,18 @@
 #include <iostream>
 #include <queue>
-#include <signal.h>
-#include <unistd.h>
 #include "cmd.h"
-#include "login.h"
-#include "sig.h"
-#include "parse.h"
 #include "execute.h"
+#include "login.h"
+#include "parse.h"
+#include "sig.h"
 using namespace std;
 
 int main(int argc, char **argv) {
-    struct sigaction act;
     queue<cmd> commands;
     string line;
     bool exit_called=false;
-    act.sa_handler=handler;
-    act.sa_flags=SA_RESTART;
-    sigemptyset(&act.sa_mask);
-    if (!sig_init(SIGINT,act))
+    if (!sig_init(commands))
         return 1;
-    commands_ptr=&commands;
     while (!exit_called) {
         login(getenv("PWD"));
         getline(cin,line);
