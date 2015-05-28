@@ -1,7 +1,6 @@
 #ifndef LOGIN_H
 #define LOGIN_H
 
-#include <errno.h>
 #include <limits.h>
 #include <stdlib.h>
 #include <stdio.h>
