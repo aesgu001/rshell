@@ -12,8 +12,7 @@
 #include <vector>
 #include "cd.h"
 #include "cmd.h"
-
-bool waiting=false;
+#include "sig.h"
 
 bool execute_redirect(const bool &flag_irdir, const bool &flag_ordir,
     const int &fdi, const int &fdo) {
@@ -50,6 +49,10 @@ bool execute_closefd(const bool &flag_irdir, const bool &flag_ordir,
 bool execute_help(const cmd &command) {
     if (strcmp(command.get_exec(),"cd")==0)
         return cd(command);
+    if (strcmp(command.get_exec(),"fg")==0)
+        return fg(command.get_arlist().at(0).c_str());
+    if (strcmp(command.get_exec(),"bg")==0)
+        return bg(command.get_arlist().at(0).c_str());
     char **arlist=new char*[command.get_arlist().size()+1];
     bool flag_irdir=false,flag_ordir=false;
     int status=0,fdi,fdo;
@@ -59,6 +62,7 @@ bool execute_help(const cmd &command) {
         strcpy(arlist[i],command.get_arlist().at(i).c_str());
     }
     arlist[command.get_arlist().size()]=NULL;
+    pid_ptr=&pid;
     if (strcmp(command.get_ifile(),"")!=0) {
         flag_irdir=true;
         if (-1==(fdi=open(command.get_ifile(),O_RDONLY))) {
@@ -91,11 +95,16 @@ bool execute_help(const cmd &command) {
         }
     }
     waiting=true;
-    if (-1==waitpid(-1,&status,0)) {
+    if (-1==waitpid(-1,&status,WUNTRACED)) {
         perror("waitpid");
         exit(1);
     }
     waiting=false;
+    if (WIFSTOPPED(status)) {
+        std::cerr<<"["<<bg_prcs.size()<<"]+  Stopped";
+        std::cerr<<"                "<<command.get_exec()<<"\n";
+        bg_prcs.at(bg_prcs.size()-1).second=command;
+    }
     if (!execute_closefd(flag_irdir,flag_ordir,fdi,fdo))
         exit(1);
     for (std::size_t i=0;i<command.get_arlist().size()+1;i++)
