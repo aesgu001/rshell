@@ -49,10 +49,10 @@ bool execute_closefd(const bool &flag_irdir, const bool &flag_ordir,
 bool execute_help(const cmd &command) {
     if (strcmp(command.get_exec(),"cd")==0)
         return cd(command);
-    if (strcmp(command.get_exec(),"fg")==0)
-        return fg(command.get_arlist().at(0).c_str());
-    if (strcmp(command.get_exec(),"bg")==0)
-        return bg(command.get_arlist().at(0).c_str());
+    /*if (strcmp(command.get_exec(),"fg")==0)
+        return fg(command.get_arlist().at(0).c_str());*/
+    /*if (strcmp(command.get_exec(),"bg")==0)
+        return bg(command.get_arlist().at(0).c_str());*/
     char **arlist=new char*[command.get_arlist().size()+1];
     bool flag_irdir=false,flag_ordir=false;
     int status=0,fdi,fdo;
@@ -100,11 +100,11 @@ bool execute_help(const cmd &command) {
         exit(1);
     }
     waiting=false;
-    if (WIFSTOPPED(status)) {
+    /*if (WIFSTOPPED(status)) {
         std::cerr<<"["<<jobs.size()<<"]+  Stopped";
         std::cerr<<"                "<<command.get_exec()<<"\n";
         jobs.at(jobs.size()-1).name=command.get_exec();
-    }
+    }*/
     if (!execute_closefd(flag_irdir,flag_ordir,fdi,fdo))
         exit(1);
     for (std::size_t i=0;i<command.get_arlist().size()+1;i++)

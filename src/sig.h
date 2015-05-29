@@ -5,27 +5,27 @@
 #include <signal.h>
 #include <stdio.h>
 #include <unistd.h>
-#include <vector>
+//#include <vector>
 #include "cmd.h"
 #include "login.h"
 #include "misc.h"
 
-struct job {
+/*struct job {
     job(): name(""), pid(0), running(false) {}
     job(const std::string &n, const pid_t &p, const bool &r):
         name(n), pid(p), running(r) {}
     std::string name;
     pid_t pid;
     bool running;
-};
+};*/
 
 bool waiting=false;
 pid_t *pid_ptr;
 std::queue<cmd> *cmds_ptr;
 struct sigaction act;
-std::vector<job> jobs;
+//std::vector<job> jobs;
 
-bool bg(const char *arg0) {
+/*bool bg(const char *arg0) {
     if (jobs.empty()) {
         std::cerr<<arg0<<": bg: current: no such job.\n";
         return false;
@@ -43,9 +43,9 @@ bool bg(const char *arg0) {
         jobs.at(jobs.size()-1).running=true;
     }
     return true;
-}
+}*/
 
-bool fg(const char *arg0) {
+/*bool fg(const char *arg0) {
     if (jobs.empty()) {
         std::cerr<<arg0<<": fg: current: no such job.\n";
         return false;
@@ -71,7 +71,7 @@ bool fg(const char *arg0) {
         jobs.at(jobs.size()-1).name=j.name;
     }
     return status==0? true:false;
-}
+}*/
 
 void handler(int signum) {
     if (signum==SIGINT) {
@@ -85,7 +85,7 @@ void handler(int signum) {
             }
         dump_queue(*cmds_ptr);
     }
-    else if (signum==SIGTSTP) {
+    /*else if (signum==SIGTSTP) {
         if (waiting) {
             std::cerr<<"\n";
             if (-1==kill(*pid_ptr,SIGSTOP)) {
@@ -94,7 +94,7 @@ void handler(int signum) {
             }
             jobs.push_back(job("",*pid_ptr,false));
         }
-    }
+    }*/
 }
 
 bool sig_init(std::queue<cmd> &commands) {
@@ -106,10 +106,10 @@ bool sig_init(std::queue<cmd> &commands) {
         perror("sigaction");
         return false;
     }
-    if (-1==sigaction(SIGTSTP,&act,NULL)) {
+    /*if (-1==sigaction(SIGTSTP,&act,NULL)) {
         perror("sigaction");
         return false;
-    }
+    }*/
     return true;
 }
 
