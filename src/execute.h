@@ -101,9 +101,9 @@ bool execute_help(const cmd &command) {
     }
     waiting=false;
     if (WIFSTOPPED(status)) {
-        std::cerr<<"["<<bg_prcs.size()<<"]+  Stopped";
+        std::cerr<<"["<<jobs.size()<<"]+  Stopped";
         std::cerr<<"                "<<command.get_exec()<<"\n";
-        bg_prcs.at(bg_prcs.size()-1).second=command;
+        jobs.at(jobs.size()-1).name=command.get_exec();
     }
     if (!execute_closefd(flag_irdir,flag_ordir,fdi,fdo))
         exit(1);

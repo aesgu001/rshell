@@ -5,55 +5,70 @@
 #include <signal.h>
 #include <stdio.h>
 #include <unistd.h>
-#include <utility>
 #include <vector>
 #include "cmd.h"
 #include "login.h"
 #include "misc.h"
 
+struct job {
+    job(): name(""), pid(0), running(false) {}
+    job(const std::string &n, const pid_t &p, const bool &r):
+        name(n), pid(p), running(r) {}
+    std::string name;
+    pid_t pid;
+    bool running;
+};
+
 bool waiting=false;
 pid_t *pid_ptr;
 std::queue<cmd> *cmds_ptr;
 struct sigaction act;
-std::vector<std::pair<pid_t,cmd> > bg_prcs;
+std::vector<job> jobs;
 
 bool bg(const char *arg0) {
-    if (bg_prcs.empty()) {
+    if (jobs.empty()) {
         std::cerr<<arg0<<": bg: current: no such job.\n";
         return false;
     }
-    std::cerr<<"["<<bg_prcs.size()<<"]+ ";
-    std::cerr<<bg_prcs.at(bg_prcs.size()-1).second.get_exec()<<" &\n";
-    std::cerr<<"\n["<<bg_prcs.size()<<"]+  Stopped";
-    std::cerr<<"                "
-        <<bg_prcs.at(bg_prcs.size()-1).second.get_exec()<<"\n";
+    if (jobs.at(jobs.size()-1).running)
+        std::cerr<<arg0<<": bg: job "
+            <<jobs.size()<<" already in background\n";
+    else {
+        if (-1==kill(jobs.at(jobs.size()-1).pid,SIGCONT)) {
+            perror("kill");
+            exit(1);
+        }
+        std::cerr<<"["<<jobs.size()<<"]+ ";
+        std::cerr<<jobs.at(jobs.size()-1).name<<" &\n";
+        jobs.at(jobs.size()-1).running=true;
+    }
     return true;
 }
 
 bool fg(const char *arg0) {
-    if (bg_prcs.empty()) {
+    if (jobs.empty()) {
         std::cerr<<arg0<<": fg: current: no such job.\n";
         return false;
     }
     int status=0;
-    std::pair<pid_t,cmd> p=bg_prcs.at(bg_prcs.size()-1);
-    pid_ptr=&p.first;
-    bg_prcs.pop_back();
-    std::cerr<<p.second.get_exec()<<"\n";
+    job j=jobs.at(jobs.size()-1);
+    pid_ptr=&j.pid;
+    jobs.pop_back();
     waiting=true;
-    if (-1==kill(p.first,SIGCONT)) {
+    std::cerr<<j.name<<"\n";
+    if (-1==kill(*pid_ptr,SIGCONT)) {
         perror("kill");
         exit(1);
     }
-    if (-1==(waitpid(p.first,&status,WUNTRACED))) {
+    if (-1==(waitpid(*pid_ptr,&status,WUNTRACED))) {
         perror("waitpid");
         exit(1);
     }
     waiting=false;
     if (WIFSTOPPED(status)) {
-        std::cerr<<"["<<bg_prcs.size()<<"]+  Stopped";
-        std::cerr<<"                "<<p.second.get_exec()<<"\n";
-        bg_prcs.at(bg_prcs.size()-1).second=p.second;
+        std::cerr<<"["<<jobs.size()<<"]+  Stopped";
+        std::cerr<<"                "<<j.name<<"\n";
+        jobs.at(jobs.size()-1).name=j.name;
     }
     return status==0? true:false;
 }
@@ -63,6 +78,11 @@ void handler(int signum) {
         std::cerr<<"\n";
         if (!waiting)
             login(getenv("PWD"));
+        else
+            if (-1==kill(*pid_ptr,SIGKILL)) {
+                perror("kill");
+                exit(1);
+            }
         dump_queue(*cmds_ptr);
     }
     else if (signum==SIGTSTP) {
@@ -72,7 +92,7 @@ void handler(int signum) {
                 perror("kill");
                 exit(1);
             }
-            bg_prcs.push_back(std::pair<pid_t,cmd>(*pid_ptr,cmd()));
+            jobs.push_back(job("",*pid_ptr,false));
         }
     }
 }
