@@ -64,13 +64,14 @@ which will not be executed successfully.
 
 8. Any child process will automatically be terminated by the `^C` signal,
 stopped or running.
-Interrupted processes will display the shell prompt in a disorderly manner.
+Interrupting running child processes in the background will display the shell
+prompt in a disorderly manner.
 
 9. The built-in stack data structure can store more than one stopped child process,
 but only the top child process may continue by entering `fg` or `bg`,
 since the only way to terminate it is by sending the `^C` signal.
 
-10. Killing a stopped child process using 'kill -9' will print the shell prompt
+10. Killing a stopped child process using `kill -9` will print the shell prompt
 in a disorderly manner.
 "Resuming" a killed child process will exit the shell.
 
