@@ -3,57 +3,55 @@
 
 #include <queue>
 #include <signal.h>
+#include <stack>
 #include <stdio.h>
 #include <unistd.h>
-//#include <vector>
 #include "cmd.h"
 #include "login.h"
 #include "misc.h"
 
-/*struct job {
+struct job {
     job(): name(""), pid(0), running(false) {}
     job(const std::string &n, const pid_t &p, const bool &r):
         name(n), pid(p), running(r) {}
     std::string name;
     pid_t pid;
     bool running;
-};*/
+};
 
 bool waiting=false;
 pid_t *pid_ptr;
 std::queue<cmd> *cmds_ptr;
 struct sigaction act;
-//std::vector<job> jobs;
+std::stack<job> jobs;
 
-/*bool bg(const char *arg0) {
+bool bg(const char *arg0) {
     if (jobs.empty()) {
         std::cerr<<arg0<<": bg: current: no such job.\n";
         return false;
     }
-    if (jobs.at(jobs.size()-1).running)
-        std::cerr<<arg0<<": bg: job "
-            <<jobs.size()<<" already in background\n";
+    if (jobs.top().running)
+        std::cerr<<arg0<<": bg: job already in background\n";
     else {
-        if (-1==kill(jobs.at(jobs.size()-1).pid,SIGCONT)) {
+        if (-1==kill(jobs.top().pid,SIGCONT)) {
             perror("kill");
             exit(1);
         }
-        std::cerr<<"["<<jobs.size()<<"]+ ";
-        std::cerr<<jobs.at(jobs.size()-1).name<<" &\n";
-        jobs.at(jobs.size()-1).running=true;
+        std::cerr<<"+ "<<jobs.top().name<<" &\n";
+        jobs.top().running=true;
     }
     return true;
-}*/
+}
 
-/*bool fg(const char *arg0) {
+bool fg(const char *arg0) {
     if (jobs.empty()) {
         std::cerr<<arg0<<": fg: current: no such job.\n";
         return false;
     }
     int status=0;
-    job j=jobs.at(jobs.size()-1);
+    job j=jobs.top();
     pid_ptr=&j.pid;
-    jobs.pop_back();
+    jobs.pop();
     waiting=true;
     std::cerr<<j.name<<"\n";
     if (-1==kill(*pid_ptr,SIGCONT)) {
@@ -66,12 +64,12 @@ struct sigaction act;
     }
     waiting=false;
     if (WIFSTOPPED(status)) {
-        std::cerr<<"["<<jobs.size()<<"]+  Stopped";
+        std::cerr<<"+  Stopped";
         std::cerr<<"                "<<j.name<<"\n";
-        jobs.at(jobs.size()-1).name=j.name;
+        jobs.top().name=j.name;
     }
     return status==0? true:false;
-}*/
+}
 
 void handler(int signum) {
     if (signum==SIGINT) {
@@ -85,16 +83,16 @@ void handler(int signum) {
             }
         dump_queue(*cmds_ptr);
     }
-    /*else if (signum==SIGTSTP) {
+    else if (signum==SIGTSTP) {
         if (waiting) {
             std::cerr<<"\n";
             if (-1==kill(*pid_ptr,SIGSTOP)) {
                 perror("kill");
                 exit(1);
             }
-            jobs.push_back(job("",*pid_ptr,false));
+            jobs.push(job("",*pid_ptr,false));
         }
-    }*/
+    }
 }
 
 bool sig_init(std::queue<cmd> &commands) {
@@ -106,10 +104,10 @@ bool sig_init(std::queue<cmd> &commands) {
         perror("sigaction");
         return false;
     }
-    /*if (-1==sigaction(SIGTSTP,&act,NULL)) {
+    if (-1==sigaction(SIGTSTP,&act,NULL)) {
         perror("sigaction");
         return false;
-    }*/
+    }
     return true;
 }
 
