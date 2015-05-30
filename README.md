@@ -40,6 +40,10 @@ The shell's prompt also displays the current working directory.
 4. **Interrupt Signal:** The interrupt signal or `^C` now returns the user to the shell's prompt,
 cancelling commands without the shell exiting itself!
 
+5. **Stop Signal:** The stop signal or `^Z` now stops a child process,
+and stores it in a stack, where it shall either be resumed or terminated by the user.
+The `fg` and `bg` commands are also implemented to resume *the most recently stopped child process* either in the foreground or in the background.
+
 ### Bugs/Issues/Limitations
 
 1. Entering `bin/rshell` in the shell simulator runs a duplication of the application.
@@ -57,6 +61,20 @@ which will not be executed successfully.
 6. Any output redirection will be ignored should any input redirection fail in one command.
 
 7. Piping commands without operands, such as `ls -r |`, will be treated as a syntax error.
+
+8. Any child process will automatically be terminated by the `^C` signal,
+stopped or running.
+Interrupted processes will display the shell prompt in a disorderly manner.
+
+9. The built-in stack data structure can store more than one stopped child process,
+but only the top child process may continue by entering `fg` or `bg`,
+since the only way to terminate it is by sending the `^C` signal.
+
+10. Killing a stopped child process using 'kill -9' will print the shell prompt
+in a disorderly manner.
+"Resuming" a killed child process will exit the shell.
+
+11. Resuming child processes in the background will not be stopped if they are trying to read from the shell's standard input.
 
 ### ls Bugs/Issues/Limitations
 
