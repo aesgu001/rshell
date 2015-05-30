@@ -95,7 +95,7 @@ bool execute_help(const cmd &command) {
         }
     }
     waiting=true;
-    if (-1==waitpid(*pid_ptr,&status,WUNTRACED)) {
+    if (-1==waitpid(-1,&status,WUNTRACED)) {
         perror("waitpid");
         exit(1);
     }

@@ -27,7 +27,7 @@ std::stack<job> jobs;
 
 bool bg(const char *arg0) {
     if (jobs.empty()) {
-        std::cerr<<arg0<<": bg: current: no such job.\n";
+        std::cerr<<arg0<<": bg: current: no such job\n";
         return false;
     }
     if (jobs.top().running)
@@ -45,19 +45,19 @@ bool bg(const char *arg0) {
 
 bool fg(const char *arg0) {
     if (jobs.empty()) {
-        std::cerr<<arg0<<": fg: current: no such job.\n";
+        std::cerr<<arg0<<": fg: current: no such job\n";
         return false;
     }
     int status=0;
     job j=jobs.top();
     pid_ptr=&j.pid;
     jobs.pop();
-    waiting=true;
     std::cerr<<j.name<<"\n";
     if (-1==kill(*pid_ptr,SIGCONT)) {
         perror("kill");
         exit(1);
     }
+    waiting=true;
     if (-1==(waitpid(*pid_ptr,&status,WUNTRACED))) {
         perror("waitpid");
         exit(1);
