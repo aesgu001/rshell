@@ -1,0 +1,189 @@
+Script started on Fri 29 May 2015 10:02:38 PM PDT
+~
+aesgu001@hammer $ cs100
+[0;91m
+===============================================================================
+|                                                                             |
+| You have enabled settings specific for cs100.  Everything you do is being   |
+| recorded to measure your progress in the class.                             |
+|                                                                             |
+| Important commands for the class:                                           |
+|   * calcgrade.sh          displays a detailed breakdown of your grade       |
+|   * checksyscalls.sh      is your cpp file doing proper error checking?     |
+|   * typespeed             practice typing unix commands                     |
+|                                                                             |
+| Important commands for general C++ programming:                             |
+|   * make                  don't call g++ manually; let make do the work!    |
+|   * gdb                   the GNU debugger                                  |
+|   * valgrind              get rid of your memory leaks                      |
+|   * cppcheck              static analysis tool                              |
+|   * man                   find help about any syscall / terminal command    |
+|                                                                             |
+===============================================================================
+[0m
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~[0;95m [0;36m$[0m cd Documents/rshell
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (signal) [0;36m$[0m make && bin/rshell
+mkdir -p bin
+g++ -std=c++11 -Wall -Werror -ansi -pedantic -g -o bin/rshell src/main.cpp
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ #--------------------------
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ #	Testing Signals
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ #--------------------------
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ 
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ # 1. the 'cd' command
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ # a. HOME directory
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ 
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ cd # no '~' argument
+aesgu001@hammer.cs.ucr.edu:~$ pwd
+/home/csmajs/aesgu001
+aesgu001@hammer.cs.ucr.edu:~$ ls
+Desktop  Documents  Downloads  Music  Pictures	Public	Templates  Videos
+aesgu001@hammer.cs.ucr.edu:~$ cd -
+/home/csmajs/aesgu001/Documents/rshell
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ 
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ cd ~
+aesgu001@hammer.cs.ucr.edu:~$ pwd
+/home/csmajs/aesgu001
+aesgu001@hammer.cs.ucr.edu:~$ ls
+Desktop  Documents  Downloads  Music  Pictures	Public	Templates  Videos
+aesgu001@hammer.cs.ucr.edu:~$ cd-  -
+/home/csmajs/aesgu001/Documents/rshell
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ 
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ # 2.    b. sub directory
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ 
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ cd src
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell/src$ pwd
+/home/csmajs/aesgu001/Documents/rshell/src
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell/src$ ls
+cd.h   col.h   execute.h  login.h  ls.h      misc.h   sig.h
+cmd.h  cp.cpp  file.h	  ls.cpp   main.cpp  parse.h  Timer.h
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell/src$ cd -
+/home/csmajs/aesgu001/Documents/rshell
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ 
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ # c. parent directory
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ 
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ cd ..
+aesgu001@hammer.cs.ucr.edu:~/Documents$ pwd
+/home/csmajs/aesgu001/Documents
+aesgu001@hammer.cs.ucr.edu:~/Documents$ ls
+bs  gitlearn  gitlearn_doc  rshell  rshell-1  rshell-2	ucr-cs100
+aesgu001@hammer.cs.ucr.edu:~/Documents$ cd -
+/home/csmajs/aesgu001/Documents/rshell
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ 
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ # d. absolute path
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ 
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ cd /var/log
+aesgu001@hammer.cs.ucr.edu:/var/log$ pwd
+/var/log
+aesgu001@hammer.cs.ucr.edu:/var/log$ ls
+anaconda.ifcfg.log    cron-20150524	   messages-20150503  secure-20150524
+anaconda.log	      cups		   messages-20150510  spice-vdagent.log
+anaconda.program.log  dmesg		   messages-20150517  spooler
+anaconda.storage.log  dmesg.old		   messages-20150524  spooler-20150503
+anaconda.syslog       dracut.log	   ntpstats	      spooler-20150510
+anaconda.xlog	      dracut.log-20150101  nx		      spooler-20150517
+anaconda.yum.log      gdm		   pm-powersave.log   spooler-20150524
+audit		      graft		   ppp		      tallylog
+boot.log	      kill.log		   prelink	      wtmp
+btmp		      lastlog		   sa		      wtmp-20150501
+btmp-20150501	      maillog		   samba	      Xorg.0.log
+ConsoleKit	      maillog-20150503	   sa-update.log      yum.log
+cron		      maillog-20150510	   secure	      yum.log-20150101
+cron-20150503	      maillog-20150517	   secure-20150503
+cron-20150510	      maillog-20150524	   secure-20150510
+cron-20150517	      messages		   secure-20150517
+aesgu001@hammer.cs.ucr.edu:/var/log$ cd -
+/home/csmajs/aesgu001/Documents/rshell
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ 
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ 
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ # 2. the '^C' signal
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ # a. in prompt --should do nothing and reprompt
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ ^C
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ 
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ ps
+  PID TTY          TIME CMD
+27662 pts/91   00:00:00 bash
+27749 pts/91   00:00:00 rshell
+29149 pts/91   00:00:00 ps
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ 
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ # b. with a running child process --should st  kill c-process but not exit the shell
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ 
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ cat
+hello
+hello
+^C
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ ps
+  PID TTY          TIME CMD
+27662 pts/91   00:00:00 bash
+27749 pts/91   00:00:00 rshell
+29461 pts/91   00:00:00 ps
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ # child is killed!
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ 
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ # c 3. '^Z' signal
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ # a. in prompt --should do nothing
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ 
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ ^Z
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ 
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ # b. with a running child process --should stop c-process and reprompt
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ 
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ cat
+hello
+hello
+^Z
++  Stopped                cat
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ ps # child process should still be there
+  PID TTY          TIME CMD
+27662 pts/91   00:00:00 bash
+27749 pts/91   00:00:00 rshell
+29644 pts/91   00:00:00 cat
+29722 pts/91   00:00:00 ps
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ 
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ # c. fg  'fg'
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ 
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ fg
+cat
+goodbye
+goodbye
+^C
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ ps # child is killed
+  PID TTY          TIME CMD
+27662 pts/91   00:00:00 bash
+27749 pts/91   00:00:00 rshell
+29785 pts/91   00:00:00 ps
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ 
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ # d. bg
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ 
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ ./a.out # just print x's in an infinite loop
+xxxxxxxxxxxxxxx^Z
++  Stopped                ./a.out
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ bg # a.out runs alonside the shell
++ ./a.out &
+xaesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ xxxxxxlsxxx
+a.out  bin  LICENSE  Makefile  README.md  src  tests
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ xxxxxxxxxechox xhelxloxx
+hello
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ xxxps
+  PID TTY          TIME CMD
+27662 pts/91   00:00:00 bash
+27749 pts/91   00:00:00 rshell
+29935 pts/91   00:00:00 a.out
+30171 pts/91   00:00:00 ps
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ xxxxxxxxxxxxfgx
+./a.out
+xxxx^C
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ ps # child process killed!
+  PID TTY          TIME CMD
+27662 pts/91   00:00:00 bash
+27749 pts/91   00:00:00 rshell
+30562 pts/91   00:00:00 ps
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ 
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ #---------------------------
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ #	EX xiting Test
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ #---------------------------
+aesgu001@hammer.cs.ucr.edu:~/Documents/rshell$ exit
+[s%%%%%%%%%%[u[0;32maesgu001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (signal) [0;36m$[0m exit
+exit
+~
+aesgu001@hammer $ exit
+exit
+
+Script done on Fri 29 May 2015 10:14:42 PM PDT
